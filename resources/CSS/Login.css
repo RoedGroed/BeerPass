@@ -1,0 +1,26 @@
+#BorderPane{
+    -fx-background-color: #201f45;
+}
+
+.lbl{
+    -fx-text-fill: White;
+    -fx-font-weight: 400;
+    -fx-font-size: 32px;
+    -fx-font-family: 'Inter';
+}
+
+#btnForgot{
+    -fx-text-fill: White;
+    -fx-background-color: Transparent;
+}
+
+#btnLogin{
+    -fx-background-color: rgba(95, 18, 18, 0.5);
+    -fx-border-color: rgba(255, 255, 255, 0.4);
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-radius: 7px;
+    -fx-text-fill: White;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 14;
+}
