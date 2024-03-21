@@ -16,6 +16,7 @@
 
 #btnLogin{
     -fx-background-color: rgba(95, 18, 18, 0.5);
+    -fx-background-radius: 7px;
     -fx-border-color: rgba(255, 255, 255, 0.4);
     -fx-border-style: solid;
     -fx-border-width: 2px;

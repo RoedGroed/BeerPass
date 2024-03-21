@@ -1,0 +1,46 @@
+#Sidebar{
+    -fx-background-color: linear-gradient(to bottom right, rgb(95, 18, 18) 0%, rgb(75, 84, 168) 100%);
+}
+
+#BorderPane{
+    -fx-background-color: #201f45;
+}
+
+#lblUsername{
+    -fx-font-size: 16px;
+    -fx-background-color: Transparent;
+    -fx-text-fill: White;
+    -fx-text-alignment: center;
+}
+.lbl{
+    -fx-font-size: 32;
+    -fx-text-fill: White;
+    -fx-font-family: 'Inter';
+    -fx-text-alignment: center;
+}
+
+.btn{
+    -fx-background-color: transparent;
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    }
+
+#btnNewEvent{
+    -fx-background-color: rgba(95, 18, 18, 0.5);
+    -fx-background-radius: 7px;
+    -fx-border-color: rgba(255, 255, 255, 0.4);
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-radius: 7px;
+    -fx-text-fill: White;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 14;
+}
+
+#btnLogout{-fx-background-image: url(/Images/PowerIcon.png);}
+
+#btnEvent {-fx-background-image: url(/Images/EventIcon.png);}
+
+#btnAdmin {-fx-background-image: url(/Images/AdminIcon.png);}
+
+#btnTicket{-fx-background-image: url(/Images/TicketIcon.png);}
