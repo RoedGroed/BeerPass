@@ -20,7 +20,7 @@
             <image>
                <Image url="@Images/EA-Logo.png" />
             </image></ImageView>
-              <MFXButton id="btnLogin" layoutX="253.0" layoutY="223.0" prefHeight="30.0" prefWidth="115.0" text="Login" />
+              <MFXButton id="btnLogin" fx:id="btnLogin" layoutX="253.0" layoutY="223.0" onAction="#onLogin" prefHeight="30.0" prefWidth="115.0" text="Login" />
            </AnchorPane>
    </center>
 </BorderPane>
