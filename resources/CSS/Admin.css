@@ -1,0 +1,72 @@
+#Vbox {
+    -fx-background-color: linear-gradient(to top, #201F45, #5F1212);
+    -fx-opacity: 75%;
+}
+#BorderPane {
+    -fx-background-color: rgba(32, 31, 82, 0.98);
+}
+
+.label {
+    -fx-text-fill: white;
+    -fx-font-size: 32;
+    -fx-font-family: 'Regular';
+    -fx-stroke: black;
+    -fx-stroke-width: 200px;
+    -fx-alignment: center;
+}
+
+.lblUsername {
+    -fx-text-fill: white;
+    -fx-font-size: 10;
+    -fx-font-family: 'Regular';
+    -fx-stroke: black;
+    -fx-stroke-width: 200px;
+    -fx-alignment: center;
+}
+.btnLogout {
+    -fx-background-color: transparent;
+    -fx-background-image: url(/Images/PowerIcon.png);
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+}
+.btnEvent {
+    -fx-background-color: transparent;
+    -fx-background-image: url(/Images/EventIcon.png);
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+}
+.btnAdmin {
+    -fx-background-color: transparent;
+    -fx-background-image: url(/Images/AdminIcon.png);
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+}
+.btnTickets {
+    -fx-background-color: transparent;
+    -fx-background-image: url(/Images/TicketIcon.png);
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+}
+.listViews {
+    -fx-background-color: black;
+    -fx-opacity: 45%;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+}
+.lblUserRoles {
+    -fx-text-fill: white;
+    -fx-font-size: 28;
+    -fx-text-alignment: center;
+    -fx-font-family: 'Inter';
+}
+.btn {
+    -fx-background-color: #5F1212;
+    -fx-opacity: 0.75;
+    -fx-border-color: rgba(255, 255, 255, 0.6);
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 12px;
+    -fx-text-fill: white;
+}
