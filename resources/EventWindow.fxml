@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="CSS/EventWindow.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Event.EventWindowController">
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="CSS/EventWindow.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Event.EventWindowController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -23,7 +23,7 @@
                   <Insets left="15.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <MFXButton id="btnLogout" fx:id="btnLogout" prefHeight="78.0" prefWidth="88.0" styleClass="btn" text="">
+            <MFXButton id="btnLogout" fx:id="btnLogout" onAction="#handleLogoutButtonAction" prefHeight="78.0" prefWidth="88.0" styleClass="btn" text="">
                <VBox.margin>
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
