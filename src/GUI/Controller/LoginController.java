@@ -45,15 +45,18 @@ public class LoginController {
         String username = txtUser.getText();
         String password = txtPass.getText();
         if(model.isValidUser(username, password)) {
+            Stage stage = (Stage) txtUser.getScene().getWindow();
+            stage.close();
             try {
+
                 //Loading the new stage
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/EventWindow.fxml"));
                 Parent root = loader.load();
                 //stage stuff
-                Stage stage = new Stage();
-                stage.setTitle("BrewPass");
-                stage.setScene(new Scene(root));
-                stage.show();
+                Stage secStage = new Stage();
+                secStage.setTitle("BrewPass");
+                secStage.setScene(new Scene(root));
+                secStage.show();
             } catch (IOException e) {
                 System.out.println(e);
                 throw new RuntimeException(e);
