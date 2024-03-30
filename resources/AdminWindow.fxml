@@ -85,7 +85,8 @@
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </Label>
-         </children></VBox>
+         </children>
+      </VBox>
    </left>
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="anchorPane" BorderPane.alignment="CENTER">
