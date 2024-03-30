@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="CSS/AppWindows.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Admin.NewUserController">
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="CSS/AppWindows.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Admin.NewUserController">
 <left>
     <VBox id="Sidebar" prefHeight="720.0" prefWidth="131.0" BorderPane.alignment="CENTER">
         <children>
@@ -133,17 +133,17 @@
                             <Rectangle fx:id="radiobtnRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="168.0" stroke="BLACK" strokeType="INSIDE" width="427.0" StackPane.alignment="TOP_LEFT" />
                             <VBox minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" StackPane.alignment="CENTER_LEFT">
                                 <children>
-                                    <MFXRadioButton text="Admin">
+                                    <MFXRadioButton fx:id="userAdmin" text="Admin">
                                         <padding>
                                             <Insets left="10.0" top="10.0" />
                                         </padding>
                                     </MFXRadioButton>
-                                    <MFXRadioButton text="Event Coordinator">
+                                    <MFXRadioButton fx:id="userEventCoordinator" text="Event Coordinator">
                                         <padding>
                                             <Insets left="10.0" />
                                         </padding>
                                     </MFXRadioButton>
-                                    <MFXRadioButton text="User">
+                                    <MFXRadioButton fx:id="userCustomer" text="User">
                                         <padding>
                                             <Insets left="10.0" />
                                         </padding>
@@ -164,7 +164,7 @@
             <HBox alignment="BOTTOM_RIGHT" spacing="20.0">
                 <children>
                     <MFXButton onAction="#onCancel" prefHeight="30.0" prefWidth="110.0" styleClass="btn" text="CANCEL" />
-                    <MFXButton onAction="#onConfirm" prefHeight="30.0" prefWidth="110.0" styleClass="btnConfirm" text="CONFIRM">
+                    <MFXButton fx:id="onConfirmUser" onAction="#onConfirmUser" prefHeight="30.0" prefWidth="110.0" styleClass="btnConfirm" text="CONFIRM">
                         <HBox.margin>
                             <Insets />
                         </HBox.margin>
