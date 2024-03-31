@@ -83,7 +83,6 @@ public class NewUserController extends BaseController implements Initializable {
         String username = tfUserName.getText();
         String email = tfUserEmail.getText();
         String password = tfUserPassword.getText();
-        
 
         String role;
         if (selectedRoleButton == userAdmin) {
@@ -98,21 +97,18 @@ public class NewUserController extends BaseController implements Initializable {
 
         try {
             UserDAO userDAO = new UserDAO();
-            boolean success = userDAO.createNewUser(username, password, role, email);
-            if (success) {
-                // Clear the text fields
-                tfUserName.clear();
-                tfUserEmail.clear();
-                tfUserPassword.clear();
+            userDAO.createNewUser(username, password, role, email);
 
-                // Deselect all MFXRadioButtons
-                userAdmin.setSelected(false);
-                userEventCoordinator.setSelected(false);
-                userCustomer.setSelected(false);
+            // Clear the text fields
+            tfUserName.clear();
+            tfUserEmail.clear();
+            tfUserPassword.clear();
 
-            } else {
+            // Deselect all MFXRadioButtons
+            userAdmin.setSelected(false);
+            userEventCoordinator.setSelected(false);
+            userCustomer.setSelected(false);
 
-            }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
             // Show error notification
