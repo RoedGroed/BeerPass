@@ -38,8 +38,9 @@ public class UserDAO {
                 String userName = rs.getString("UserName");
                 String email = rs.getString("Email");
                 String role = rs.getString("Role");
+                String password = rs.getString("password");
 
-                User user = new User(userID, userName, null, email, role);
+                User user = new User(userID, userName, password, email, role);
                 allUsers.add(user);
             }
         } catch (SQLException e) {
@@ -76,6 +77,25 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
+
+    public void updateUser (User selectedUser) throws IOException, SQLException {
+        String updateQuery = "UPDATE Users SET Username = ?, Password = ?, Role = ?, Email = ? WHERE UserID = ?";
+        DBConnector dbConnector = new DBConnector();
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+
+            preparedStatement.setString(1, selectedUser.getUsername());
+            preparedStatement.setString(2, selectedUser.getPassword());
+            preparedStatement.setString(3, selectedUser.getRole());
+            preparedStatement.setString(4, selectedUser.getEmail());
+            preparedStatement.setInt(5, selectedUser.getUserID());
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException ex){
+            throw new SQLException("Could not update user", ex);
+        }
+    }
+
 }
 
 

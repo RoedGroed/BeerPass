@@ -1,5 +1,6 @@
 package GUI.Controller.Admin;
 
+import BE.User;
 import GUI.Controller.BaseController;
 import GUI.Model.Model;
 import javafx.collections.FXCollections;
@@ -29,6 +30,7 @@ public class AdminWindowController extends BaseController implements Initializab
     private ListView lvEventCo;
     @FXML
     private ListView lvUsers;
+    private ListView<User> selectedListView;
 
     public AdminWindowController() {
         this.model = model;
@@ -43,6 +45,7 @@ public class AdminWindowController extends BaseController implements Initializab
         lvAdmin.setItems(model.getUsersByRole("Admin"));
         lvEventCo.setItems(model.getUsersByRole("Event Coordinator"));
         lvUsers.setItems(model.getUsersByRole("User"));
+        addListListener();
 
         /*
         lvAdmin.setItems(model.getUsersByRole("Admin").stream()
@@ -56,25 +59,31 @@ public class AdminWindowController extends BaseController implements Initializab
         lvUsers.setItems(model.getUsersByRole("User").stream()
                 .map(user -> user.getUsername() + " - " + user.getEmail())
                 .collect(Collectors.toCollection(FXCollections::observableArrayList)));
-*/
+        */
+
     }
+
+
 
     @FXML
     private void onEditUser(ActionEvent actionEvent) throws IOException {
-        try {
+        User selectedUser = selectedListView.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditUser.fxml"));
             Parent root = loader.load();
 
+            EditUserController editUserController = loader.getController();
+            editUserController.populateFields(selectedUser);
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("BrewPass");
+            stage.setTitle("Edit User");
             stage.show();
+
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             currentStage.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load App.fxml");
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a user to edit.");
             alert.showAndWait();
         }
     }
@@ -97,6 +106,22 @@ public class AdminWindowController extends BaseController implements Initializab
             Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load App.fxml");
             alert.showAndWait();
         }
+    }
+
+    private ListView<User> getSelectedListView(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == lvAdmin) {
+            return lvAdmin;
+        } else if (actionEvent.getSource() == lvEventCo) {
+            return lvEventCo;
+        } else {
+            return lvUsers;
+        }
+    }
+
+    private void addListListener(){
+        lvAdmin.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedListView = lvAdmin);
+        lvEventCo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedListView = lvEventCo);
+        lvUsers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedListView = lvUsers);
     }
 
 

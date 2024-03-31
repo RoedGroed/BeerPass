@@ -1,9 +1,11 @@
 package GUI.Controller.Admin;
 
+import BE.User;
 import GUI.Controller.BaseController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
@@ -15,11 +17,24 @@ public class EditUserController extends BaseController implements Initializable 
     private Rectangle titleRectangle;
     @FXML
     private Rectangle radiobtnRectangle;
+    @FXML
+    private TextField tfUserName;
+    @FXML
+    private TextField tfUserPassword;
+    @FXML
+    private TextField tfUserEmail;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         titleRectangle.getStyleClass().add("my-gradient-rectangle");
         radiobtnRectangle.getStyleClass().add("my-rectangle-style");
+    }
+
+    public void populateFields(User user) {
+        User selectedUser = user;
+        tfUserName.setText(selectedUser.getUsername());
+        tfUserPassword.setText(selectedUser.getPassword());
+        tfUserEmail.setText(selectedUser.getEmail());
     }
 
     @FXML

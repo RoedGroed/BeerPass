@@ -2,7 +2,7 @@ package GUI.Model;
 
 import BE.User;
 import BLL.Manager;
-import DAL.DBConnector;
+
 import DAL.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,4 +42,15 @@ public class Model {
         }
         return filteredUsers;
     }
+
+
+    public void updateUser(User selectedUser) throws SQLException, IOException {
+        manager.updateUser(selectedUser);
+
+    }
+
+    public List<User> getAllUsers() throws SQLException, IOException {
+        return manager.getAllUsers();
+    }
+
 }

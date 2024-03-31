@@ -13,5 +13,10 @@ public class Manager {
     public List<User> getAllUsers() throws SQLException, IOException {
         return userDAO.readAllUsers();
     }
+
+    public void updateUser(User selectedUser) throws SQLException, IOException {
+        userDAO.updateUser(selectedUser);
+    }
+
 }
 
