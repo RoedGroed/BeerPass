@@ -97,7 +97,7 @@
             <StackPane maxHeight="71.0" maxWidth="427.0">
                 <children>
                     <Rectangle fx:id="titleRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" stroke="BLACK" strokeType="INSIDE" width="427.0" StackPane.alignment="TOP_LEFT" />
-                    <Label styleClass="lbl" text="NEW USER" StackPane.alignment="CENTER">
+                    <Label styleClass="lbl" text="EDIT USER" StackPane.alignment="CENTER">
                         <StackPane.margin>
                             <Insets />
                         </StackPane.margin>
@@ -133,17 +133,17 @@
                             <Rectangle fx:id="radiobtnRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="168.0" stroke="BLACK" strokeType="INSIDE" width="427.0" StackPane.alignment="TOP_LEFT" />
                             <VBox minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" StackPane.alignment="CENTER_LEFT">
                                 <children>
-                                    <MFXRadioButton text="Admin">
+                                    <MFXRadioButton fx:id="userAdmin" text="Admin">
                                         <padding>
                                             <Insets left="10.0" top="10.0" />
                                         </padding>
                                     </MFXRadioButton>
-                                    <MFXRadioButton text="Event Coordinator">
+                                    <MFXRadioButton fx:id="userEventCoordinator" text="Event Coordinator">
                                         <padding>
                                             <Insets left="10.0" />
                                         </padding>
                                     </MFXRadioButton>
-                                    <MFXRadioButton text="User">
+                                    <MFXRadioButton fx:id="userCustomer" text="User">
                                         <padding>
                                             <Insets left="10.0" />
                                         </padding>

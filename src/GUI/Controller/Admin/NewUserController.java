@@ -44,11 +44,6 @@ public class NewUserController extends BaseController implements Initializable {
             if(newValue){
                 clearSelectionAndSelect(userAdmin);
             }
-            ToggleGroup roleGroup = new ToggleGroup();
-
-            userAdmin.setToggleGroup(roleGroup);
-            userEventCoordinator.setToggleGroup(roleGroup);
-            userCustomer.setToggleGroup(roleGroup);
         });
 
         userEventCoordinator.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -62,6 +57,11 @@ public class NewUserController extends BaseController implements Initializable {
                 clearSelectionAndSelect(userCustomer);
             }
         });
+        ToggleGroup roleGroup = new ToggleGroup();
+
+        userAdmin.setToggleGroup(roleGroup);
+        userEventCoordinator.setToggleGroup(roleGroup);
+        userCustomer.setToggleGroup(roleGroup);
     }
 
     @FXML
