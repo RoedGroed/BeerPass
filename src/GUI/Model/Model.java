@@ -28,18 +28,18 @@ public class Model {
     }
 
     public ObservableList<User>getUsersByRole(String role){
-            ObservableList<User> filteredUsers = FXCollections.observableArrayList();
-            try {
-                List<User> allUsers = manager.getAllUsers();
-                for (User user : allUsers) {
-                    if (user.getRole().equalsIgnoreCase(role)) {
-                        filteredUsers.add(user);
-                    }
+        ObservableList<User> filteredUsers = FXCollections.observableArrayList();
+        try {
+            List<User> allUsers = manager.getAllUsers();
+            for (User user : allUsers) {
+                String userRole = user.getRole();
+                if (userRole != null && userRole.equalsIgnoreCase(role)) {
+                    filteredUsers.add(user);
                 }
-            } catch (SQLException | IOException e) {
-                e.printStackTrace(); //håndter med alert
             }
-            return filteredUsers;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
         }
-
+        return filteredUsers;
+    }
 }
