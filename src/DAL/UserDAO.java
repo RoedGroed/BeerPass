@@ -3,10 +3,9 @@ package DAL;
 import BE.User;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
@@ -26,6 +25,30 @@ public class UserDAO {
             return false; // Return false if an exception occurred
         }
     }
+
+    public List<User> readAllUsers() throws SQLException, IOException {
+        DBConnector dbConnector = new DBConnector();
+        List<User> allUsers = new ArrayList<>();
+        String sql = "SELECT * FROM dbo.Users;";
+        try (Connection conn = dbConnector.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                int userID = rs.getInt("UserID");
+                String userName = rs.getString("UserName");
+                String email = rs.getString("Email");
+                String role = rs.getString("Role");
+
+                User user = new User(userID, userName, null, email, role);
+                allUsers.add(user);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Could not retrieve users from database", e);
+        }
+        return allUsers;
+    }
+
+
     public boolean deleteUser(int userId) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {

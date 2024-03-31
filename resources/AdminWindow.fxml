@@ -91,13 +91,13 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="anchorPane" BorderPane.alignment="CENTER">
          <children>
-            <ListView layoutX="50.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listViews">
+            <ListView fx:id="lvAdmin" layoutX="50.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listViews">
                <padding>
                   <Insets left="20.0" top="50.0" />
                </padding>
             </ListView>
-            <ListView layoutX="450.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listViews" />
-            <ListView layoutX="850.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listViews" />
+            <ListView fx:id="lvEventCo" layoutX="450.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listViews" />
+            <ListView fx:id="lvUsers" layoutX="850.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listViews" />
             <Label layoutX="50.0" layoutY="92.0" prefHeight="17.0" prefWidth="248.0" styleClass="lblUserRoles" text="Admin" />
             <Label layoutX="450.0" layoutY="92.0" prefHeight="17.0" prefWidth="249.0" styleClass="lblUserRoles" text="Event Coordinator" />
             <Label layoutX="851.0" layoutY="92.0" prefHeight="17.0" prefWidth="248.0" styleClass="lblUserRoles" text="Users" />
