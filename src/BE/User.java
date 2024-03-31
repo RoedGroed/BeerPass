@@ -15,6 +15,9 @@ public class User {
         this.role = role;
     }
 
+    public User(String username, String password, String email) {
+    }
+
     public int getUserID() {
         return userID;
     }
@@ -46,5 +49,9 @@ public class User {
     @Override
     public String toString() {
         return  username + ", " + email ;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

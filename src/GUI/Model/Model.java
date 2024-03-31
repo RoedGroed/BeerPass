@@ -46,7 +46,6 @@ public class Model {
 
     public void updateUser(User selectedUser) throws SQLException, IOException {
         manager.updateUser(selectedUser);
-
     }
 
     public List<User> getAllUsers() throws SQLException, IOException {
