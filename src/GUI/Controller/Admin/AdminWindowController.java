@@ -40,6 +40,11 @@ public class AdminWindowController extends BaseController implements Initializab
     }
 
     private void initListviews() {
+        lvAdmin.setItems(model.getUsersByRole("Admin"));
+        lvEventCo.setItems(model.getUsersByRole("Event Coordinator"));
+        lvUsers.setItems(model.getUsersByRole("User"));
+
+        /*
         lvAdmin.setItems(model.getUsersByRole("Admin").stream()
                 .map(user -> user.getUsername() + " - " + user.getEmail())
                 .collect(Collectors.toCollection(FXCollections::observableArrayList)));
@@ -51,7 +56,7 @@ public class AdminWindowController extends BaseController implements Initializab
         lvUsers.setItems(model.getUsersByRole("User").stream()
                 .map(user -> user.getUsername() + " - " + user.getEmail())
                 .collect(Collectors.toCollection(FXCollections::observableArrayList)));
-
+*/
     }
 
     @FXML

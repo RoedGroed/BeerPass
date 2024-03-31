@@ -37,7 +37,7 @@ public class Model {
                     }
                 }
             } catch (SQLException | IOException e) {
-                e.printStackTrace(); // Handle this more gracefully in a real application
+                e.printStackTrace(); //håndter med alert
             }
             return filteredUsers;
         }

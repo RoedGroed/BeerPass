@@ -42,4 +42,9 @@ public class User {
     public String getRole() {
         return role;
     }
+
+    @Override
+    public String toString() {
+        return  username + ", " + email ;
+    }
 }
