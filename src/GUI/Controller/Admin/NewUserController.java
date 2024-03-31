@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.shape.Rectangle;
 
 import java.awt.event.MouseEvent;
@@ -43,6 +44,11 @@ public class NewUserController extends BaseController implements Initializable {
             if(newValue){
                 clearSelectionAndSelect(userAdmin);
             }
+            ToggleGroup roleGroup = new ToggleGroup();
+
+            userAdmin.setToggleGroup(roleGroup);
+            userEventCoordinator.setToggleGroup(roleGroup);
+            userCustomer.setToggleGroup(roleGroup);
         });
 
         userEventCoordinator.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -77,9 +83,7 @@ public class NewUserController extends BaseController implements Initializable {
         String username = tfUserName.getText();
         String email = tfUserEmail.getText();
         String password = tfUserPassword.getText();
-
-
-        // Hvordan får vi fat i den valgte radiobutton?
+        
 
         String role;
         if (selectedRoleButton == userAdmin) {
