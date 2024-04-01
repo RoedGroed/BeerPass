@@ -1,14 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="GUI.Controller.Event.EditEventController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="CSS/AppWindows.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Event.EditEventController">
+    <left>
+        <VBox id="Sidebar" prefHeight="720.0" prefWidth="131.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label id="lblUsername" fx:id="lblUsername" prefHeight="26.0" prefWidth="108.0" text="&lt;Username&gt;" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="15.0" top="5.0" />
+                    </VBox.margin>
+                </Label>
+                <MFXButton id="btnLogout" fx:id="btnLogout" onAction="#onLogout" prefHeight="78.0" prefWidth="88.0" styleClass="btnPanel" text="">
+                    <VBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                    </VBox.margin>
+                </MFXButton>
+                <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Logout" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="15.0" />
+                    </VBox.margin>
+                </Label>
+                <Separator layoutY="180.0" prefHeight="2.0" prefWidth="131.0">
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="20.0" />
+                    </padding></Separator>
+                <MFXButton id="btnEvent" fx:id="btnEvent" onAction="#onEvent" prefHeight="90.0" prefWidth="100.0" styleClass="btnPanel" text=" ">
+                    <VBox.margin>
+                        <Insets left="15.0" top="10.0" />
+                    </VBox.margin>
+                </MFXButton>
+                <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Event" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="10.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="15.0" />
+                    </padding>
+                </Label>
+                <Separator prefWidth="131.0">
+                    <padding>
+                        <Insets bottom="17.0" top="17.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin></Separator>
+                <MFXButton id="btnAdmin" fx:id="btnAdmin" onAction="#onAdmin" prefHeight="100.0" prefWidth="105.0" styleClass="btnPanel" text="">
+                    <VBox.margin>
+                        <Insets left="15.0" top="10.0" />
+                    </VBox.margin>
+                </MFXButton>
+                <Label fx:id="lblAdmin" prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Admin" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="15.0" />
+                    </VBox.margin>
+                </Label>
+                <Separator prefWidth="200.0">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="12.0" top="10.0" />
+                    </padding></Separator>
+                <MFXButton id="btnTicket" fx:id="btnTickets" onAction="#onTicket" prefHeight="77.0" prefWidth="102.0" styleClass="btnPanel" text=" ">
+                    <VBox.margin>
+                        <Insets left="15.0" top="20.0" />
+                    </VBox.margin>
+                </MFXButton>
+                <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Tickets" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="15.0" />
+                    </VBox.margin>
+                </Label>
+            </children>
+        </VBox>
+    </left>
+    <center>
+        <VBox prefHeight="1218.0" prefWidth="1099.0" BorderPane.alignment="CENTER">
+            <children>
+                <AnchorPane prefHeight="684.0" prefWidth="1099.0">
+                    <children>
+                        <Label id="newEventLabel" layoutX="51.0" layoutY="46.0" prefHeight="71.0" prefWidth="427.0" text="Editing Event" textAlignment="CENTER" />
+                        <Label layoutX="51.0" layoutY="155.0" prefHeight="19.0" prefWidth="107.0" text="Event Image" />
+                        <Label layoutX="51.0" layoutY="215.0" prefHeight="19.0" prefWidth="104.0" text="Event Name" />
+                        <Label layoutX="51.0" layoutY="273.0" prefHeight="19.0" prefWidth="138.0" text="Location" />
+                        <Label layoutX="52.0" layoutY="328.0" prefHeight="19.0" prefWidth="179.0" text="Date" />
+                        <Label layoutX="51.0" layoutY="385.0" prefHeight="19.0" prefWidth="258.0" text="Maximum Number of Attendees" />
+                        <TextField fx:id="tfEventName" layoutX="51.0" layoutY="235.0" prefHeight="27.0" prefWidth="427.0" />
+                        <TextField fx:id="tfEventLocation" layoutX="51.0" layoutY="291.0" prefHeight="27.0" prefWidth="427.0" />
+                        <TextField fx:id="tfEventTime" layoutX="263.0" layoutY="346.0" prefHeight="33.0" prefWidth="215.0" />
+                        <TextField fx:id="tfMaxAttendees" layoutX="51.0" layoutY="405.0" prefHeight="27.0" prefWidth="427.0" />
+                        <ComboBox fx:id="cbEventImages" layoutX="51.0" layoutY="177.0" prefHeight="27.0" prefWidth="427.0" styleClass="combo-box" />
+                        <ImageView fitHeight="210.0" fitWidth="318.0" layoutX="106.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true" />
+                        <TextArea id="text-area" fx:id="taEventNotes" layoutX="586.0" layoutY="151.0" prefHeight="168.0" prefWidth="482.0" />
+                        <Label layoutX="586.0" layoutY="127.0" prefHeight="24.0" prefWidth="139.0" text="Event Notes" />
+                        <MFXButton fx:id="btnRemove" layoutX="616.0" layoutY="583.0" onAction="#onCancel" prefHeight="30.0" prefWidth="168.0" styleClass="btn" text="Remove Coordinator" />
+                        <MFXButton fx:id="btnAdd" layoutX="882.0" layoutY="583.0" onAction="#onCancel" prefHeight="30.0" prefWidth="149.0" styleClass="btn" text="Add Coordinator" />
+                        <ListView fx:id="lvCoordinators" layoutX="586.0" layoutY="373.0" prefHeight="206.0" prefWidth="227.0" styleClass="list-view" />
+                        <ListView fx:id="lvAllCoordinators" layoutX="843.0" layoutY="373.0" prefHeight="206.0" prefWidth="227.0" styleClass="list-view" />
+                        <Label layoutX="616.0" layoutY="345.0" prefHeight="30.0" prefWidth="150.0" text="Event Coordinators" />
+                        <Label layoutX="870.0" layoutY="345.0" prefHeight="30.0" prefWidth="174.0" text="Available Coordinators" />
+                        <DatePicker fx:id="dpEventDate" layoutX="52.0" layoutY="347.0" prefHeight="7.0" prefWidth="179.0" styleClass="date-picker" />
+                        <Label layoutX="263.0" layoutY="328.0" prefHeight="19.0" prefWidth="179.0" text="Time" />
+                    </children>
+                </AnchorPane>
+                <HBox alignment="BOTTOM_RIGHT" prefHeight="30.0" prefWidth="1073.0" spacing="20.0">
+                    <children>
+                  <MFXButton fx:id="btnDelete" onAction="#onDelete" prefHeight="30.0" prefWidth="110.0" styleClass="btn" text="DELETE" />
+                        <MFXButton fx:id="btnCancel" onAction="#onCancel" prefHeight="30.0" prefWidth="110.0" styleClass="btn" text="CANCEL" />
+                        <MFXButton fx:id="btnConfirm" onAction="#onConfirmEvent" prefHeight="30.0" prefWidth="110.0" styleClass="btnConfirm" text="CONFIRM">
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </MFXButton>
+                    </children>
+                </HBox>
+            </children>
+            <BorderPane.margin>
+                <Insets left="50.0" />
+            </BorderPane.margin>
+        </VBox>
+    </center>
+</BorderPane>

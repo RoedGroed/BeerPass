@@ -12,7 +12,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <MFXButton id="btnNewEvent" layoutX="991.0" layoutY="649.0" prefHeight="31.0" prefWidth="111.0" text="New Event" />
+            <MFXButton id="btnNewEvent" fx:id="btnNewEvent" layoutX="991.0" layoutY="649.0" onAction="#onNewEvent" prefHeight="31.0" prefWidth="111.0" text="New Event" />
          </children></AnchorPane>
    </center>
    <left>
@@ -23,7 +23,7 @@
                   <Insets left="15.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <MFXButton id="btnLogout" fx:id="btnLogout" onAction="#onLogout" prefHeight="78.0" prefWidth="88.0" styleClass="btn" text="">
+            <MFXButton id="btnLogout" fx:id="btnLogout" onAction="#onLogout" prefHeight="78.0" prefWidth="88.0" styleClass="btn" text=" ">
                <VBox.margin>
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>

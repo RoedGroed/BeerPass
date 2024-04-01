@@ -67,6 +67,7 @@
     -fx-font-size: 14;
 }
 
+
 .my-rectangle-style {
     -fx-fill: rgba(0, 0, 0, 0.45);
     -fx-stroke: rgba(255, 255, 255, 0.5);
@@ -97,3 +98,75 @@
 #btnAdmin {-fx-background-image: url(/Images/AdminIcon.png);}
 
 #btnTicket{-fx-background-image: url(/Images/TicketIcon.png);}
+
+
+.date-picker {
+    -fx-background-color: rgba(0, 0, 0, 0.45);
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-style: solid;
+    -fx-border-radius: 7px;
+    -fx-text-fill: white;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 12px;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: rgba(95, 18, 18, 0.5);
+    -fx-background-radius: 0;
+}
+
+.date-picker-popup .day-cell {
+    -fx-background-color: rgba(95, 18, 18, 0.5);
+    -fx-text-fill: white;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 14px;
+}
+
+.date-picker-popup .today {
+    -fx-background-color: rgba(57, 142, 60, 0.5);
+}
+
+.date-picker-popup .highlighted-date {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-text-fill: black;
+}
+
+.date-picker .date-cell {
+    -fx-text-fill: white; /* Text color for day */
+}
+
+.date-picker .month-year-pane .label {
+    -fx-text-fill: black; /* Text color for month and year */
+}
+
+.combo-box {
+    -fx-background-color: rgba(0, 0, 0, 0.45);
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-style: solid;
+    -fx-border-radius: 7px;
+    -fx-text-fill: white;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 12px;
+}
+
+.combo-box .list-view .list-cell {
+    -fx-background-color: rgba(0, 0, 0, 0.45);
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-style: solid;
+    -fx-border-radius: 7px;
+    -fx-text-fill: white;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: rgba(0, 0, 0, 0.45);
+    -fx-background-radius: 7px;
+    -fx-background-insets: 0;
+}
+
+#newEventLabel {
+    -fx-background-color: linear-gradient(to bottom right, rgb(95, 18, 18) 0%, rgb(75, 84, 168) 100%);
+    -fx-font-size: 32px;
+    -fx-text-fill: white;
+    -fx-background-radius: 7px;
+    -fx-alignment: center;
+}
