@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
@@ -22,7 +23,6 @@ import java.util.stream.Collectors;
 
 public class AdminWindowController extends BaseController implements Initializable {
 
-    private Model model = new Model();
 
     @FXML
     private ListView lvAdmin;
@@ -30,6 +30,8 @@ public class AdminWindowController extends BaseController implements Initializab
     private ListView lvEventCo;
     @FXML
     private ListView lvUsers;
+    @FXML
+    private Button btnAdmin;
     private ListView<User> selectedListView;
 
     public AdminWindowController() {
@@ -74,6 +76,8 @@ public class AdminWindowController extends BaseController implements Initializab
 
             EditUserController editUserController = loader.getController();
             editUserController.populateFields(selectedUser);
+            BaseController controller = loader.getController();
+            controller.setModel(model);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -93,6 +97,9 @@ public class AdminWindowController extends BaseController implements Initializab
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewUser.fxml"));
             Parent root = loader.load();
+
+            BaseController controller = loader.getController();
+            controller.setModel(model);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

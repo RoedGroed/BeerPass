@@ -57,12 +57,12 @@
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </Separator>
-            <MFXButton fx:id="adminBtn" onAction="#onAdmin" prefHeight="100.0" prefWidth="105.0" styleClass="btnAdmin" text="">
+            <MFXButton fx:id="btnAdmin" onAction="#onAdmin" prefHeight="100.0" prefWidth="105.0" styleClass="btnAdmin" text="">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </MFXButton>
-            <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Admin">
+            <Label fx:id="lblAdmin" prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Admin">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserDAO {
 
-    public boolean isValidUser(String username, String password) throws SQLException, IOException {
+    /*public boolean isValidUser(String username, String password) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
             String query = "SELECT * FROM Users WHERE UserName = ? AND Password = ?";
@@ -24,6 +24,30 @@ public class UserDAO {
             e.printStackTrace();
             return false; // Return false if an exception occurred
         }
+    }*/
+
+    public User getUserByNameAndPassword(String username, String password) throws SQLException, IOException {
+        DBConnector dbConnector = new DBConnector();
+        try (Connection conn = dbConnector.getConnection()) {
+            String query = "SELECT UserID, UserName, Password, Email, Role FROM Users WHERE UserName = ? AND Password = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, username);
+                stmt.setString(2, password); // Consider hashing in real applications
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return new User(
+                                rs.getInt("UserID"),
+                                rs.getString("UserName"),
+                                rs.getString("Password"),
+                                rs.getString("Email"),
+                                rs.getString("Role")
+                        );
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public List<User> readAllUsers() throws SQLException, IOException {
@@ -95,6 +119,7 @@ public class UserDAO {
             throw new SQLException("Could not update user", ex);
         }
     }
+
 
 }
 

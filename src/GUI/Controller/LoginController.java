@@ -41,10 +41,37 @@ public class LoginController {
     }
 
     @FXML
-    private void onLogin(ActionEvent actionEvent) throws SQLException, IOException {
+    private void onLogin(ActionEvent actionEvent) {
         String username = txtUser.getText();
         String password = txtPass.getText();
-        if(model.isValidUser(username, password)) {
+
+        try {
+            User user = model.validateUser(username, password);
+            if (user != null){
+                Stage stage = (Stage) txtUser.getScene().getWindow();
+                stage.close();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/EventWindow.fxml"));
+                Parent root = loader.load();
+
+                BaseController controller = loader.getController();
+                controller.setModel(model);
+
+                Stage secStage = new Stage();
+                secStage.setTitle("BrewPass");
+                secStage.setScene(new Scene(root));
+                secStage.show();
+            }else {
+                System.out.println("Invalid username or password");
+            }
+        } catch (IOException e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        /*if(model.isValidUser(username, password)) {
             Stage stage = (Stage) txtUser.getScene().getWindow();
             stage.close();
             try {
@@ -64,7 +91,7 @@ public class LoginController {
         }
         else {
             System.out.println("Invalid username or password");
-        }
+        }*/
     }
 
 }
