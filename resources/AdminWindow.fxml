@@ -21,7 +21,7 @@
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </Label>
-            <MFXButton fx:id="logoutBtn" onAction="#onLogout" prefHeight="80.0" prefWidth="100.0" styleClass="btnLogout" text="">
+            <MFXButton fx:id="btnLogout" onAction="#onLogout" prefHeight="80.0" prefWidth="100.0" styleClass="btnLogout" text="">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
@@ -39,7 +39,7 @@
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </Separator>
-            <MFXButton fx:id="eventBtn" onAction="#onEvent" prefHeight="90.0" prefWidth="100.0" styleClass="btnEvent" text=" ">
+            <MFXButton fx:id="btnEvent" onAction="#onEvent" prefHeight="90.0" prefWidth="100.0" styleClass="btnEvent" text=" ">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
@@ -75,7 +75,7 @@
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </Separator>
-            <MFXButton fx:id="ticketBtn" onAction="#onTicket" prefHeight="100.0" prefWidth="105.0" styleClass="btnTickets" text=" ">
+            <MFXButton fx:id="btnTickets" onAction="#onTicket" prefHeight="100.0" prefWidth="105.0" styleClass="btnTickets" text=" ">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
