@@ -11,9 +11,9 @@
 <BorderPane id="BorderPane" prefHeight="320.0" prefWidth="730.0" stylesheets="CSS/Login.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.LoginController">
    <center>
            <AnchorPane>
-              <TextField fx:id="txtUser" layoutX="88.0" layoutY="85.0" prefHeight="30.0" prefWidth="280.0" />
+              <TextField fx:id="txtEmail" layoutX="88.0" layoutY="85.0" prefHeight="30.0" prefWidth="280.0" />
               <TextField fx:id="txtPass" layoutX="88.0" layoutY="183.0" prefHeight="30.0" prefWidth="280.0" />
-              <Label fx:id="lblUser" layoutX="89.0" layoutY="37.0" prefHeight="39.0" prefWidth="155.0" styleClass="lbl" text="Username" />
+              <Label fx:id="lblEmail" layoutX="89.0" layoutY="37.0" prefHeight="39.0" prefWidth="155.0" styleClass="lbl" text="E-mail" />
               <Label fx:id="lblPass" layoutX="88.0" layoutY="132.0" prefHeight="39.0" prefWidth="148.0" styleClass="lbl" text="Password" />
               <MFXButton id="btnForgot" fx:id="btnForgot" layoutX="89.0" layoutY="213.0" prefHeight="25.0" prefWidth="115.0" text="Forgot Password?" />
               <ImageView id="imgEA" fitHeight="170.0" fitWidth="233.0" layoutX="443.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">

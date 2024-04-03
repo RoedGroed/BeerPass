@@ -6,10 +6,16 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -66,6 +72,25 @@ public class NewUserController extends BaseController implements Initializable {
 
     @FXML
     private void onCancel(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        currentStage.close();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminWindow.fxml"));
+            Parent root = loader.load();
+
+            BaseController controller = loader.getController();
+            controller.setModel(model);
+
+            Stage adminStage = new Stage();
+            adminStage.setScene(new Scene(root));
+            adminStage.setTitle("Admin Window");
+            adminStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load AdminWindow.fxml");
+            alert.showAndWait();
+        }
     }
 
     private void clearSelectionAndSelect(MFXRadioButton selectedRadioButton) {

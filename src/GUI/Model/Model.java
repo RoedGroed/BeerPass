@@ -54,8 +54,8 @@ public class Model {
 
 
 
-    public User validateUser(String username, String password) throws SQLException, IOException {
-        currentUser = manager.validateUser(username, password);
+    public User validateUser(String email, String password) throws SQLException, IOException {
+        currentUser = manager.validateUser(email, password);
         return currentUser;
     }
 

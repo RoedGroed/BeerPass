@@ -1,6 +1,7 @@
 package DAL;
 
 import BE.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.sql.*;
@@ -26,13 +27,36 @@ public class UserDAO {
         }
     }*/
 
-    public User getUserByNameAndPassword(String username, String password) throws SQLException, IOException {
+    /*public User getUserByNameAndPassword(String username, String password) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
             String query = "SELECT UserID, UserName, Password, Email, Role FROM Users WHERE UserName = ? AND Password = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, username);
-                stmt.setString(2, password); // Consider hashing in real applications
+                stmt.setString(2, password);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return new User(
+                                rs.getInt("UserID"),
+                                rs.getString("UserName"),
+                                rs.getString("Password"),
+                                rs.getString("Email"),
+                                rs.getString("Role")
+                        );
+                    }
+                }
+            }
+        }
+        return null;
+    }*/
+
+    public User getUserByEmail(String email) throws SQLException, IOException {
+        DBConnector dbConnector = new DBConnector();
+        try (Connection conn = dbConnector.getConnection()) {
+            String query = "SELECT UserID, UserName, Password, Email, Role FROM Users WHERE Email = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, email);
 
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
@@ -89,10 +113,12 @@ public class UserDAO {
     public void createNewUser(String username, String password, String role, String email) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(10));
             String query = "INSERT INTO Users (Username, Password, Role, Email) VALUES (?, ?, ?, ?)";
             try (PreparedStatement statement = conn.prepareStatement(query)) {
                 statement.setString(1, username);
-                statement.setString(2, password);
+                //statement.setString(2, password);
+                statement.setString(2, hashedPassword);
                 statement.setString(3, role);
                 statement.setString(4, email);
                 statement.executeUpdate();
@@ -109,8 +135,10 @@ public class UserDAO {
         try (Connection connection = dbConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
 
+            String hashedPassword = BCrypt.hashpw(selectedUser.getPassword(), BCrypt.gensalt(10));
+
             preparedStatement.setString(1, selectedUser.getUsername());
-            preparedStatement.setString(2, selectedUser.getPassword());
+            preparedStatement.setString(2, hashedPassword);
             preparedStatement.setString(3, selectedUser.getRole());
             preparedStatement.setString(4, selectedUser.getEmail());
             preparedStatement.setInt(5, selectedUser.getUserID());
@@ -119,6 +147,7 @@ public class UserDAO {
             throw new SQLException("Could not update user", ex);
         }
     }
+
 
 
 }

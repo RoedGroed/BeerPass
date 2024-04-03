@@ -24,14 +24,12 @@ public class LoginController {
     @FXML
     private Label lblPass;
 
-    @FXML
-    private Label lblUser;
 
     @FXML
     private TextField txtPass;
 
     @FXML
-    private TextField txtUser;
+    private TextField txtEmail;
     @FXML
     private MFXButton btnLogin;
     private Model model;
@@ -42,13 +40,13 @@ public class LoginController {
 
     @FXML
     private void onLogin(ActionEvent actionEvent) {
-        String username = txtUser.getText();
+        String email = txtEmail.getText();
         String password = txtPass.getText();
 
         try {
-            User user = model.validateUser(username, password);
+            User user = model.validateUser(email, password);
             if (user != null){
-                Stage stage = (Stage) txtUser.getScene().getWindow();
+                Stage stage = (Stage) txtEmail.getScene().getWindow();
                 stage.close();
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/EventWindow.fxml"));
@@ -62,7 +60,7 @@ public class LoginController {
                 secStage.setScene(new Scene(root));
                 secStage.show();
             }else {
-                System.out.println("Invalid username or password");
+                System.out.println("Wrong email or password.");
             }
         } catch (IOException e) {
             System.out.println(e);
@@ -70,28 +68,6 @@ public class LoginController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        /*if(model.isValidUser(username, password)) {
-            Stage stage = (Stage) txtUser.getScene().getWindow();
-            stage.close();
-            try {
-
-                //Loading the new stage
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/EventWindow.fxml"));
-                Parent root = loader.load();
-                //stage stuff
-                Stage secStage = new Stage();
-                secStage.setTitle("BrewPass");
-                secStage.setScene(new Scene(root));
-                secStage.show();
-            } catch (IOException e) {
-                System.out.println(e);
-                throw new RuntimeException(e);
-            }
-        }
-        else {
-            System.out.println("Invalid username or password");
-        }*/
     }
 
 }

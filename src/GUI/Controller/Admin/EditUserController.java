@@ -34,7 +34,7 @@ public class EditUserController extends BaseController implements Initializable 
     private TextField tfUserPassword;
     @FXML
     private TextField tfUserEmail;
-    private Model model;
+    //private Model model;
     private User user;
     @FXML
     private MFXRadioButton userAdmin;
@@ -77,7 +77,7 @@ public class EditUserController extends BaseController implements Initializable 
     public void populateFields(User user) {
         this.user = user;
         tfUserName.setText(user.getUsername());
-        tfUserPassword.setText(user.getPassword());
+        //tfUserPassword.setText(user.getPassword());
         tfUserEmail.setText(user.getEmail());
         if (user.getRole().equals("Admin")) {
             userAdmin.setSelected(true);
@@ -113,6 +113,9 @@ public class EditUserController extends BaseController implements Initializable 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminWindow.fxml"));
             Parent root = loader.load();
 
+            BaseController controller = loader.getController();
+            controller.setModel(model);
+
             Stage adminStage = new Stage();
             adminStage.setScene(new Scene(root));
             adminStage.setTitle("Admin Window");
@@ -146,6 +149,9 @@ public class EditUserController extends BaseController implements Initializable 
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminWindow.fxml"));
                 Parent root = loader.load();
+
+                BaseController controller = loader.getController();
+                controller.setModel(model);
 
                 Stage adminStage = new Stage();
                 adminStage.setScene(new Scene(root));
