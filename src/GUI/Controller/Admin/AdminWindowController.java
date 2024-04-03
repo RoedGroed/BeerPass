@@ -66,10 +66,24 @@ public class AdminWindowController extends BaseController implements Initializab
     }
 
 
-
+    /**
+     *
+     * @param actionEvent
+     * @throws IOException
+     * Checks if a user or a listview != null.
+     * Passes the information from the user-object into the corresponding fields.
+     */
     @FXML
     private void onEditUser(ActionEvent actionEvent) throws IOException {
+
+        if (selectedListView == null || !selectedListView.isFocused()){
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a user to edit.");
+            alert.showAndWait();
+            return;
+        }
+
         User selectedUser = selectedListView.getSelectionModel().getSelectedItem();
+
         if (selectedUser != null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditUser.fxml"));
             Parent root = loader.load();
@@ -115,7 +129,7 @@ public class AdminWindowController extends BaseController implements Initializab
         }
     }
 
-    private ListView<User> getSelectedListView(ActionEvent actionEvent) {
+/*    private ListView<User> getSelectedListView(ActionEvent actionEvent) {
         if (actionEvent.getSource() == lvAdmin) {
             return lvAdmin;
         } else if (actionEvent.getSource() == lvEventCo) {
@@ -123,7 +137,7 @@ public class AdminWindowController extends BaseController implements Initializab
         } else {
             return lvUsers;
         }
-    }
+    }*/
 
     private void addListListener(){
         lvAdmin.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedListView = lvAdmin);

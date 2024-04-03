@@ -159,7 +159,10 @@ public class BaseController implements Initializable {
 
             currentStage.close();
 
+            String appTitle = fxmlPath.substring(fxmlPath.lastIndexOf("/") + 1, fxmlPath.lastIndexOf("."));
+
             Stage stage = new Stage();
+            stage.setTitle("BrewPass - " + appTitle);
             stage.setScene(new Scene(root));
             stage.show();
 

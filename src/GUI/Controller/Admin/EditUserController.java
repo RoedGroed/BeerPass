@@ -4,13 +4,10 @@ import BE.User;
 import GUI.Controller.BaseController;
 import GUI.Model.Model;
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -34,7 +31,6 @@ public class EditUserController extends BaseController implements Initializable 
     private TextField tfUserPassword;
     @FXML
     private TextField tfUserEmail;
-    //private Model model;
     private User user;
     @FXML
     private MFXRadioButton userAdmin;
@@ -105,58 +101,33 @@ public class EditUserController extends BaseController implements Initializable 
 
     @FXML
     private void onCancel(ActionEvent actionEvent) {
-
-        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        currentStage.close();
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminWindow.fxml"));
-            Parent root = loader.load();
-
-            BaseController controller = loader.getController();
-            controller.setModel(model);
-
-            Stage adminStage = new Stage();
-            adminStage.setScene(new Scene(root));
-            adminStage.setTitle("Admin Window");
-            adminStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load AdminWindow.fxml");
-            alert.showAndWait();
-        }
+        loadFXML("/AdminWindow.FXML",model, (Stage) tfUserName.getScene().getWindow());
     }
 
     @FXML
     private void onConfirm(ActionEvent actionEvent) {
         try {
             if (user != null) {
+
                 String username = tfUserName.getText();
                 String password = tfUserPassword.getText();
                 String email = tfUserEmail.getText();
                 String role = getSelectedRole();
 
                 user.setUsername(username);
-                user.setPassword(password);
                 user.setEmail(email);
                 user.setRole(role);
+
+                // Checks if the password has been changed.
+                if (!password.isEmpty()) {
+                    user.setPassword(password);
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are changing the password.\rAre you sure you want to do this?");
+                    alert.showAndWait();
+                }
+                // Updates the user object with changed variables.
                 model.updateUser(user);
 
-                // Handle FXML Navigation
-
-                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                currentStage.close();
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminWindow.fxml"));
-                Parent root = loader.load();
-
-                BaseController controller = loader.getController();
-                controller.setModel(model);
-
-                Stage adminStage = new Stage();
-                adminStage.setScene(new Scene(root));
-                adminStage.setTitle("Admin Window");
-                adminStage.show();
+                loadFXML("/AdminWindow.FXML",model,(Stage) tfUserEmail.getScene().getWindow());
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();

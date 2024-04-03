@@ -46,4 +46,18 @@ public class NewEventController extends BaseController implements Initializable 
         loadFXML("/EventWindow.FXML",model, (Stage) tfEventName.getScene().getWindow());
     }
 
+
+    /* TODO: When user gets a date, populate the time textfield with local time, so they can see the format.
+            Lav en form for verification for time, så det altid er i korrekt format (Se MyTunes)
+            -
+            Populate(Metode) Combobox med billeder, hvor billedet så giver den rigtige imagepath.
+            Skal man kunne add nye billeder igennem GUI'en?
+            Gør så combobox bliver updated hvis der bliver added nye billeder i EventImage Mappen?
+            ComboBox image picked -> Load Image i ImageViewer.
+            -
+            Format DatePicker data om til String(hvis den ikke allerede er det) og format den til ikke Amerikansk.
+
+     */
+
+
 }
