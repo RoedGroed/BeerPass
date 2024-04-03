@@ -1,5 +1,6 @@
 package GUI.Controller.Admin;
 
+import BLL.Manager;
 import DAL.UserDAO;
 import GUI.Controller.BaseController;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -41,11 +42,13 @@ public class NewUserController extends BaseController implements Initializable {
     private MFXRadioButton userEventCoordinator;
     @FXML
     private MFXRadioButton userCustomer;
+    private ToggleGroup roleGroup;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         titleRectangle.getStyleClass().add("my-gradient-rectangle");
         radiobtnRectangle.getStyleClass().add("my-rectangle-style");
-        // Add these listeners:
+
         userAdmin.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue){
                 clearSelectionAndSelect(userAdmin);
@@ -103,36 +106,52 @@ public class NewUserController extends BaseController implements Initializable {
 
     private MFXRadioButton selectedRoleButton; // Keep track of the currently selected button
 
+    private Manager manager;
+
+    public NewUserController() {
+        this.manager = new Manager();
+    }
+
     @FXML
     private void onConfirmUser(ActionEvent event) {
         String username = tfUserName.getText();
         String email = tfUserEmail.getText();
         String password = tfUserPassword.getText();
-
-        String role;
-        if (selectedRoleButton == userAdmin) {
+        String role = null;
+        if (userEventCoordinator.isSelected()) {
+            role = "Event Coordinator";
+        } else if (userAdmin.isSelected()) {
             role = "Admin";
-        } else if (selectedRoleButton == userEventCoordinator) {
-            role = "Event coordinator";
-        } else if (selectedRoleButton == userCustomer) {
-            role = "User";
-        } else {
-            role = null; // handle the case where no button is selected, if needed
+        } else if (userCustomer.isSelected()) {
+            role = "Customer";
+        }
+
+        if (role == null) {
+            // No radio button was selected, handle this case appropriately
+            System.err.println("Please select a role.");
+            return;
         }
 
         try {
-            UserDAO userDAO = new UserDAO();
-            userDAO.createNewUser(username, password, role, email);
+            manager.createNewUser(username, password, role, email);
 
-            // Clear the text fields
-            tfUserName.clear();
-            tfUserEmail.clear();
-            tfUserPassword.clear();
 
-            // Deselect all MFXRadioButtons
-            userAdmin.setSelected(false);
-            userEventCoordinator.setSelected(false);
-            userCustomer.setSelected(false);
+
+            // Close current stage
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+
+            // And open AdminWindow
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminWindow.fxml"));
+            Parent root = loader.load();
+
+            BaseController controller = loader.getController();
+            controller.setModel(model);
+
+            Stage adminStage = new Stage();
+            adminStage.setScene(new Scene(root));
+            adminStage.setTitle("Admin Window");
+            adminStage.show();
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();

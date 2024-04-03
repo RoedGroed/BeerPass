@@ -2,6 +2,7 @@ package BLL;
 
 import BE.User;
 import DAL.UserDAO;
+import GUI.Model.Model;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
@@ -29,6 +30,15 @@ public class Manager {
             return user;
         }
         return null;
+    }
+
+        public Manager() {
+            this.userDAO = new UserDAO();
+        }
+
+    public void createNewUser(String username, String password, String role, String email) throws SQLException, IOException {
+        Model model = new Model(username, email, password, role);
+        userDAO.createNewUser(model);
     }
 }
 
