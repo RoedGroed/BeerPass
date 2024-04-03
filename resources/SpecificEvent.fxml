@@ -1,14 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="GUI.Controller.Event.SpecificEventController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="CSS/AppWindows.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Event.SpecificEventController">
+    <left>
+        <VBox id="Sidebar" prefHeight="720.0" prefWidth="131.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label id="lblUsername" fx:id="lblUsername" prefHeight="26.0" prefWidth="108.0" text="&lt;Username&gt;" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="15.0" top="5.0" />
+                    </VBox.margin>
+                </Label>
+                <MFXButton id="btnLogout" fx:id="btnLogout" onAction="#onLogout" prefHeight="78.0" prefWidth="88.0" styleClass="btnPanel" text="">
+                    <VBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                    </VBox.margin>
+                </MFXButton>
+                <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Logout" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="15.0" />
+                    </VBox.margin>
+                </Label>
+                <Separator layoutY="180.0" prefHeight="2.0" prefWidth="131.0">
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="20.0" />
+                    </padding></Separator>
+                <MFXButton id="btnEvent" fx:id="btnEvent" onAction="#onEvent" prefHeight="90.0" prefWidth="100.0" styleClass="btnPanel" text=" ">
+                    <VBox.margin>
+                        <Insets left="15.0" top="10.0" />
+                    </VBox.margin>
+                </MFXButton>
+                <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Event" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="10.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="15.0" />
+                    </padding>
+                </Label>
+                <Separator prefWidth="131.0">
+                    <padding>
+                        <Insets bottom="17.0" top="17.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin></Separator>
+                <MFXButton id="btnAdmin" fx:id="btnAdmin" onAction="#onAdmin" prefHeight="100.0" prefWidth="105.0" styleClass="btnPanel" text="">
+                    <VBox.margin>
+                        <Insets left="15.0" top="10.0" />
+                    </VBox.margin>
+                </MFXButton>
+                <Label fx:id="lblAdmin" prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Admin" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="15.0" />
+                    </VBox.margin>
+                </Label>
+                <Separator prefWidth="200.0">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="12.0" top="10.0" />
+                    </padding></Separator>
+                <MFXButton id="btnTicket" fx:id="btnTickets" onAction="#onTicket" prefHeight="77.0" prefWidth="102.0" styleClass="btnPanel" text=" ">
+                    <VBox.margin>
+                        <Insets left="15.0" top="20.0" />
+                    </VBox.margin>
+                </MFXButton>
+                <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Tickets" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="15.0" />
+                    </VBox.margin>
+                </Label>
+            </children>
+        </VBox>
+    </left>
+    <center>
+        <VBox prefHeight="1218.0" prefWidth="1099.0" BorderPane.alignment="CENTER">
+            <children>
+                <AnchorPane prefHeight="717.0" prefWidth="1099.0">
+                    <children>
+                        <Label layoutX="51.0" layoutY="46.0" prefHeight="71.0" prefWidth="427.0" styleClass="bigLabel" text="Event Name" textAlignment="CENTER" />
+                        <TextField fx:id="tfSearch" layoutX="52.0" layoutY="209.0" prefHeight="27.0" prefWidth="225.0" promptText="Search" />
+                        <ImageView fitHeight="210.0" fitWidth="318.0" layoutX="106.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true" />
+                        <TextArea id="TextArea" fx:id="taEventNotes" layoutX="591.0" layoutY="210.0" prefHeight="168.0" prefWidth="482.0" promptText="Write notes for the event here." styleClass="TextArea" />
+                        <Label layoutX="591.0" layoutY="186.0" prefHeight="24.0" prefWidth="139.0" text="Event Notes" />
+                        <ListView fx:id="lvAllUsers" layoutX="51.0" layoutY="252.0" prefHeight="373.0" prefWidth="227.0" styleClass="listView" />
+                        <ListView layoutX="327.0" layoutY="209.0" prefHeight="92.0" prefWidth="221.0" styleClass="listView" />
+                        <Label layoutX="349.0" layoutY="179.0" prefHeight="30.0" prefWidth="150.0" text="Ticket Types" />
+                        <Label layoutX="53.0" layoutY="179.0" prefHeight="30.0" prefWidth="174.0" text="Select User" />
+                        <MFXButton fx:id="btnPrintTicket" layoutX="962.0" layoutY="653.0" onAction="#onPrintTicket" prefHeight="30.0" prefWidth="110.0" styleClass="btnConfirm" text="Print Ticket" />
+                        <MFXButton fx:id="btnEditEvent" layoutX="51.0" layoutY="653.0" onAction="#onEditEvent" prefHeight="30.0" prefWidth="110.0" styleClass="btn" text="Edit Event" />
+                  <MFXButton fx:id="btnDeleteEvent" layoutX="323.0" layoutY="653.0" onAction="#onDeleteEvent" prefHeight="30.0" prefWidth="110.0" styleClass="btn" text="Delete Event" />
+                  <ImageView fx:id="imgTicketPreview" fitHeight="150.0" fitWidth="422.0" layoutX="595.0" layoutY="421.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label layoutX="758.0" layoutY="391.0" prefHeight="30.0" prefWidth="150.0" text="Ticket Preview" />
+                  <Label layoutX="363.0" layoutY="278.0" prefHeight="130.0" prefWidth="132.0" text="En tager en stilling til hvordan tickets skal sættes op :)" wrapText="true" />
+                  <Label id="infoLabel" fx:id="lblInfo" layoutX="52.0" layoutY="123.0" prefHeight="32.0" prefWidth="427.0" styleClass="bigLabel" text="Time Date Location" />
+                  <Label id="ticketLabel" fx:id="lblTicketCounter" layoutX="918.0" layoutY="62.0" prefHeight="32.0" prefWidth="135.0" text="135 / 250" textAlignment="CENTER" />
+                  <Label id="ticketLabel" layoutX="918.0" layoutY="46.0" prefHeight="19.0" prefWidth="138.0" styleClass="bigLabel" text="Tickets Sold" />
+                  <MFXButton fx:id="btnMailTicket" layoutX="832.0" layoutY="653.0" onAction="#onMailTicket" prefHeight="30.0" prefWidth="110.0" styleClass="btnConfirm" text="Mail Ticket" />
+                    </children>
+                </AnchorPane>
+            </children>
+            <BorderPane.margin>
+                <Insets left="50.0" />
+            </BorderPane.margin>
+        </VBox>
+    </center>
+</BorderPane>

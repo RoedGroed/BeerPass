@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,12 +36,14 @@ public class NewEventController extends BaseController implements Initializable 
     }
     @FXML
     private void onCancel(ActionEvent actionEvent) {
-        // Add your cancel logic here
+        loadFXML("/EventWindow.FXML",model, (Stage) tfEventName.getScene().getWindow());
     }
 
     @FXML
     private void onConfirmUser(ActionEvent actionEvent) {
-        // Add your confirm user logic here
+        // Show and Wait
+        // Update the database and lists(Obserable Lists)
+        loadFXML("/EventWindow.FXML",model, (Stage) tfEventName.getScene().getWindow());
     }
 
 }

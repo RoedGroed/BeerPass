@@ -96,7 +96,7 @@
             <children>
             <AnchorPane prefHeight="684.0" prefWidth="1099.0">
                <children>
-                  <Label id="newEventLabel" layoutX="51.0" layoutY="46.0" prefHeight="71.0" prefWidth="427.0" text="New Event" textAlignment="CENTER" />
+                  <Label styleClass="bigLabel" layoutX="51.0" layoutY="46.0" prefHeight="71.0" prefWidth="427.0" text="New Event" textAlignment="CENTER" />
                   <Label layoutX="51.0" layoutY="155.0" prefHeight="19.0" prefWidth="107.0" text="Event Image" />
                   <Label layoutX="51.0" layoutY="215.0" prefHeight="19.0" prefWidth="104.0" text="Event Name" />
                   <Label layoutX="51.0" layoutY="273.0" prefHeight="19.0" prefWidth="138.0" text="Location" />
@@ -112,8 +112,8 @@
                   <Label layoutX="586.0" layoutY="127.0" prefHeight="24.0" prefWidth="139.0" text="Event Notes" />
                   <MFXButton fx:id="btnRemove" layoutX="616.0" layoutY="583.0" onAction="#onCancel" prefHeight="30.0" prefWidth="168.0" styleClass="btn" text="Remove Coordinator" />
                   <MFXButton fx:id="btnAdd" layoutX="882.0" layoutY="583.0" onAction="#onCancel" prefHeight="30.0" prefWidth="149.0" styleClass="btn" text="Add Coordinator" />
-                  <ListView styleClass="list-view" fx:id="lvCoordinators" layoutX="586.0" layoutY="373.0" prefHeight="206.0" prefWidth="227.0" />
-                  <ListView styleClass="list-view" fx:id="lvAllCoordinators" layoutX="843.0" layoutY="373.0" prefHeight="206.0" prefWidth="227.0" />
+                  <ListView styleClass="listView" fx:id="lvCoordinators" layoutX="586.0" layoutY="373.0" prefHeight="206.0" prefWidth="227.0" />
+                  <ListView styleClass="listView" fx:id="lvAllCoordinators" layoutX="843.0" layoutY="373.0" prefHeight="206.0" prefWidth="227.0" />
                   <Label layoutX="616.0" layoutY="345.0" prefHeight="30.0" prefWidth="150.0" text="Event Coordinators" />
                   <Label layoutX="870.0" layoutY="345.0" prefHeight="30.0" prefWidth="174.0" text="Available Coordinators" />
                   <DatePicker fx:id="dpEventDate" layoutX="52.0" layoutY="347.0" prefHeight="7.0" prefWidth="179.0" styleClass="date-picker" />

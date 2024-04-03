@@ -7,7 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -35,17 +37,20 @@ public class EditEventController extends BaseController implements Initializable
     }
     @FXML
     private void onCancel(ActionEvent actionEvent) {
-        // Add your cancel logic here
+        loadFXML("/SpecificEvent.FXML", model, (Stage) tfEventName.getScene().getWindow());
     }
 
     @FXML
     private void onConfirmEvent(ActionEvent actionEvent) {
-        // Add your confirm logic here
+        // Show and Wait Box
+        loadFXML("/SpecificEvent.FXML", model, (Stage) tfEventName.getScene().getWindow());
     }
 
     @FXML
-    private void onDelete(ActionEvent actionEvent) {
-        // Add your Delete logic here
-    }
+    private void onAddCoordinator(ActionEvent actionEvent){}
+
+    @FXML
+    private void onRemoveCoordinator(ActionEvent actionEvent){}
+
 
 }

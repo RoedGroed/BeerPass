@@ -143,7 +143,31 @@ public class BaseController implements Initializable {
         }
     }
 
+    /**
+     * Method to open new FXML, and close the current Stage.
+     * @param fxmlPath - A String Holding fxmlpath - "/AdminWindow.FXML"
+     * @param model - model
+     * @param currentStage - get a node in the controller. Example: (Stage) tfEventName.getScene().getWindow());
+     */
+    public void loadFXML(String fxmlPath, Model model, Stage currentStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
 
+            BaseController controller = loader.getController();
+            controller.setModel(model);
+
+            currentStage.close();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load " + fxmlPath);
+            alert.showAndWait();
+        }
+    }
 
 
 }
