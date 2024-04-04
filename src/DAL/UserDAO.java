@@ -111,17 +111,17 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
-    public void createNewUser(Model model) throws SQLException, IOException {
+    public void createNewUser(User user) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
-            String hashedPassword = BCrypt.hashpw(model.getPassword(), BCrypt.gensalt(10));
+            String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
             String query = "INSERT INTO Users (Username, Password, Role, Email) VALUES (?, ?, ?, ?)";
             try (PreparedStatement statement = conn.prepareStatement(query)) {
-                statement.setString(1, model.getUsername());
+                statement.setString(1, user.getUsername());
                 //statement.setString(2, password);
                 statement.setString(2, hashedPassword);
-                statement.setString(3, model.getRole());
-                statement.setString(4, model.getEmail());
+                statement.setString(3, user.getRole());
+                statement.setString(4, user.getEmail());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

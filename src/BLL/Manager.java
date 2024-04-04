@@ -40,8 +40,9 @@ public class Manager {
         }
 
     public void createNewUser(String username, String password, String role, String email) throws SQLException, IOException {
-        Model model = new Model(username, email, password, role);
-        userDAO.createNewUser(model);
+        User user = new User(username, password, email);
+        user.setRole(role);
+        userDAO.createNewUser(user);
     }
 
     ///EVENT MANAGEMENT///
