@@ -5,7 +5,10 @@ import BE.Event;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventDAO {
 
@@ -58,7 +61,32 @@ public class EventDAO {
             preparedStatement.executeUpdate();
         }
     }
-    public void readAllEvent(){}
+
+    public List<Event> readAllEvents() throws SQLException, IOException{
+        DBConnector dbConnector = new DBConnector();
+        List<Event> events = new ArrayList<>();
+
+        try (Connection conn = dbConnector.getConnection()) {
+            String sql = "SELECT * FROM dbo.Events";
+            try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    Event event = new Event();
+                    event.setName(resultSet.getString("Name"));
+                    event.setLocation(resultSet.getString("Location"));
+                    event.setTime(resultSet.getString("Time"));
+                    event.setNote(resultSet.getString("Note"));
+                    event.setTicketLimit(resultSet.getInt("TicketLimit"));
+                    event.setImagePath(resultSet.getString("ImagePath"));
+                    events.add(event);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return events;
+    }
 
     public void readSomeOfTheEventMaybeIDontKnowForSureButItCouldBeOfUseWithTicketsAndUsersMaybe (){}
 

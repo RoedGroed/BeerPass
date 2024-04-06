@@ -6,6 +6,7 @@ import BLL.Manager;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class EventModel {
 
@@ -29,7 +30,9 @@ public class EventModel {
         manager.updateEvents(selectedEvent);
     }
 
-    public void readAllEvents(){}
+    public List<Event> getAllEvents() throws SQLException, IOException {
+        return manager.getAllEvents();
+    }
 
     private void reformatTime(){
 

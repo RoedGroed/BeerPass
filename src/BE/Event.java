@@ -20,6 +20,9 @@ public class Event {
         this.imagePath = imagePath;
     }
 
+    public Event() {
+    }
+
     public int getEventID() {
         return eventID;
     }

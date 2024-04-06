@@ -59,7 +59,12 @@ public class Manager {
         eventDAO.updateEvents(selectedEvent);
     }
 
-    public void readAllEvent(){}
+    public Manager(EventDAO eventDAO) {
+        this.eventDAO = eventDAO;
+    }
 
+    public List<Event> getAllEvents() throws SQLException, IOException {
+        return eventDAO.readAllEvents();
+    }
 }
 
