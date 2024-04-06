@@ -47,12 +47,12 @@ public class Manager {
 
     ///EVENT MANAGEMENT///
 
-    public Event createEvent (Event event) throws IOException, SQLException {
-        return eventDAO.createEvent(event);
+    public Event createEvent (Event selectedEvent) throws IOException, SQLException {
+        return eventDAO.createEvent(selectedEvent);
     }
 
-    public void deleteEvent(){
-        // Delete Event.
+    public void deleteEvent(Event selectedEvent) throws SQLException, IOException {
+        eventDAO.deleteEvent(selectedEvent);
     }
 
     public void updateEvents(Event selectedEvent) throws SQLException, IOException {

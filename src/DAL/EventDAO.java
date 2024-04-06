@@ -30,8 +30,16 @@ public class EventDAO {
         return event;
     }
 
-    public void deleteEvent(){
-        // Delete Event.
+    public void deleteEvent(Event event) throws SQLException, IOException {
+        DBConnector dbConnector = new DBConnector();
+        try(Connection conn = dbConnector.getConnection()) {
+            String sql = "DELETE FROM Events WHERE EventID = ?";
+            try (PreparedStatement preparedStatement = conn.prepareStatement(sql)){
+
+                preparedStatement.setInt(1,event.getEventID());
+                preparedStatement.executeUpdate();
+            }
+        }
     }
 
     public void updateEvents(Event selectedEvent) throws SQLException, IOException{

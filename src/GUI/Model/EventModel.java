@@ -21,8 +21,8 @@ public class EventModel {
         // Update the event beings shown here also maybe, such it updates realtime.
     }
 
-    public void deleteEvent(){
-        // Delete Event.
+    public void deleteEvent(Event selectedEvent) throws SQLException, IOException {
+        manager.deleteEvent(selectedEvent);
     }
 
     public void updateEvent(Event selectedEvent) throws SQLException, IOException {

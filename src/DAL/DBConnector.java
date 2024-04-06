@@ -21,7 +21,7 @@ public class DBConnector {
      * @throws SQLException If the DataSource cannot be made.
      * @throws IOException If the file path cannot be read.
      */
-    public DBConnector() throws SQLException, IOException {
+    public DBConnector() throws IOException {
         Properties databaseProperties = new Properties();
         databaseProperties.load(new FileInputStream(PROP_FILE));
         this.dataSource = new SQLServerDataSource();
