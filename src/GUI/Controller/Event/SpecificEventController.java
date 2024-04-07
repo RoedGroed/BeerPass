@@ -11,6 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class SpecificEventController extends BaseController implements Initializable {
 
 
@@ -32,7 +35,8 @@ public class SpecificEventController extends BaseController implements Initializ
     private TextField tfSearch;
     private EventModel eventModel;
 
-    public void initialize(){
+    public void initialize(URL location, ResourceBundle resources){
+        super.initialize(location, resources);
         eventModel = new EventModel();
     }
 

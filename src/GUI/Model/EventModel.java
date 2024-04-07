@@ -1,7 +1,10 @@
 package GUI.Model;
 
 import BE.Event;
+import BE.User;
 import BLL.Manager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -11,8 +14,11 @@ import java.util.List;
 public class EventModel {
 
     private Manager manager;
+    //private Model model;
+
 
     public EventModel (){
+        //this.model = Model.getInstance();
         manager = new Manager();
     }
 
@@ -34,6 +40,26 @@ public class EventModel {
         return manager.getAllEvents();
     }
 
+    public List<Event> getEventsForEventCo(int userID) throws SQLException, IOException {
+        return manager.getEventsForEventCo(userID);
+    }
+
+    public ObservableList<User> getUsersByRole(String role){
+        ObservableList<User> filteredUsers = FXCollections.observableArrayList();
+        try {
+            List<User> allUsers = manager.getAllUsers();
+            for (User user : allUsers) {
+                String userRole = user.getRole();
+                if (userRole != null && userRole.equalsIgnoreCase(role)) {
+                    filteredUsers.add(user);
+                }
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return filteredUsers;
+    }
+
     private void reformatTime(){
 
     }
@@ -49,6 +75,8 @@ public class EventModel {
 
         return formatDate + " " + timeStart;
     }
+
+
 
     /* TODO: Lav en metode der skiller Time String, og laver første del til en LocalDate igen.
         og sender resten af String videre i tfEventTtime.

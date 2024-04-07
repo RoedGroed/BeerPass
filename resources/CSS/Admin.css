@@ -25,25 +25,25 @@
 }
 .btnLogout {
     -fx-background-color: transparent;
-    -fx-background-image: url(/Images/PowerIcon.png);
+    -fx-background-image: url(/Images/CSS/PowerIcon.png);
     -fx-background-size: stretch;
     -fx-background-position: center;
 }
 .btnEvent {
     -fx-background-color: transparent;
-    -fx-background-image: url(/Images/EventIcon.png);
+    -fx-background-image: url(/Images/CSS/EventIcon.png);
     -fx-background-size: stretch;
     -fx-background-position: center;
 }
 .btnAdmin {
     -fx-background-color: transparent;
-    -fx-background-image: url(/Images/AdminIcon.png);
+    -fx-background-image: url(/Images/CSS/AdminIcon.png);
     -fx-background-size: stretch;
     -fx-background-position: center;
 }
 .btnTickets {
     -fx-background-color: transparent;
-    -fx-background-image: url(/Images/TicketIcon.png);
+    -fx-background-image: url(/Images/CSS/TicketIcon.png);
     -fx-background-size: stretch;
     -fx-background-position: center;
 }

@@ -26,9 +26,6 @@ public class EventDAO {
 
                 preparedStatement.executeUpdate();
             }
-            catch (SQLException e) {
-            e.printStackTrace();
-            }
         }
         return event;
     }
@@ -73,6 +70,7 @@ public class EventDAO {
 
                 while (resultSet.next()) {
                     Event event = new Event();
+                    event.setEventID(resultSet.getInt("EventID"));
                     event.setName(resultSet.getString("Name"));
                     event.setLocation(resultSet.getString("Location"));
                     event.setTime(resultSet.getString("Time"));
@@ -81,8 +79,33 @@ public class EventDAO {
                     event.setImagePath(resultSet.getString("ImagePath"));
                     events.add(event);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            }
+        }
+        return events;
+    }
+
+    public List<Event> readEventsForCoordinator(int userId) throws SQLException, IOException {
+        DBConnector dbConnector = new DBConnector();
+        List<Event> events = new ArrayList<>();
+
+        String sql = "SELECT e.* FROM Events e JOIN Event_Coordinator_assignment a ON e.EventID = a.EventID WHERE a.UserID = ?";
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                while (resultSet.next()) {
+                    Event event = new Event();
+                    event.setEventID(resultSet.getInt("EventID"));
+                    event.setName(resultSet.getString("Name"));
+                    event.setLocation(resultSet.getString("Location"));
+                    event.setTime(resultSet.getString("Time"));
+                    event.setNote(resultSet.getString("Note"));
+                    event.setTicketLimit(resultSet.getInt("TicketLimit"));
+                    event.setImagePath(resultSet.getString("ImagePath"));
+                    events.add(event);
+                }
             }
         }
         return events;

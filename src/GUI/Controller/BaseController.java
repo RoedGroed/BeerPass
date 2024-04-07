@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class BaseController implements Initializable {
 
-    public Model model = new Model();
+    protected Model model;
     @FXML
     private Button btnLogout;
     @FXML
@@ -33,13 +33,19 @@ public class BaseController implements Initializable {
     private Label lblAdmin;
     private User loggedInUser;
 
-    public void setModel(Model model) {
-        this.model = model;
-        AdminButtonVisibility();
+    /*public void setModel(Model model) {
+        BaseController.model = model;
+        System.out.println("Model set in BaseController: " + model);
     }
+
+    public static Model getModel() {
+        System.out.println("Model retrieved from BaseController: " + model);
+        return model;
+    }*/
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        model = Model.getInstance();
         AdminButtonVisibility();
     }
 
@@ -74,9 +80,6 @@ public class BaseController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/EventWindow.fxml"));
             Parent root = loader.load();
 
-            BaseController controller = loader.getController();
-            controller.setModel(model);
-
             Stage stage = new Stage();
             //stage.setFullScreen(true);
             stage.setTitle("BrewPass");
@@ -99,9 +102,6 @@ public class BaseController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminWindow.fxml"));
             Parent root = loader.load();
 
-            BaseController controller = loader.getController();
-            controller.setModel(model);
-
             Stage stage = new Stage();
             //stage.setFullScreen(true);
             stage.setTitle("BrewPass");
@@ -123,9 +123,6 @@ public class BaseController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/TicketWindow.fxml"));
             Parent root = loader.load();
-
-            BaseController controller = loader.getController();
-            controller.setModel(model);
 
             Stage stage = new Stage();
             //stage.setFullScreen(true);
@@ -153,9 +150,6 @@ public class BaseController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-
-            BaseController controller = loader.getController();
-            controller.setModel(model);
 
             currentStage.close();
 

@@ -35,7 +35,7 @@ public class LoginController {
     private Model model;
 
     public LoginController() {
-        this.model = new Model();
+        this.model = Model.getInstance();
     }
 
     @FXML
@@ -52,8 +52,6 @@ public class LoginController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/EventWindow.fxml"));
                 Parent root = loader.load();
 
-                BaseController controller = loader.getController();
-                controller.setModel(model);
 
                 Stage secStage = new Stage();
                 secStage.setTitle("BrewPass");

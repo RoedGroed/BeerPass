@@ -49,6 +49,7 @@ public class NewEventController extends BaseController implements Initializable 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
         eventModel = new EventModel();
         comboBoxSetup();
         loadImages();

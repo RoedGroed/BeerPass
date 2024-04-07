@@ -38,10 +38,10 @@
     -fx-font-size: 14;
 }
 
-#btnLogout{-fx-background-image: url(/Images/PowerIcon.png);}
+#btnLogout{-fx-background-image: url(/Images/CSS/PowerIcon.png);}
 
-#btnEvent {-fx-background-image: url(/Images/EventIcon.png);}
+#btnEvent {-fx-background-image: url(/Images/CSS/EventIcon.png);}
 
-#btnAdmin {-fx-background-image: url(/Images/AdminIcon.png);}
+#btnAdmin {-fx-background-image: url(/Images/CSS/AdminIcon.png);}
 
-#btnTicket{-fx-background-image: url(/Images/TicketIcon.png);}
+#btnTicket{-fx-background-image: url(/Images/CSS/TicketIcon.png);}

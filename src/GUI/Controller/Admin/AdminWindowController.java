@@ -35,11 +35,12 @@ public class AdminWindowController extends BaseController implements Initializab
     private ListView<User> selectedListView;
 
     public AdminWindowController() {
-        this.model = model;
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
         initListviews();
     }
 
@@ -48,20 +49,6 @@ public class AdminWindowController extends BaseController implements Initializab
         lvEventCo.setItems(model.getUsersByRole("Event Coordinator"));
         lvUsers.setItems(model.getUsersByRole("User"));
         addListListener();
-
-        /*
-        lvAdmin.setItems(model.getUsersByRole("Admin").stream()
-                .map(user -> user.getUsername() + " - " + user.getEmail())
-                .collect(Collectors.toCollection(FXCollections::observableArrayList)));
-
-        lvEventCo.setItems(model.getUsersByRole("Event Coordinator").stream()
-                .map(user -> user.getUsername() + " - " + user.getEmail())
-                .collect(Collectors.toCollection(FXCollections::observableArrayList)));
-
-        lvUsers.setItems(model.getUsersByRole("User").stream()
-                .map(user -> user.getUsername() + " - " + user.getEmail())
-                .collect(Collectors.toCollection(FXCollections::observableArrayList)));
-        */
 
     }
 
@@ -85,9 +72,6 @@ public class AdminWindowController extends BaseController implements Initializab
 
             EditUserController editUserController = loader.getController();
             editUserController.populateFields(selectedUser);
-            BaseController controller = loader.getController();
-            controller.setModel(model);
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Edit User");
@@ -107,9 +91,6 @@ public class AdminWindowController extends BaseController implements Initializab
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewUser.fxml"));
             Parent root = loader.load();
 
-            BaseController controller = loader.getController();
-            controller.setModel(model);
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("BrewPass");
@@ -124,15 +105,6 @@ public class AdminWindowController extends BaseController implements Initializab
         }
     }
 
-/*    private ListView<User> getSelectedListView(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == lvAdmin) {
-            return lvAdmin;
-        } else if (actionEvent.getSource() == lvEventCo) {
-            return lvEventCo;
-        } else {
-            return lvUsers;
-        }
-    }*/
 
     private void addListListener(){
         lvAdmin.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedListView = lvAdmin);

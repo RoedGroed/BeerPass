@@ -18,7 +18,7 @@
               <MFXButton id="btnForgot" fx:id="btnForgot" layoutX="89.0" layoutY="213.0" prefHeight="25.0" prefWidth="115.0" text="Forgot Password?" />
               <ImageView id="imgEA" fitHeight="170.0" fitWidth="233.0" layoutX="443.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@Images/EA-Logo.png" />
+               <Image url="@Images/CSS/EA-Logo.png" />
             </image></ImageView>
               <MFXButton id="btnLogin" fx:id="btnLogin" layoutX="253.0" layoutY="223.0" onAction="#onLogin" prefHeight="30.0" prefWidth="115.0" text="Login" />
            </AnchorPane>

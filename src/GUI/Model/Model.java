@@ -19,10 +19,11 @@ public class Model {
 
 
     //private UserDAO userDAO;
+    private static Model instance;
     private Manager manager;
     private User currentUser;
 
-    public Model( ) {
+    private Model( ) {
         //userDAO = new UserDAO();
         manager = new Manager();
     }
@@ -30,6 +31,13 @@ public class Model {
     /*public boolean isValidUser(String username, String password) throws SQLException, IOException {
         return userDAO.isValidUser(username, password);
     }*/
+
+    public static Model getInstance() {
+        if (instance == null) {
+            instance = new Model();
+        }
+        return instance;
+    }
 
     public ObservableList<User>getUsersByRole(String role){
         ObservableList<User> filteredUsers = FXCollections.observableArrayList();
@@ -55,7 +63,9 @@ public class Model {
         return manager.getAllUsers();
     }
 
-
+    public User getCurrentUser() {
+        return currentUser;
+    }
 
     public User validateUser(String email, String password) throws SQLException, IOException {
         currentUser = manager.validateUser(email, password);

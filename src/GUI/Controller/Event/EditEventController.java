@@ -33,6 +33,7 @@ public class EditEventController extends BaseController implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
         cbEventImages.getItems().addAll("John", "Emma", "Michael", "Sophia");
     }
     @FXML

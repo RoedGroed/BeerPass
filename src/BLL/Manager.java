@@ -66,5 +66,9 @@ public class Manager {
     public List<Event> getAllEvents() throws SQLException, IOException {
         return eventDAO.readAllEvents();
     }
+
+    public List<Event> getEventsForEventCo(int userId) throws SQLException, IOException {
+        return eventDAO.readEventsForCoordinator(userId);
+    }
 }
 

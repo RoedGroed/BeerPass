@@ -41,9 +41,9 @@ public class EditUserController extends BaseController implements Initializable 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
         titleRectangle.getStyleClass().add("my-gradient-rectangle");
         radiobtnRectangle.getStyleClass().add("my-rectangle-style");
-        model = new Model();
         // Add these listeners:
         userAdmin.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue){

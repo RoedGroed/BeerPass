@@ -46,6 +46,7 @@ public class NewUserController extends BaseController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
         titleRectangle.getStyleClass().add("my-gradient-rectangle");
         radiobtnRectangle.getStyleClass().add("my-rectangle-style");
 
@@ -81,9 +82,6 @@ public class NewUserController extends BaseController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminWindow.fxml"));
             Parent root = loader.load();
-
-            BaseController controller = loader.getController();
-            controller.setModel(model);
 
             Stage adminStage = new Stage();
             adminStage.setScene(new Scene(root));
@@ -144,9 +142,6 @@ public class NewUserController extends BaseController implements Initializable {
             // And open AdminWindow
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminWindow.fxml"));
             Parent root = loader.load();
-
-            BaseController controller = loader.getController();
-            controller.setModel(model);
 
             Stage adminStage = new Stage();
             adminStage.setScene(new Scene(root));
