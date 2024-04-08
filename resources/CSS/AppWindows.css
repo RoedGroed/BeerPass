@@ -259,6 +259,45 @@ Shapes
 .text-area .scroll-pane .content{
     -fx-background-color: rgba(0, 0, 0, 0.45);
 }
+#lblTic {
+    -fx-font-size: 24;
+    -fx-text-fill: white;
+    -fx-font-family: 'Inter';
+    -fx-alignment: center;
+}
+#lblTic2 {
+    -fx-font-size: 24;
+    -fx-text-fill: white;
+    -fx-font-family: 'Inter';
+}
+#tglBtn {
+    -fx-text-fill: white;
+    -fx-background-color: rgba(0, 0, 0, 0.45);
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-radius: 7px;
+    -fx-background-radius: 10px;
+}
+#tglBtn:selected {
+    -fx-text-fill: white;
+    -fx-background-color: rgba(0, 0, 0, 0.45);
+    -fx-border-color: rgba(95, 18, 18, 0.5);
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-radius: 7px;
+    -fx-background-radius: 10px;
+}
+#triangleBtnLeft {
+    -fx-background-color: transparent;
+    -fx-background-image: url(/Images/CSS/tri-left.png);
+    -fx-background-size: stretch;
+}
+#triangleBtnRight {
+    -fx-background-color: transparent;
+    -fx-background-image: url(/Images/CSS/tri-right.png);
+    -fx-background-size: stretch;
+}
 
 
 

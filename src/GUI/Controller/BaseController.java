@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.User;
+import GUI.Controller.Ticket.TicketWindowController;
 import GUI.Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

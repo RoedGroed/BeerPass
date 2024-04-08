@@ -1,8 +1,10 @@
 package BLL;
 
 import BE.Event;
+import BE.Ticket;
 import BE.User;
 import DAL.EventDAO;
+import DAL.TicketDAO;
 import DAL.UserDAO;
 import GUI.Model.Model;
 import org.mindrot.jbcrypt.BCrypt;
@@ -14,6 +16,7 @@ import java.util.List;
 public class Manager {
     private UserDAO userDAO = new UserDAO();
     private EventDAO eventDAO = new EventDAO();
+    private TicketDAO ticketDAO = new TicketDAO();
 
     public List<User> getAllUsers() throws SQLException, IOException {
         return userDAO.readAllUsers();
@@ -70,6 +73,14 @@ public class Manager {
     public List<Event> getEventsForEventCo(int userId) throws SQLException, IOException {
         return eventDAO.readEventsForCoordinator(userId);
     }
-
+    public void addTicket(String ticketName, String ticketType) throws IOException {
+        ticketDAO.addTicket(ticketName, ticketType);
+    }
+    public List<Ticket> getAllTickets() throws SQLException, IOException {
+        return ticketDAO.readAllTickets();
+    }
+    public void linkTicketToEvent(int eventID, int ticketID) throws SQLException, IOException {
+        ticketDAO.linkTicketToEvent(eventID, ticketID);
+    }
 }
 

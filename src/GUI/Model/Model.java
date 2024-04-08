@@ -1,5 +1,6 @@
 package GUI.Model;
 
+import BE.Ticket;
 import BE.User;
 import BLL.Manager;
 
@@ -78,6 +79,16 @@ public class Model {
 
     public boolean isAdmin() {
         return currentUser != null && "Admin".equals(currentUser.getRole());
+    }
+
+    public void addTicket(String ticketName, String ticketType) throws IOException {
+        manager.addTicket(ticketName, ticketType);
+    }
+    public List<Ticket> getAllTickets() throws SQLException, IOException {
+        return manager.getAllTickets();
+    }
+    public void linkTicketToEvent(int eventID, int ticketID) throws SQLException, IOException {
+        manager.linkTicketToEvent(eventID, ticketID);
     }
 
 }
