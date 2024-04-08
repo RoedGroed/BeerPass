@@ -70,5 +70,6 @@ public class Manager {
     public List<Event> getEventsForEventCo(int userId) throws SQLException, IOException {
         return eventDAO.readEventsForCoordinator(userId);
     }
+
 }
 

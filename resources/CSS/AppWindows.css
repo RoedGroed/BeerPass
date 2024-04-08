@@ -1,10 +1,22 @@
-#Sidebar{
-    -fx-background-color: linear-gradient(to bottom right, rgb(95, 18, 18) 0%, rgb(75, 84, 168) 100%);
-}
+/*
+Panes
+ */
 
 #BorderPane{
     -fx-background-color: #201f45;
 }
+
+.scroll-pane{
+    -fx-background-color:transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/*
+Labels
+ */
 
 #lblUsername{
     -fx-font-size: 16px;
@@ -27,15 +39,25 @@
     -fx-text-alignment: center;
 }
 
-.text-field{
-    -fx-background-color: rgba(0, 0, 0, 0.45);
-    -fx-border-color: rgba(255, 255, 255, 0.5);
-    -fx-border-style: solid;
-    -fx-border-width: 2px;
-    -fx-border-radius: 7px;
+.bigLabel {
+    -fx-background-color: linear-gradient(to bottom right, rgb(95, 18, 18) 0%, rgb(75, 84, 168) 100%);
+    -fx-font-size: 32px;
     -fx-text-fill: white;
+    -fx-background-radius: 7px;
+    -fx-alignment: center;
 }
 
+#infoLabel{
+    -fx-font-size: 20px;
+}
+#ticketLabel{
+    -fx-alignment: center;
+    -fx-font-size: 16px;
+}
+
+/*
+Buttons
+ */
 
 .btnPanel{
     -fx-background-color: transparent;
@@ -67,22 +89,6 @@
     -fx-font-size: 14;
 }
 
-
-.my-rectangle-style {
-    -fx-fill: rgba(0, 0, 0, 0.45);
-    -fx-stroke: rgba(255, 255, 255, 0.5);
-    -fx-stroke-width: 2;
-    -fx-arc-width: 15px;
-    -fx-arc-height: 15px;
-}
-
-.my-gradient-rectangle {
-    -fx-fill: linear-gradient(to right, rgba(95, 18, 18, 1) 0%, rgba(75, 84, 168, 1) 100%);
-    -fx-stroke-width: 0;
-    -fx-arc-width: 15;
-    -fx-arc-height: 15;
-}
-
 .radio-button{
     -fx-font-size: 16;
     -fx-text-fill: White;
@@ -99,6 +105,9 @@
 
 #btnTicket{-fx-background-image: url(/Images/CSS/TicketIcon.png);}
 
+/*
+Date picker
+ */
 
 .date-picker {
     -fx-background-color: rgba(0, 0, 0, 0.45);
@@ -139,6 +148,10 @@
     -fx-text-fill: black; /* Text color for month and year */
 }
 
+/*
+Combo box
+ */
+
 .combo-box {
     -fx-background-color: rgba(0, 0, 0, 0.45);
     -fx-border-color: rgba(255, 255, 255, 0.5);
@@ -161,22 +174,22 @@
     -fx-background-insets: 0;
 }
 
-.bigLabel {
-    -fx-background-color: linear-gradient(to bottom right, rgb(95, 18, 18) 0%, rgb(75, 84, 168) 100%);
-    -fx-font-size: 32px;
+/*
+Text field
+ */
+
+.text-field{
+    -fx-background-color: rgba(0, 0, 0, 0.45);
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-radius: 7px;
     -fx-text-fill: white;
-    -fx-background-radius: 7px;
-    -fx-alignment: center;
 }
 
-#infoLabel{
-    -fx-font-size: 20px;
-}
-#ticketLabel{
-    -fx-alignment: center;
-    -fx-font-size: 16px;
-}
-
+/*
+Listviews
+ */
 .listView{
     -fx-background-color: black;
     -fx-opacity: 45%;
@@ -185,6 +198,41 @@
     -fx-background-radius: 15px;
     -fx-border-radius: 15px;
 }
+
+/*
+Shapes
+ */
+
+#Sidebar{
+    -fx-background-color: linear-gradient(to bottom right, rgb(95, 18, 18) 0%, rgb(75, 84, 168) 100%);
+}
+
+.my-rectangle-style {
+    -fx-fill: rgba(0, 0, 0, 0.45);
+    -fx-stroke: rgba(255, 255, 255, 0.5);
+    -fx-stroke-width: 2;
+    -fx-arc-width: 15;
+    -fx-arc-height: 15;
+}
+
+.my-gradient-rectangle {
+    -fx-fill: linear-gradient(to right, rgba(95, 18, 18, 1) 0%, rgba(75, 84, 168, 1) 100%);
+    -fx-stroke-width: 0;
+    -fx-arc-width: 15;
+    -fx-arc-height: 15;
+}
+
+.my-imagelabel-rectangle-style {
+    -fx-fill: rgba(0, 0, 0, 0.45);
+    -fx-stroke: rgba(255, 255, 255, 0.5);
+    -fx-stroke-width: 2;
+}
+
+
+
+/*
+Òthers (for now)
+ */
 
 .text-area .content{
     text-area-background:  rgba(0, 0, 0, 0.45) ;
@@ -211,3 +259,6 @@
 .text-area .scroll-pane .content{
     -fx-background-color: rgba(0, 0, 0, 0.45);
 }
+
+
+

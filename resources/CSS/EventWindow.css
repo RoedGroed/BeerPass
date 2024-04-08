@@ -6,19 +6,29 @@
     -fx-background-color: #201f45;
 }
 
+#EventsVBox{
+    -fx-background-color: Transparent;
+}
+
+.scroll-pane{
+    -fx-background-color: Transparent;
+}
+
+.VB
+
 #lblUsername{
     -fx-font-size: 16px;
     -fx-background-color: Transparent;
     -fx-text-fill: White;
     -fx-text-alignment: center;
 }
+
 .lbl{
     -fx-font-size: 32;
     -fx-text-fill: White;
     -fx-font-family: 'Inter';
     -fx-text-alignment: center;
 }
-
 
 .btn{
     -fx-background-color: transparent;

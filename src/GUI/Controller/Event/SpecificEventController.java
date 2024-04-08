@@ -1,5 +1,6 @@
 package GUI.Controller.Event;
 
+import BE.Event;
 import BE.User;
 import GUI.Controller.BaseController;
 import GUI.Model.EventModel;
@@ -11,7 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class SpecificEventController extends BaseController implements Initializable {
@@ -75,5 +78,8 @@ public class SpecificEventController extends BaseController implements Initializ
     void onMailTicket(ActionEvent event) {}
 
 
+    void initData(Event event) throws SQLException, IOException {
+        lvAllUsers.setItems(model.getAllUsers());
+    }
 }
 

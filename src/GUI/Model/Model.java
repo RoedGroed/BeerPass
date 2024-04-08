@@ -24,13 +24,8 @@ public class Model {
     private User currentUser;
 
     private Model( ) {
-        //userDAO = new UserDAO();
         manager = new Manager();
     }
-
-    /*public boolean isValidUser(String username, String password) throws SQLException, IOException {
-        return userDAO.isValidUser(username, password);
-    }*/
 
     public static Model getInstance() {
         if (instance == null) {
@@ -55,12 +50,21 @@ public class Model {
         return filteredUsers;
     }
 
-    public void updateUser(User selectedUser) throws SQLException, IOException {
-        manager.updateUser(selectedUser);
+    public ObservableList<User> getAllUsers() throws SQLException, IOException {
+        ObservableList<User> Users = FXCollections.observableArrayList();
+        try {
+            List<User> allUsers = manager.getAllUsers();
+            for (User user : allUsers) {
+                Users.add(user);
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return Users;
     }
 
-    public List<User> getAllUsers() throws SQLException, IOException {
-        return manager.getAllUsers();
+    public void updateUser(User selectedUser) throws SQLException, IOException {
+        manager.updateUser(selectedUser);
     }
 
     public User getCurrentUser() {
