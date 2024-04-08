@@ -93,7 +93,7 @@
             <children>
                 <AnchorPane prefHeight="717.0" prefWidth="1099.0">
                     <children>
-                        <Label layoutX="51.0" layoutY="46.0" prefHeight="71.0" prefWidth="427.0" styleClass="bigLabel" text="Event Name" textAlignment="CENTER" />
+                        <Label fx:id="lblEventName" layoutX="51.0" layoutY="46.0" prefHeight="71.0" prefWidth="427.0" styleClass="bigLabel" text="Event Name" textAlignment="CENTER" />
                         <TextField fx:id="tfSearch" layoutX="52.0" layoutY="209.0" prefHeight="27.0" prefWidth="225.0" promptText="Search" />
                         <ImageView fitHeight="210.0" fitWidth="318.0" layoutX="106.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true" />
                         <TextArea id="TextArea" fx:id="taEventNotes" layoutX="591.0" layoutY="210.0" prefHeight="168.0" prefWidth="482.0" promptText="Write notes for the event here." styleClass="TextArea" />

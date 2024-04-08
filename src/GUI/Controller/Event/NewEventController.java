@@ -51,8 +51,8 @@ public class NewEventController extends BaseController implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         eventModel = new EventModel();
-        comboBoxSetup();
-        loadImages();
+        loadImageViewer();
+        loadImagesIntoComboBox();
 
     }
     @FXML
@@ -86,22 +86,22 @@ public class NewEventController extends BaseController implements Initializable 
         return new Event(-1, name, location, time, note, ticketLimit, imagePath);
     }
 
-    private void comboBoxSetup(){
+    private void loadImageViewer(){
         cbEventImages.setOnAction(event -> {
             String selectedImage = cbEventImages.getValue();
             if (selectedImage != null) {
 
                 // TODO: Ændre når vi har nogle event images til den nye file path
-                String imagePath = "resources/Images/" + selectedImage;
+                String imagePath = "resources/Images/App/" + selectedImage;
                 Image image = new Image(new File(imagePath).toURI().toString());
                 imgEventImage.setImage(image);
             }
         });
     }
 
-    private void loadImages(){
+    private void loadImagesIntoComboBox(){
         // TODO: Ændre når vi har nogle event images til den nye file path
-        File folder = new File("resources/Images");
+        File folder = new File("resources/Images/App/");
 
         if(folder.exists() && folder.isDirectory()) {
             File[] imageList = folder.listFiles();

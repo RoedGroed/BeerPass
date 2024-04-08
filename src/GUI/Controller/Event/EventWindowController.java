@@ -43,6 +43,7 @@ public class EventWindowController extends BaseController implements Initializab
     @FXML
     private ScrollPane scrollPane;
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources){
         //model = Model.getInstance();
@@ -128,6 +129,7 @@ public class EventWindowController extends BaseController implements Initializab
 
             SpecificEventController controller = loader.getController();
             controller.initData(event);
+            controller.populateFields(event);
 
             Stage stage = new Stage();
             stage.setTitle(event.getName());
@@ -145,7 +147,6 @@ public class EventWindowController extends BaseController implements Initializab
     private void onNewEvent(ActionEvent actionEvent) {
         loadFXML("/NewEvent.FXML", model, (Stage) btnNewEvent.getScene().getWindow());
     }
-
 
 
 }

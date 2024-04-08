@@ -7,11 +7,16 @@ import GUI.Model.EventModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -31,12 +36,16 @@ public class SpecificEventController extends BaseController implements Initializ
     @FXML
     private Label lblUsername;
     @FXML
+    private Label lblEventName;
+    @FXML
     private ListView<User> lvAllUsers;
     @FXML
     private TextArea taEventNotes;
+
     @FXML
     private TextField tfSearch;
     private EventModel eventModel;
+    private Event event;
 
     public void initialize(URL location, ResourceBundle resources){
         super.initialize(location, resources);
@@ -66,9 +75,21 @@ public class SpecificEventController extends BaseController implements Initializ
     }
 
     @FXML
-    void onEditEvent(ActionEvent event) {
-        // Get info from the event loaded into the fields
-        loadFXML("/EditEvent.FXML",model, (Stage) lblUsername.getScene().getWindow());
+    void onEditEvent(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditEvent.fxml"));
+            Parent root = loader.load();
+
+            EditEventController editEventController = loader.getController();
+            editEventController.populateFields(event); // Pass the event object to populate the fields
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Edit Event");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -81,5 +102,18 @@ public class SpecificEventController extends BaseController implements Initializ
     void initData(Event event) throws SQLException, IOException {
         lvAllUsers.setItems(model.getAllUsers());
     }
+
+    public void populateFields(Event event){
+        this.event = event;
+
+        lblEventName.setText(event.getName());
+        lblInfo.setText(event.getTime() + " || " + event.getLocation());
+        lblTicketCounter.setText(String.valueOf(event.getTicketLimit()));
+        //FIXME: Der skal laves en måde at regne de solgte billeter ud på.
+        taEventNotes.setText(event.getNote());
+
+    }
+
+
 }
 

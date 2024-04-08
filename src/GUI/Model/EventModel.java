@@ -5,7 +5,9 @@ import BE.User;
 import BLL.Manager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -76,13 +78,18 @@ public class EventModel {
         return formatDate + " " + timeStart;
     }
 
+    public String[] divorceTimeString(String formattedDateTime) {
+        String[] parts = formattedDateTime.split(" ", 2); // Splits String into an array
+        String stringDate = parts[0];
+        String time = parts[1];
+
+        LocalDate date = LocalDate.parse(stringDate);
+
+        return new String[] { date.toString(), time };
+    }
 
 
-    /* TODO: Lav en metode der skiller Time String, og laver første del til en LocalDate igen.
-        og sender resten af String videre i tfEventTtime.
-        lav et boolean flag, det checker om time og date er blevet ændret, hvis den er det, så skal den køre
 
-    */
 
 
 }
