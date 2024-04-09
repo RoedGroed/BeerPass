@@ -6,6 +6,7 @@ import BE.User;
 import GUI.Controller.BaseController;
 import GUI.Model.EventModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,7 @@ import java.util.ResourceBundle;
 
 public class SpecificEventController extends BaseController implements Initializable {
 
-
+    private EventModel eventModel;
     @FXML
     private ImageView imgTicketPreview;
     @FXML
@@ -46,7 +47,7 @@ public class SpecificEventController extends BaseController implements Initializ
 
     @FXML
     private TextField tfSearch;
-    private EventModel eventModel;
+
     private Event event;
     @FXML
     private ListView lvRadioBtns;
@@ -65,20 +66,28 @@ public class SpecificEventController extends BaseController implements Initializ
     public void initialize(URL location, ResourceBundle resources){
         super.initialize(location, resources);
         eventModel = new EventModel();
+        initToggleBtns();
+    }
 
-
-
-
+    private void initToggleBtns()  {
         tBtnSpecial.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            updateVisibility(newValue, false);
+            try {
+                updateVisibility(newValue, false);
+            } catch (SQLException | IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         tBtnEvent.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            updateVisibility(false, newValue);
+            try {
+                updateVisibility(false, newValue);
+            } catch (SQLException | IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
-    private void updateVisibility(boolean specialSelected, boolean eventSelected) {
+    private void updateVisibility(boolean specialSelected, boolean eventSelected) throws SQLException, IOException {
         lblSeleUser.setVisible(eventSelected);
         tfSearch.setVisible(eventSelected);
         lvAllUsers.setVisible(eventSelected);
@@ -86,36 +95,33 @@ public class SpecificEventController extends BaseController implements Initializ
         lvRadioBtns.setVisible(specialSelected || eventSelected);
 
         if (eventSelected) {
-            //populateRadioButtonsForEventTickets();
+            populateRadioButtonsForEventTickets();
         } else if (specialSelected) {
             populateRadioButtonsForSpecialTickets();
         }
-
     }
 
-    private void populateRadioButtonsForEventTickets() {
-        /*private void populateRadioButtonsForEventTickets(int eventId) {
-            List<Ticket> ticketsForEvent = ticketModel.getTicketsForEvent(eventId);
-            lvRadioBtns.getItems().clear();
+    private void populateRadioButtonsForEventTickets() throws SQLException, IOException {
+        List<Ticket> eventTickets = model.getEventTickets();
+        populateRadioButtons(eventTickets);
+    }
 
-            ToggleGroup ticketToggleGroup = new ToggleGroup();
+    private void populateRadioButtonsForSpecialTickets() throws SQLException, IOException {
+        List<Ticket> specialTickets = model.getSpecialTickets();
+        populateRadioButtons(specialTickets);
+    }
 
-            for (Ticket ticket : ticketsForEvent) {
-                RadioButton radioButton = new RadioButton(ticket.getName());
-                radioButton.setUserData(ticket);
-                radioButton.setToggleGroup(ticketToggleGroup);
+    private void populateRadioButtons(List<Ticket> tickets) {
+        lvRadioBtns.getItems().clear();
+        ToggleGroup ticketToggleGroup = new ToggleGroup();
 
-                lvRadioBtns.getItems().add(radioButton);
-            }*/
-
+        for (Ticket ticket : tickets) {
+            MFXRadioButton rb = new MFXRadioButton(ticket.getTicketType());
+            rb.setUserData(ticket);
+            rb.setText(ticket.getTicketName());
+            rb.setToggleGroup(ticketToggleGroup);
+            lvRadioBtns.getItems().add(rb);
         }
-
-        private void updateTicketPreview(Ticket ticket) {
-
-        }
-
-
-    private void populateRadioButtonsForSpecialTickets() {
     }
 
     @FXML

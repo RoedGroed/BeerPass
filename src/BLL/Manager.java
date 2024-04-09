@@ -26,9 +26,6 @@ public class Manager {
         userDAO.updateUser(selectedUser);
     }
 
-    /*public User validateUser(String username, String password) throws SQLException, IOException {
-        return userDAO.getUserByNameAndPassword(username, password);
-    }*/
 
     public User validateUser(String email, String password) throws SQLException, IOException {
         User user = userDAO.getUserByEmail(email);

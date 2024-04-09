@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Model {
     private String role;
@@ -87,6 +88,18 @@ public class Model {
     public List<Ticket> getAllTickets() throws SQLException, IOException {
         return manager.getAllTickets();
     }
+    public List<Ticket> getEventTickets() throws SQLException, IOException {
+        return manager.getAllTickets().stream()
+                .filter(ticket -> "Event Ticket".equalsIgnoreCase(ticket.getTicketType()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Ticket> getSpecialTickets() throws SQLException, IOException {
+        return manager.getAllTickets().stream()
+                .filter(ticket -> "Special Ticket".equalsIgnoreCase(ticket.getTicketType()))
+                .collect(Collectors.toList());
+    }
+
     public void linkTicketToEvent(int eventID, int ticketID) throws SQLException, IOException {
         manager.linkTicketToEvent(eventID, ticketID);
     }
