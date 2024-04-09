@@ -53,7 +53,7 @@ public class SpecificEventController extends BaseController implements Initializ
     }
 
     @FXML
-    void onDeleteEvent(ActionEvent event) {
+    void onDeleteEvent(ActionEvent actionEvent) {
 
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirm Deletion");
@@ -62,7 +62,13 @@ public class SpecificEventController extends BaseController implements Initializ
 
         confirmationAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK){
-               // FIXME: eventModel.deleteEvent(selectedEvent);
+                try {
+                    eventModel.deleteEvent(event);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 // TODO: Get the event objected passed to this controller, so that i can delete the correct object.
                 // TODO: Update the events being shown, use the read method here/Remove from the list.
                 loadFXML("/EventWindow.FXML",model, (Stage) lblUsername.getScene().getWindow());
@@ -87,6 +93,9 @@ public class SpecificEventController extends BaseController implements Initializ
             stage.setScene(new Scene(root));
             stage.setTitle("Edit Event");
             stage.show();
+
+            Stage currentStage = (Stage) lblInfo.getScene().getWindow();
+            currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

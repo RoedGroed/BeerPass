@@ -13,7 +13,9 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -57,9 +59,27 @@ public class EditEventController extends BaseController implements Initializable
     }
 
     @FXML
-    private void onConfirmEvent(ActionEvent actionEvent) {
-        // Show and Wait Box
-        loadFXML("/SpecificEvent.FXML", model, (Stage) tfEventName.getScene().getWindow());
+    private void onConfirmEvent(ActionEvent actionEvent) throws SQLException, IOException {
+        getUserInput(event);
+        eventModel.updateEvent(event);
+
+        loadFXML("/EventWindow.FXML", model, (Stage) tfEventName.getScene().getWindow());
+    }
+
+    public void getUserInput(Event event){
+        event.setName(tfEventName.getText());
+        event.setLocation(tfEventLocation.getText());
+
+        String timeStart= tfEventTime.getText();
+        LocalDate timeDate = dpEventDate.getValue();
+        String time = eventModel.formatTimeToString(timeDate,timeStart);
+        event.setTime(time);
+
+        event.setNote(taEventNotes.getText());
+        event.setImagePath(cbEventImages.getValue());
+        event.setTicketLimit(Integer.parseInt(tfMaxAttendees.getText()));
+
+
     }
 
     @FXML

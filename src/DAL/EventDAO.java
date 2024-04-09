@@ -30,17 +30,7 @@ public class EventDAO {
         return event;
     }
 
-    public void deleteEvent(Event event) throws SQLException, IOException {
-        DBConnector dbConnector = new DBConnector();
-        try(Connection conn = dbConnector.getConnection()) {
-            String sql = "DELETE FROM Events WHERE EventID = ?";
-            try (PreparedStatement preparedStatement = conn.prepareStatement(sql)){
 
-                preparedStatement.setInt(1,event.getEventID());
-                preparedStatement.executeUpdate();
-            }
-        }
-    }
 
     public void updateEvents(Event selectedEvent) throws SQLException, IOException{
         String updateQuery = "UPDATE Events SET Name = ?, Location = ?, Time = ?, Note = ?, TicketLimit = ?, ImagePath = ? WHERE EventID = ?";
@@ -54,6 +44,7 @@ public class EventDAO {
             preparedStatement.setString(4, selectedEvent.getNote());
             preparedStatement.setInt(5, selectedEvent.getTicketLimit());
             preparedStatement.setString(6, selectedEvent.getImagePath());
+            preparedStatement.setInt(7, selectedEvent.getEventID());
 
             preparedStatement.executeUpdate();
         }
@@ -109,6 +100,34 @@ public class EventDAO {
             }
         }
         return events;
+    }
+
+
+
+    ///// UTILITY /////
+
+    public void deleteEvent(int eventId) throws SQLException, IOException {
+        DBConnector dbConnector = new DBConnector();
+        try (Connection conn = dbConnector.getConnection()) {
+            deleteEventTickets(conn, eventId);
+            deleteTheEvent(conn, eventId);
+        }
+    }
+
+    private void deleteEventTickets(Connection conn, int eventId) throws SQLException {
+        String deleteTicketsSql = "DELETE FROM EventTickets WHERE EventID = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(deleteTicketsSql)) {
+            stmt.setInt(1, eventId);
+            stmt.executeUpdate();
+        }
+    }
+
+    private void deleteTheEvent(Connection conn, int eventId) throws SQLException {
+        String deleteEventSql = "DELETE FROM Events WHERE EventID = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(deleteEventSql)) {
+            stmt.setInt(1, eventId);
+            stmt.executeUpdate();
+        }
     }
 
     public void readSomeOfTheEventMaybeIDontKnowForSureButItCouldBeOfUseWithTicketsAndUsersMaybe (){}

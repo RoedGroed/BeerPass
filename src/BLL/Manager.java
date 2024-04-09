@@ -55,7 +55,7 @@ public class Manager {
     }
 
     public void deleteEvent(Event selectedEvent) throws SQLException, IOException {
-        eventDAO.deleteEvent(selectedEvent);
+        eventDAO.deleteEvent(selectedEvent.getEventID());
     }
 
     public void updateEvents(Event selectedEvent) throws SQLException, IOException {
