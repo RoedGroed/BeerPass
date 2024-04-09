@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="250.0" fitWidth="500.0" layoutX="-3.0" layoutY="-2.0">
          <image>
-            <Image url="@../../../../Downloads/ticket_template.png" />
+            <Image url="Images/App/ticket_template.png" />
          </image>
       </ImageView>
       <Label fx:id="eventName" layoutX="183.0" layoutY="71.0" text="Event name">
