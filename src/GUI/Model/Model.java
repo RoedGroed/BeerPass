@@ -90,6 +90,18 @@ public class Model {
     public void linkTicketToEvent(int eventID, int ticketID) throws SQLException, IOException {
         manager.linkTicketToEvent(eventID, ticketID);
     }
+    public List<Ticket> getLinkedTickets(int eventID) throws SQLException, IOException {
+        return manager.getLinkedTickets(eventID);
+    }
+    public void removeTicketFromEvent(int eventID, int ticketID) throws SQLException, IOException {
+        manager.removeTicketFromEvent(eventID, ticketID);
+    }
+    public int getTicketIDByName(String selectedTicket) throws SQLException, IOException {
+        return manager.getTicketIDByName(selectedTicket);
+    }
+    public void deleteTicket(int ticketID) throws SQLException, IOException {
+        manager.deleteTicket(ticketID);
+    }
 
 }
 

@@ -82,5 +82,17 @@ public class Manager {
     public void linkTicketToEvent(int eventID, int ticketID) throws SQLException, IOException {
         ticketDAO.linkTicketToEvent(eventID, ticketID);
     }
+    public List<Ticket> getLinkedTickets(int eventID) throws SQLException, IOException {
+        return ticketDAO.getLinkedTickets(eventID);
+    }
+    public void removeTicketFromEvent(int eventID, int ticketID) throws SQLException, IOException {
+        ticketDAO.removeTicketFromEvent(eventID, ticketID);
+    }
+    public int getTicketIDByName(String selectedTicket) throws SQLException, IOException {
+        return ticketDAO.getTicketIDByName(selectedTicket);
+    }
+    public void deleteTicket(int ticketID) throws SQLException, IOException {
+        ticketDAO.deleteTicket(ticketID);
+    }
 }
 
