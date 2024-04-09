@@ -270,7 +270,7 @@ Shapes
     -fx-text-fill: white;
     -fx-font-family: 'Inter';
 }
-#tglBtn {
+.tglBtn {
     -fx-text-fill: white;
     -fx-background-color: rgba(0, 0, 0, 0.45);
     -fx-border-color: rgba(255, 255, 255, 0.5);
@@ -279,7 +279,7 @@ Shapes
     -fx-border-radius: 7px;
     -fx-background-radius: 10px;
 }
-#tglBtn:selected {
+.tglBtn:selected {
     -fx-text-fill: white;
     -fx-background-color: rgba(0, 0, 0, 0.45);
     -fx-border-color: rgba(95, 18, 18, 0.5);

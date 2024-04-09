@@ -94,8 +94,8 @@
                   <Label id="lblTic2" layoutX="774.0" layoutY="91.0" prefHeight="25.0" prefWidth="328.0" text="New Ticket Type" />
                   <TextField fx:id="txtfTicketName" layoutX="774.0" layoutY="125.0" prefHeight="35.0" prefWidth="299.0" promptText="Ticket Name" />
                   <MFXButton fx:id="btnAddTicket" layoutX="982.0" layoutY="208.0" onAction="#onAddTicket" prefHeight="25.0" prefWidth="91.0" styleClass="btn" text="Add Ticket" />
-                  <ToggleButton id="tglBtn" fx:id="tglBtnEventTicket" layoutX="774.0" layoutY="170.0" mnemonicParsing="false" onAction="#onEventTicket" prefHeight="25.0" prefWidth="101.0" text="Event Ticket" />
-                  <ToggleButton id="tglBtn" fx:id="tglBtnSpecialTicket" layoutX="972.0" layoutY="170.0" mnemonicParsing="false" onAction="#onSpecialTicket" prefHeight="25.0" prefWidth="101.0" text="Special Ticket" />
+                  <ToggleButton styleClass="tglBtn" fx:id="tglBtnEventTicket" layoutX="774.0" layoutY="170.0" mnemonicParsing="false" onAction="#onEventTicket" prefHeight="25.0" prefWidth="101.0" text="Event Ticket" />
+                  <ToggleButton styleClass="tglBtn" fx:id="tglBtnSpecialTicket" layoutX="972.0" layoutY="170.0" mnemonicParsing="false" onAction="#onSpecialTicket" prefHeight="25.0" prefWidth="101.0" text="Special Ticket" />
                   <MFXButton id="triangleBtnLeft" fx:id="btnTriangleLeft" layoutX="470.0" layoutY="242.0" onAction="#onTriangleLeft" text=" " />
                   <MFXButton id="triangleBtnRight" fx:id="btnTriangleRight" layoutX="470.0" layoutY="313.0" onAction="#onTriangleRight" text=" " />
                </children></AnchorPane>
