@@ -23,7 +23,9 @@ public class TicketWindowController extends BaseController implements Initializa
     @FXML
     private ListView listviewAvaTickets;
     @FXML
-    private ListView listviewTicketTypes;
+    private ListView listviewEventTickets;
+    @FXML
+    private ListView listviewSpecialTickets;
     @FXML
     private TextField txtfTicketName;
     @FXML
@@ -33,7 +35,8 @@ public class TicketWindowController extends BaseController implements Initializa
     private EventModel eventModel;
     private Event event;
     private ObservableList<Event> allEvents = FXCollections.observableArrayList();
-    private ObservableList<Ticket> allTickets = FXCollections.observableArrayList();
+    private ObservableList<Ticket> eventTickets = FXCollections.observableArrayList();
+    private ObservableList<Ticket> specialTickets = FXCollections.observableArrayList();
     ToggleGroup tg = new ToggleGroup();
     public TicketWindowController() {
         eventModel = new EventModel();
@@ -65,10 +68,10 @@ public class TicketWindowController extends BaseController implements Initializa
                     }
                 }
             });
-            //Listview for ticket types
-            allTickets.addAll(model.getAllTickets());
-            listviewTicketTypes.setItems(allTickets);
-            listviewTicketTypes.setCellFactory(ticketListView -> new ListCell<Ticket>() {
+            //Listview for eventticket types
+            eventTickets.addAll(model.getEventTickets());
+            listviewEventTickets.setItems(eventTickets);
+            listviewEventTickets.setCellFactory(ticketListView -> new ListCell<Ticket>() {
                 @Override
                 protected void updateItem(Ticket ticket, boolean empty) {
                     super.updateItem(ticket, empty);
@@ -79,7 +82,20 @@ public class TicketWindowController extends BaseController implements Initializa
                     }
                 }
             });
-            //listview for the tickets linked to an event
+            specialTickets.addAll(model.getSpecialTickets());
+            listviewSpecialTickets.setItems(specialTickets);
+            listviewSpecialTickets.setCellFactory(ticketListView -> new ListCell<Ticket>() {
+                @Override
+                protected void updateItem(Ticket ticket, boolean empty) {
+                    super.updateItem(ticket, empty);
+                    if (empty || ticket == null) {
+                        setText(null);
+                    } else {
+                        setText(ticket.getTicketName());
+                    }
+                }
+            });
+            //listview for the eventtickets linked to an event
             listviewEvents.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     Event selectedEvent = (Event) newValue;
@@ -109,19 +125,27 @@ public class TicketWindowController extends BaseController implements Initializa
 
     @FXML
     private void onRemoveTicket(ActionEvent actionEvent) {
-        if (listviewTicketTypes.getSelectionModel().getSelectedItem() != null) {
-            Ticket selectedTicketName = (Ticket) listviewTicketTypes.getSelectionModel().getSelectedItem();
+        if (listviewEventTickets.getSelectionModel().getSelectedItem() != null) {
+            Ticket selectedTicketName = (Ticket) listviewEventTickets.getSelectionModel().getSelectedItem();
             // Retrieving the ticketID then removing it
             try {
                 model.deleteTicket(selectedTicketName.getTicketID());
                 updateUI();
-            } catch (SQLException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "This ticket is in use, please remove it form an event first.");
-                alert.showAndWait();
-            } catch (IOException e) {
+            } catch (SQLException | IOException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "This ticket is in use, please remove it form an event first.");
                 alert.showAndWait();
             }
+        } else if (listviewSpecialTickets.getSelectionModel().getSelectedItem() != null) {
+            Ticket selectedTicketName = (Ticket) listviewSpecialTickets.getSelectionModel().getSelectedItem();
+            // Retrieving the ticketID then removing it
+            try {
+                model.deleteTicket(selectedTicketName.getTicketID());
+                updateUI();
+            } catch (SQLException | IOException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "This ticket is in use, please remove it form an event first.");
+                alert.showAndWait();
+            }
+
         }
     }
     @FXML
@@ -156,14 +180,15 @@ public class TicketWindowController extends BaseController implements Initializa
 
     public void onSpecialTicket(ActionEvent actionEvent) {
     }
+
     @FXML
     private void onTriangleLeft(ActionEvent actionEvent) throws SQLException, IOException, InterruptedException {
         if(listviewEvents.getSelectionModel().getSelectedItem() != null &&
-                listviewTicketTypes.getSelectionModel().getSelectedItem() != null) {
+                listviewEventTickets.getSelectionModel().getSelectedItem() != null) {
             //Getting the event and ticket ids from the two listviews
             Event selectedEvent = (Event) listviewEvents.getSelectionModel().getSelectedItem();
             int eventID = selectedEvent.getEventID();
-            Ticket selectedTicket = (Ticket) listviewTicketTypes.getSelectionModel().getSelectedItem();
+            Ticket selectedTicket = (Ticket) listviewEventTickets.getSelectionModel().getSelectedItem();
             int ticketID = selectedTicket.getTicketID();
             //calling the method from the database to link the ticket to the event
             model.linkTicketToEvent(eventID, ticketID);
@@ -206,12 +231,15 @@ public class TicketWindowController extends BaseController implements Initializa
             allEvents.addAll(eventModel.getAllEvents());
 
             // Update the tickets list
-            allTickets.clear();
-            allTickets.addAll(model.getAllTickets());
+            eventTickets.clear();
+            eventTickets.addAll(model.getEventTickets());
+            specialTickets.clear();
+            specialTickets.addAll(model.getSpecialTickets());
 
             // Refresh ListViews
             listviewEvents.refresh();
-            listviewTicketTypes.refresh();
+            listviewEventTickets.refresh();
+            listviewSpecialTickets.refresh();
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }

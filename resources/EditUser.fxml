@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -92,76 +93,83 @@
     </VBox>
 </left>
 <center>
-    <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-        <children>
-            <StackPane maxHeight="71.0" maxWidth="427.0">
-                <children>
-                    <Rectangle fx:id="titleRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" stroke="BLACK" strokeType="INSIDE" width="427.0" StackPane.alignment="TOP_LEFT" />
-                    <Label styleClass="lbl" text="EDIT USER" StackPane.alignment="CENTER">
-                        <StackPane.margin>
-                            <Insets />
-                        </StackPane.margin>
-                    </Label>
-                </children>
-                <VBox.margin>
-                    <Insets top="25.0" />
-                </VBox.margin>
-            </StackPane>
-            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
-                <columnConstraints>
-                    <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="ALWAYS" />
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints maxHeight="68.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="117.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="108.0" minHeight="0.0" prefHeight="14.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="108.0" minHeight="0.0" prefHeight="16.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="17.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="14.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="14.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="109.0" minHeight="0.0" prefHeight="21.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="263.0" minHeight="0.0" prefHeight="263.0" vgrow="SOMETIMES" />
-                </rowConstraints>
-                <children>
-                    <Label text="USER NAME" />
-                    <Label text="USER PASSWORD" GridPane.rowIndex="3" />
-                    <Label text="USER ROLES" GridPane.rowIndex="9" />
-                    <StackPane GridPane.rowIndex="10">
-                        <children>
-                            <Rectangle fx:id="radiobtnRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="168.0" stroke="BLACK" strokeType="INSIDE" width="427.0" StackPane.alignment="TOP_LEFT" />
-                            <VBox minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" StackPane.alignment="CENTER_LEFT">
-                                <children>
-                                    <MFXRadioButton fx:id="userAdmin" text="Admin">
-                                        <padding>
-                                            <Insets left="10.0" top="10.0" />
-                                        </padding>
-                                    </MFXRadioButton>
-                                    <MFXRadioButton fx:id="userEventCoordinator" text="Event Coordinator">
-                                        <padding>
-                                            <Insets left="10.0" />
-                                        </padding>
-                                    </MFXRadioButton>
-                                    <MFXRadioButton fx:id="userCustomer" text="User">
-                                        <padding>
-                                            <Insets left="10.0" />
-                                        </padding>
-                                    </MFXRadioButton>
-                                </children>
-                            </VBox>
-                        </children>
-                    </StackPane>
-                    <TextField fx:id="tfUserName" minHeight="27.0" minWidth="427.0" GridPane.rowIndex="1" />
-                    <TextField fx:id="tfUserPassword" minHeight="27.0" minWidth="427.0" GridPane.rowIndex="4" />
-                  <Label text="USER E-MAIL" GridPane.rowIndex="6" />
-                  <TextField fx:id="tfUserEmail" minHeight="27.0" minWidth="427.0" GridPane.rowIndex="7" />
-                </children>
-                <VBox.margin>
-                    <Insets top="50.0" />
-                </VBox.margin>
-            </GridPane>
-            <HBox alignment="BOTTOM_RIGHT" spacing="20.0">
+      <AnchorPane BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets left="50.0" />
+         </BorderPane.margin>
+         <children>
+          <VBox prefHeight="200.0" prefWidth="100.0">
+              <children>
+                  <StackPane maxHeight="71.0" maxWidth="427.0">
+                      <children>
+                          <Rectangle fx:id="titleRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" stroke="BLACK" strokeType="INSIDE" width="427.0" StackPane.alignment="TOP_LEFT" />
+                          <Label styleClass="lbl" text="EDIT USER" StackPane.alignment="CENTER">
+                              <StackPane.margin>
+                                  <Insets />
+                              </StackPane.margin>
+                          </Label>
+                      </children>
+                      <VBox.margin>
+                          <Insets top="25.0" />
+                      </VBox.margin>
+                  </StackPane>
+                  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+                      <columnConstraints>
+                          <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="ALWAYS" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints maxHeight="68.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="117.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="108.0" minHeight="0.0" prefHeight="14.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="108.0" minHeight="0.0" prefHeight="16.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="17.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="14.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="133.0" minHeight="10.0" prefHeight="14.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="109.0" minHeight="0.0" prefHeight="21.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="263.0" minHeight="0.0" prefHeight="263.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                      <children>
+                          <Label text="USER NAME" />
+                          <Label text="USER PASSWORD" GridPane.rowIndex="3" />
+                          <Label text="USER ROLES" GridPane.rowIndex="9" />
+                          <StackPane GridPane.rowIndex="10">
+                              <children>
+                                  <Rectangle fx:id="radiobtnRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="168.0" stroke="BLACK" strokeType="INSIDE" width="427.0" StackPane.alignment="TOP_LEFT" />
+                                  <VBox minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" StackPane.alignment="CENTER_LEFT">
+                                      <children>
+                                          <MFXRadioButton fx:id="userAdmin" text="Admin">
+                                              <padding>
+                                                  <Insets left="10.0" top="10.0" />
+                                              </padding>
+                                          </MFXRadioButton>
+                                          <MFXRadioButton fx:id="userEventCoordinator" text="Event Coordinator">
+                                              <padding>
+                                                  <Insets left="10.0" />
+                                              </padding>
+                                          </MFXRadioButton>
+                                          <MFXRadioButton fx:id="userCustomer" text="User">
+                                              <padding>
+                                                  <Insets left="10.0" />
+                                              </padding>
+                                          </MFXRadioButton>
+                                      </children>
+                                  </VBox>
+                              </children>
+                          </StackPane>
+                          <TextField fx:id="tfUserName" minHeight="27.0" minWidth="427.0" GridPane.rowIndex="1" />
+                          <TextField fx:id="tfUserPassword" minHeight="27.0" minWidth="427.0" GridPane.rowIndex="4" />
+                        <Label text="USER E-MAIL" GridPane.rowIndex="6" />
+                        <TextField fx:id="tfUserEmail" minHeight="27.0" minWidth="427.0" GridPane.rowIndex="7" />
+                      </children>
+                      <VBox.margin>
+                          <Insets top="50.0" />
+                      </VBox.margin>
+                  </GridPane>
+              </children>
+          </VBox>
+            <HBox alignment="BOTTOM_RIGHT" layoutX="729.0" layoutY="684.0" spacing="20.0">
                 <children>
                     <MFXButton onAction="#onDelete" prefHeight="30.0" prefWidth="110.0" styleClass="btn" text="DELETE" />
                     <MFXButton onAction="#onCancel" prefHeight="30.0" prefWidth="110.0" styleClass="btn" text="CANCEL" />
@@ -171,14 +179,8 @@
                         </HBox.margin>
                     </MFXButton>
                 </children>
-                <VBox.margin>
-                    <Insets right="50.0" top="100.0" />
-                </VBox.margin>
             </HBox>
-        </children>
-        <BorderPane.margin>
-            <Insets left="50.0" />
-        </BorderPane.margin>
-    </VBox>
+         </children>
+      </AnchorPane>
 </center>
 </BorderPane>
