@@ -4,6 +4,7 @@ import BE.Event;
 import BE.User;
 import GUI.Controller.BaseController;
 import GUI.Model.EventModel;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,11 +13,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -43,6 +46,7 @@ public class NewEventController extends BaseController implements Initializable 
     @FXML
     private DatePicker dpEventDate;
     private EventModel eventModel;
+    private List<User> selectedCoordinators = new ArrayList<>();
 
 
     @FXML
@@ -64,10 +68,17 @@ public class NewEventController extends BaseController implements Initializable 
 
     @FXML
     private void onConfirmUser(ActionEvent actionEvent) throws SQLException, IOException {
-
         Event event = getUserInput();
 
+        // Save the event to generate an event ID
         eventModel.createEvent(event);
+
+        // Add coordinators to the event in the database
+    /*
+        for (User coordinator : selectedCoordinators) {
+            eventModel.addCoordinator(event.getEventID(), coordinator.getUserID());
+        }
+    */
 
         // Show and Wait
         // Update the database and lists(Observable Lists)
@@ -121,6 +132,13 @@ public class NewEventController extends BaseController implements Initializable 
         try {
             List<User> coordinators = eventModel.readAllEventCoordinators();
             lvAllCoordinators.getItems().addAll(coordinators);
+
+            lvAllCoordinators.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            lvAllCoordinators.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    selectedCoordinators.add(newValue);
+                }
+            });
         } catch (SQLException | IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -130,6 +148,36 @@ public class NewEventController extends BaseController implements Initializable 
         }
     }
 
+    /**TODO: create event, send it back up. so that i can add the event coordinators.
+     *
+     */
+
+
+    @FXML
+    private void onAddCoordinator(ActionEvent actionEvent) {
+        User selectedUser = lvAllCoordinators.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            lvAllCoordinators.getItems().remove(selectedUser);
+            lvCoordinators.getItems().add(selectedUser);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    "Please Select an Event Coordinator\r" +
+                            "that should be added to this event");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void onRemoveCoordinator(ActionEvent actionEvent) {
+        User selectedUser = lvCoordinators.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            lvCoordinators.getItems().remove(selectedUser);
+            lvAllCoordinators.getItems().add(selectedUser);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a coordinator to remove.");
+            alert.showAndWait();
+        }
+    }
 
 
 }

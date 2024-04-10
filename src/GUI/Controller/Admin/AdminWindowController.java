@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -33,6 +35,7 @@ public class AdminWindowController extends BaseController implements Initializab
     @FXML
     private Button btnAdmin;
     private ListView<User> selectedListView;
+    private List<User> selectedCoordinators = new ArrayList<>();
 
     public AdminWindowController() {
 

@@ -6,7 +6,10 @@ import GUI.Controller.BaseController;
 import GUI.Model.EventModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -56,8 +59,21 @@ public class EditEventController extends BaseController implements Initializable
         loadImagesIntoComboBox();
     }
     @FXML
-    private void onCancel(ActionEvent actionEvent) {
-        loadFXML("/SpecificEvent.FXML", model, (Stage) tfEventName.getScene().getWindow());
+    private void onCancel(ActionEvent actionEvent) throws IOException, SQLException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/SpecificEvent.fxml"));
+        Parent root = loader.load();
+
+        SpecificEventController controller = loader.getController();
+        controller.initData(event);
+        controller.populateFields(event);
+
+        Stage stage = new Stage();
+        stage.setTitle(event.getName());
+        stage.setScene(new Scene(root));
+        stage.show();
+
+        Stage currentStage = (Stage) tfEventTime.getScene().getWindow();
+        currentStage.close();
     }
 
     @FXML
@@ -126,7 +142,8 @@ public class EditEventController extends BaseController implements Initializable
             alert.showAndWait();
         }
     }
-
+    //FIXME: Current adding all to the left Listview, and not removing those already assigned.
+    // Maybe try and filter them or something, so that if there is duplicates remove them from all.
     public void populateFields(Event event){
         this.event = event;
 

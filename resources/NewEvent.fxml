@@ -110,8 +110,8 @@
                   <ImageView fx:id="imgEventImage" fitHeight="210.0" fitWidth="318.0" layoutX="106.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true" />
                   <TextArea id="text-area" fx:id="taEventNotes" layoutX="586.0" layoutY="151.0" prefHeight="168.0" prefWidth="482.0" />
                   <Label layoutX="586.0" layoutY="127.0" prefHeight="24.0" prefWidth="139.0" text="Event Notes" />
-                  <MFXButton fx:id="btnRemove" layoutX="616.0" layoutY="583.0" onAction="#onCancel" prefHeight="30.0" prefWidth="168.0" styleClass="btn" text="Remove Coordinator" />
-                  <MFXButton fx:id="btnAdd" layoutX="882.0" layoutY="583.0" onAction="#onCancel" prefHeight="30.0" prefWidth="149.0" styleClass="btn" text="Add Coordinator" />
+                  <MFXButton fx:id="btnRemove" layoutX="616.0" layoutY="583.0" onAction="#onRemoveCoordinator" prefHeight="30.0" prefWidth="168.0" styleClass="btn" text="Remove Coordinator" />
+                  <MFXButton fx:id="btnAdd" layoutX="882.0" layoutY="583.0" onAction="#onAddCoordinator" prefHeight="30.0" prefWidth="149.0" styleClass="btn" text="Add Coordinator" />
                   <ListView fx:id="lvCoordinators" layoutX="586.0" layoutY="373.0" prefHeight="206.0" prefWidth="227.0" styleClass="listView" />
                   <ListView fx:id="lvAllCoordinators" layoutX="843.0" layoutY="373.0" prefHeight="206.0" prefWidth="227.0" styleClass="listView" />
                   <Label layoutX="616.0" layoutY="345.0" prefHeight="30.0" prefWidth="150.0" text="Event Coordinators" />
