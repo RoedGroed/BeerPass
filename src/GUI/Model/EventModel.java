@@ -5,9 +5,7 @@ import BE.User;
 import BLL.Manager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -25,7 +23,7 @@ public class EventModel {
     }
 
     public void createEvent(Event event) throws SQLException, IOException {
-        Event createdEvent = manager.createEvent(event);
+        manager.createEvent(event);
 
         // Update the event beings shown here also maybe, such it updates realtime.
     }
@@ -62,9 +60,6 @@ public class EventModel {
         return filteredUsers;
     }
 
-    private void reformatTime(){
-
-    }
 
     /**
      * Method to format time to a string, so it fits into database.
@@ -88,7 +83,21 @@ public class EventModel {
         return new String[] { date.toString(), time };
     }
 
+    public List<User> readAllEventCoordinators() throws SQLException, IOException {
+       return manager.readAllEventCoordinators();
+    }
 
+    public List<User> readAllAssignedEventCoordinators(int eventID) throws SQLException, IOException {
+       return manager.readAllAssignedEventCoordinators(eventID);
+    }
+
+    public void addCoordinator(int eventID, int userID) throws IOException, SQLException {
+        manager.addCoordinator(eventID, userID);
+    }
+
+    public void removeCoordinator(int eventID, int userID) throws SQLException, IOException {
+        manager.removeCoordinator(eventID,userID);
+    }
 
 
 

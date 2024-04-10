@@ -1,6 +1,7 @@
 package GUI.Controller.Event;
 
 import BE.Event;
+import BE.User;
 import GUI.Controller.BaseController;
 import GUI.Model.EventModel;
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class EditEventController extends BaseController implements Initializable {
@@ -37,9 +39,9 @@ public class EditEventController extends BaseController implements Initializable
     private TextArea taEventNotes;
 
     @FXML
-    private ListView<?> lvCoordinators;
+    private ListView<User> lvCoordinators;
     @FXML
-    private ListView<?> lvAllCoordinators;
+    private ListView<User> lvAllCoordinators;
     private Event event;
     private EventModel eventModel;
 
@@ -79,14 +81,51 @@ public class EditEventController extends BaseController implements Initializable
         event.setImagePath(cbEventImages.getValue());
         event.setTicketLimit(Integer.parseInt(tfMaxAttendees.getText()));
 
-
     }
 
     @FXML
-    private void onAddCoordinator(ActionEvent actionEvent){}
+    private void onAddCoordinator(ActionEvent actionEvent) {
+        User selectedUser = lvAllCoordinators.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            lvCoordinators.getItems().add(selectedUser);
+            lvAllCoordinators.getItems().remove(selectedUser);
+
+            try {
+                eventModel.addCoordinator(event.getEventID(), selectedUser.getUserID());
+            } catch (IOException | SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR,
+                        "Failed to add coordinator to the event. Please try again later.");
+                alert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    "Please Select an Event Coordinator\r" +
+                    "that should be added to this event");
+            alert.showAndWait();
+        }
+    }
 
     @FXML
-    private void onRemoveCoordinator(ActionEvent actionEvent){}
+    private void onRemoveCoordinator(ActionEvent actionEvent){
+        User selectedUser = lvCoordinators.getSelectionModel().getSelectedItem();
+        if (selectedUser != null){
+            lvAllCoordinators.getItems().add(selectedUser);
+            lvCoordinators.getItems().remove(selectedUser);
+
+            try{
+                eventModel.removeCoordinator(event.getEventID(), selectedUser.getUserID());
+            } catch (IOException | SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR,
+                        "Failed to remove coordinator to the event. Please try again later.");
+                alert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    "Please Select an Event Coordinator\r" +
+                            "that should be removed from this event");
+            alert.showAndWait();
+        }
+    }
 
     public void populateFields(Event event){
         this.event = event;
@@ -139,7 +178,6 @@ public class EditEventController extends BaseController implements Initializable
         cbEventImages.setOnAction(event -> {
             String selectedImage = cbEventImages.getValue();
             if (selectedImage != null) {
-                // TODO: Ændre når vi har nogle event images til den nye file path
                 String imagePath = "resources/Images/App/" + selectedImage;
                 Image image = new Image(new File(imagePath).toURI().toString());
                 imgEventImage.setImage(image);
@@ -148,7 +186,6 @@ public class EditEventController extends BaseController implements Initializable
     }
 
     public void loadImagesIntoComboBox(){
-        // TODO: Ændre når vi har nogle event images til den nye file path
         File folder = new File("resources/Images/App/");
 
         if(folder.exists() && folder.isDirectory()) {
@@ -162,5 +199,25 @@ public class EditEventController extends BaseController implements Initializable
             }
         }
     }
+
+    public void populateCoordinatorLists(int eventId) {
+        try {
+
+            List<User> allCoordinators = eventModel.readAllEventCoordinators();
+
+            List<User> assignedCoordinators = eventModel.readAllAssignedEventCoordinators(eventId);
+
+            lvAllCoordinators.getItems().addAll(allCoordinators);
+
+            lvCoordinators.getItems().addAll(assignedCoordinators);
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* TODO: Populate the Event Coordinator lists, so that i can assign them in the database, and remove them.
+        Remember to update the lists.
+        Look into how its done in admin, and just filter only event coordinator through, and link them via the DAO
+     */
 
 }

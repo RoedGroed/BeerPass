@@ -2,6 +2,7 @@ package DAL;
 
 import BE.User;
 import GUI.Model.Model;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
@@ -149,6 +150,80 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Method to read all Event coordinators.
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     */
+    public List<User> readAllEventCoordinators() throws SQLException, IOException {
+        List<User> allUsers = readAllUsers();
+        List<User> eventCoordinators = new ArrayList<>();
+        for (User user : allUsers) {
+            if ("Event Coordinator".equals(user.getRole())) {
+                eventCoordinators.add(user);
+            }
+        }
+        return eventCoordinators;
+    }
+
+    /**
+     * Get all the assigned EC to the specific Event.
+     * @param eventId
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     */
+    public List<User> getAssignedEventCoordinators(int eventId) throws SQLException, IOException {
+        List<User> assignedCoordinators = new ArrayList<>();
+        DBConnector dbConnector = new DBConnector();
+        String sql = "SELECT u.UserID, u.UserName FROM Users u " +
+                     "INNER JOIN Event_Coordinator_assignment ec ON u.UserID = ec.UserID " +
+                     "WHERE ec.EventID = ?";
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, eventId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int userID = rs.getInt("UserID");
+                    String userName = rs.getString("UserName");
+
+                    User user = new User(userID, userName);
+                    assignedCoordinators.add(user);
+                }
+            }
+        }
+        return assignedCoordinators;
+    }
+
+    public void addCoordinator(int EventID, int userID) throws IOException, SQLException {
+        DBConnector dbConnector = new DBConnector();
+        String sql = "INSERT INTO Event_Coordinator_assignment (EventID, UserID) VALUES (?, ?)";
+
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, EventID);
+            ps.setInt(2, userID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Could not add coordinator to this event",e);
+        }
+    }
+
+    public void removeCoordinator(int EventID, int userID) throws IOException, SQLException {
+        DBConnector dbConnector = new DBConnector();
+        String sql = "DELETE FROM Event_Coordinator_assignment WHERE EventID = ? AND UserID = ?";
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, EventID);
+            ps.setInt(2, userID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Could not remove coordinator to this event",e);
+        }
+    }
+
 }
+
 
 

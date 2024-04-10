@@ -6,7 +6,6 @@ import BE.User;
 import DAL.EventDAO;
 import DAL.TicketDAO;
 import DAL.UserDAO;
-import GUI.Model.Model;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
@@ -93,6 +92,21 @@ public class Manager {
     }
     public void linkTicketToUser(int userID, int ticketID, int eventID) throws SQLException, IOException {
         ticketDAO.linkUserToTicket(userID, ticketID, eventID);
+    }
+
+    public List<User> readAllEventCoordinators() throws SQLException, IOException {
+        return userDAO.readAllEventCoordinators();
+    }
+    public List<User> readAllAssignedEventCoordinators(int eventID) throws SQLException, IOException {
+       return userDAO.getAssignedEventCoordinators(eventID);
+    }
+
+    public void addCoordinator(int eventID, int userID) throws IOException, SQLException {
+        userDAO.addCoordinator(eventID,userID);
+    }
+
+    public void removeCoordinator(int eventID, int userID) throws SQLException, IOException {
+        userDAO.removeCoordinator(eventID,userID);
     }
 }
 

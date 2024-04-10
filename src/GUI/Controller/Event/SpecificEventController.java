@@ -199,6 +199,7 @@ public class SpecificEventController extends BaseController implements Initializ
 
             EditEventController editEventController = loader.getController();
             editEventController.populateFields(event); // Pass the event object to populate the fields
+            editEventController.populateCoordinatorLists(event.getEventID());
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

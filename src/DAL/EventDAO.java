@@ -1,6 +1,7 @@
 package DAL;
 
 import BE.Event;
+import BE.User;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -129,6 +130,7 @@ public class EventDAO {
             stmt.executeUpdate();
         }
     }
+
 
     public void readSomeOfTheEventMaybeIDontKnowForSureButItCouldBeOfUseWithTicketsAndUsersMaybe (){}
 
