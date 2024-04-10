@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="200.0" prefWidth="450.0" styleClass="ticketAnchPane" stylesheets="CSS/AppWindows.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Ticket.SpecialTicketController">
+   <children>
+      <ImageView fitHeight="200.0" fitWidth="450.0">
+         <image>
+            <Image url="@Images/App/ticket_template.png" />
+         </image>
+      </ImageView>
+      <Label id="lblEventName" fx:id="lblEventName" alignment="CENTER" layoutX="28.0" layoutY="84.0" prefHeight="17.0" prefWidth="311.0" text="Event Name">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <ImageView fx:id="qrCode" fitHeight="70.0" fitWidth="70.0" layoutX="360.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="barCode" fitHeight="70.0" fitWidth="70.0" layoutX="360.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+
+   </children>
+</AnchorPane>

@@ -14,6 +14,16 @@ Panes
     -fx-background-color: transparent;
 }
 
+.ticketAnchPane .label {
+    -fx-text-fill: black;
+    -fx-font-size: 14;
+}
+
+#lblEventName{
+    -fx-text-fill: black;
+    -fx-font-size: 28;
+}
+
 /*
 Labels
  */
@@ -208,9 +218,12 @@ Listviews
     -fx-background-color: transparent;
     -fx-text-fill: white;
 }
-.list-cell:selected {
-    -fx-background-color: rgba(133, 131, 131, 0.45);
+
+.list-cell:selected{
+    -fx-background-color: #201f45;
+    -fx-background-radius: 15;
 }
+
 /*
 Shapes
  */
@@ -310,6 +323,5 @@ Shapes
     -fx-background-image: url(/Images/CSS/tri-right.png);
     -fx-background-size: stretch;
 }
-
 
 

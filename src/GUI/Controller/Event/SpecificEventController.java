@@ -4,6 +4,8 @@ import BE.Event;
 import BE.Ticket;
 import BE.User;
 import GUI.Controller.BaseController;
+import GUI.Controller.Ticket.SpecialTicketController;
+import GUI.Controller.Ticket.TicketController;
 import GUI.Model.EventModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
@@ -16,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -62,11 +65,46 @@ public class SpecificEventController extends BaseController implements Initializ
     private Label lblSeleTicket;
     @FXML
     private Label lblSeleUser;
+    @FXML
+    private StackPane spTicketPreview;
+    ToggleGroup ticketToggleGroup = new ToggleGroup();
 
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         eventModel = new EventModel();
         initToggleBtns();
+
+        ticketToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Ticket selectedTicket = (Ticket) newValue.getUserData();
+                updateTicketPreview(selectedTicket);
+            }
+        });
+    }
+
+    private void updateTicketPreview(Ticket selectedTicket) {
+        try {
+            if ("Special Ticket".equals(selectedTicket.getTicketType())) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/SpecialTicket.fxml"));
+                Parent ticketPreview = loader.load();
+                SpecialTicketController specialTicketController = loader.getController();
+                specialTicketController.setSpecialTicketData(event);
+
+                spTicketPreview.getChildren().clear();
+                spTicketPreview.getChildren().add(ticketPreview);
+            } else if ("Event Ticket".equals(selectedTicket.getTicketType())){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Ticket.fxml"));
+                Parent ticketPreview = loader.load();
+                TicketController ticketController = loader.getController();
+                ticketController.setEventTicketData(event);
+
+                spTicketPreview.getChildren().clear();
+                spTicketPreview.getChildren().add(ticketPreview);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void initToggleBtns() {
@@ -95,27 +133,27 @@ public class SpecificEventController extends BaseController implements Initializ
         lvRadioBtns.setVisible(specialSelected || eventSelected);
 
         if (eventSelected) {
-            populateRadioButtonsForEventTickets();
+            populateRadioButtonsForEventTickets(event);
         } else if (specialSelected) {
             populateRadioButtonsForSpecialTickets();
         }
     }
 
-    private void populateRadioButtonsForEventTickets() throws SQLException, IOException {
-        List<Ticket> eventTickets = model.getEventTickets();
-        populateRadioButtons(eventTickets);
+
+
+    private void populateRadioButtonsForEventTickets(Event event) throws SQLException, IOException {
+        List<Ticket> ticketsForEvent = model.getLinkedTickets(event.getEventID());
+        populateRadioButtons(ticketsForEvent);
     }
 
     private void populateRadioButtonsForSpecialTickets() throws SQLException, IOException {
         List<Ticket> specialTickets = model.getSpecialTickets();
         populateRadioButtons(specialTickets);
     }
-
-    ToggleGroup ticketToggleGroup = new ToggleGroup();
+    //ToggleGroup ticketToggleGroup = new ToggleGroup();
 
     private void populateRadioButtons(List<Ticket> tickets) {
         lvRadioBtns.getItems().clear();
-
         for (Ticket ticket : tickets) {
             MFXRadioButton rb = new MFXRadioButton(ticket.getTicketType());
             rb.setUserData(ticket);
@@ -253,19 +291,8 @@ public class SpecificEventController extends BaseController implements Initializ
         lblTicketCounter.setText(String.valueOf(event.getTicketLimit()));
         //FIXME: Der skal laves en måde at regne de solgte billeter ud på.
         taEventNotes.setText(event.getNote());
-        //populateTickets(event);
 
     }
-
-    /*private void populateTickets(Event event) {
-        List<Ticket> ticketsForEvent = ticketModel.getTicketsForEvent(event.getEventID());
-        for (Ticket ticket : ticketsForEvent) {
-            RadioButton radioButton = new RadioButton(ticket.getTicketName());
-            radioButton.setToggleGroup(ticketToggleGroup);
-            radioButton.setUserData(ticket);
-            lvRadioBtns.getItems().add(radioButton);
-        }
-    }*/
 
 }
 

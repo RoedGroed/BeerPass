@@ -4,26 +4,37 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="250.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Ticket.TicketController">
+<AnchorPane prefHeight="200.0" prefWidth="450.0" styleClass="ticketAnchPane" stylesheets="CSS/AppWindows.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Ticket.TicketController">
    <children>
-      <ImageView fitHeight="250.0" fitWidth="500.0" layoutX="-3.0" layoutY="-2.0">
+      <ImageView fitHeight="200.0" fitWidth="450.0">
          <image>
-            <Image url="Images/App/ticket_template.png" />
+            <Image url="@Images/App/ticket_template.png" />
          </image>
       </ImageView>
-      <Label fx:id="eventName" layoutX="183.0" layoutY="71.0" text="Event name">
+      <VBox alignment="CENTER" layoutX="26.0" layoutY="65.0" prefHeight="61.0" prefWidth="310.0">
+         <children>
+            <Label id="lblEventName" fx:id="eventName" text="Event name">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="eventLocation" text="Spangsbjerg Kirkevej 103, 6700 Esbjerg" />
+            <Label fx:id="eventTime" text="11/03/24 - 11:30" />
+         </children>
+      </VBox>
+      <ImageView fx:id="qrCode" fitHeight="70.0" fitWidth="70.0" layoutX="378.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="barCode" fitHeight="70.0" fitWidth="70.0" layoutX="378.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="costumerName" layoutX="155.0" layoutY="152.0" text="Customer">
          <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="eventLocation" layoutX="165.0" layoutY="103.0" text="Location" />
-      <Label fx:id="eventTime" layoutX="221.0" layoutY="103.0" text="Time of event" />
-      <ImageView fx:id="qrCode" fitHeight="73.0" fitWidth="82.0" layoutX="378.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="barCode" fitHeight="81.0" fitWidth="82.0" layoutX="378.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="costumerName" layoutX="203.0" layoutY="184.0" text="Customer" />
-      <Label fx:id="eventNotes" layoutX="43.0" layoutY="30.0" text="notes" />
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="eventNotes" layoutX="43.0" layoutY="30.0" text="notes">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+
    </children>
 </AnchorPane>

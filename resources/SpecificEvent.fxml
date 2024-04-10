@@ -9,17 +9,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="CSS/AppWindows.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Event.SpecificEventController">
     <left>
         <VBox id="Sidebar" prefHeight="720.0" prefWidth="131.0" BorderPane.alignment="CENTER">
             <children>
-                <Label id="lblUsername" fx:id="lblUsername" prefHeight="26.0" prefWidth="108.0" text="&lt;Username&gt;" VBox.vgrow="ALWAYS">
+                <Label id="lblUsername" fx:id="lblUsername" alignment="CENTER" prefHeight="26.0" prefWidth="108.0" text="&lt;Username&gt;" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets left="15.0" top="5.0" />
                     </VBox.margin>
@@ -96,33 +96,41 @@
             <children>
                 <AnchorPane prefHeight="717.0" prefWidth="1099.0">
                     <children>
-                        <Label fx:id="lblEventName" layoutX="51.0" layoutY="46.0" prefHeight="71.0" prefWidth="427.0" styleClass="bigLabel" text="Event Name" textAlignment="CENTER" />
+                        <StackPane layoutX="29.0" layoutY="46.0">
+                            <children>
+                                <VBox spacing="10.0">
+                                    <children>
+                                        <Label id="lbl" fx:id="lblEventName" alignment="CENTER" maxHeight="71.0" maxWidth="427.0" prefHeight="71.0" prefWidth="427.0" styleClass="bigLabel" text="event name" />
+                                        <Label id="infoLabel" fx:id="lblInfo" alignment="BOTTOM_CENTER" prefHeight="27.0" prefWidth="425.0" styleClass="bigLabel" text="Time Date Location" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </StackPane>
                         <TextField fx:id="tfSearch" layoutX="52.0" layoutY="261.0" prefHeight="30.0" prefWidth="225.0" promptText="Search" visible="false" />
-                        <TextArea id="TextArea" fx:id="taEventNotes" layoutX="591.0" layoutY="210.0" prefHeight="168.0" prefWidth="482.0" promptText="Write notes for the event here." styleClass="TextArea" />
-                        <Label layoutX="591.0" layoutY="186.0" prefHeight="24.0" prefWidth="139.0" text="Event Notes" />
+                        <TextArea id="TextArea" fx:id="taEventNotes" layoutX="591.0" layoutY="145.0" prefHeight="170.0" prefWidth="450.0" promptText="Write notes for the event here." styleClass="TextArea" />
+                        <Label layoutX="591.0" layoutY="121.0" prefHeight="24.0" prefWidth="139.0" text="Event Notes" />
                         <ListView fx:id="lvAllUsers" layoutX="51.0" layoutY="311.0" prefHeight="300.0" prefWidth="225.0" styleClass="listView" visible="false" />
                         <ListView fx:id="lvRadioBtns" layoutX="323.0" layoutY="261.0" prefHeight="350.0" prefWidth="225.0" styleClass="listView" visible="false" />
                         <Label fx:id="lblSeleTicket" layoutX="323.0" layoutY="231.0" prefHeight="30.0" prefWidth="150.0" text="Select Ticket" visible="false" />
                         <Label fx:id="lblSeleUser" layoutX="52.0" layoutY="231.0" prefHeight="30.0" prefWidth="174.0" text="Select User" visible="false" />
                         <MFXButton fx:id="btnPrintTicket" layoutX="962.0" layoutY="653.0" onAction="#onPrintTicket" prefHeight="30.0" prefWidth="110.0" styleClass="btnConfirm" text="Print Ticket" />
                         <MFXButton fx:id="btnEditEvent" layoutX="51.0" layoutY="653.0" onAction="#onEditEvent" prefHeight="30.0" prefWidth="110.0" styleClass="btn" text="Edit Event" />
-                  <MFXButton fx:id="btnDeleteEvent" layoutX="323.0" layoutY="653.0" onAction="#onDeleteEvent" prefHeight="30.0" prefWidth="110.0" styleClass="btn" text="Delete Event" />
-                  <ImageView fx:id="imgTicketPreview" fitHeight="150.0" fitWidth="422.0" layoutX="622.0" layoutY="421.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label alignment="CENTER" layoutX="758.0" layoutY="391.0" prefHeight="30.0" prefWidth="150.0" text="Ticket Preview" />
-                  <Label id="infoLabel" fx:id="lblInfo" layoutX="51.0" layoutY="117.0" prefHeight="32.0" prefWidth="427.0" styleClass="bigLabel" text="Time Date Location" />
-                  <Label id="ticketLabel" fx:id="lblTicketCounter" layoutX="918.0" layoutY="62.0" prefHeight="32.0" prefWidth="135.0" text="135 / 250" textAlignment="CENTER" />
-                  <Label id="ticketLabel" layoutX="918.0" layoutY="46.0" prefHeight="19.0" prefWidth="138.0" styleClass="bigLabel" text="Tickets Sold" />
-                  <MFXButton fx:id="btnMailTicket" layoutX="832.0" layoutY="653.0" onAction="#onMailTicket" prefHeight="30.0" prefWidth="110.0" styleClass="btnConfirm" text="Mail Ticket" />
-                  <HBox layoutX="51.0" layoutY="171.0">
-                     <children>
-                          <ToggleButton fx:id="tBtnEvent" prefHeight="30.0" prefWidth="110.0" styleClass="tglBtn" text="Event Ticket">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="grpSelectTicket" />
-                           </toggleGroup>
-                          </ToggleButton>
-                          <ToggleButton fx:id="tBtnSpecial" prefHeight="30.0" prefWidth="110.0" styleClass="tglBtn" text="Special Ticket" toggleGroup="$grpSelectTicket" />
-                     </children>
-                  </HBox>
+                        <MFXButton fx:id="btnDeleteEvent" layoutX="323.0" layoutY="653.0" onAction="#onDeleteEvent" prefHeight="30.0" prefWidth="110.0" styleClass="btn" text="Delete Event" />
+                        <Label alignment="CENTER" layoutX="757.0" layoutY="329.0" prefHeight="30.0" prefWidth="150.0" text="Ticket Preview" />
+                        <Label id="ticketLabel" fx:id="lblTicketCounter" layoutX="918.0" layoutY="62.0" prefHeight="32.0" prefWidth="135.0" text="135 / 250" textAlignment="CENTER" />
+                        <Label id="ticketLabel" layoutX="918.0" layoutY="46.0" prefHeight="19.0" prefWidth="138.0" styleClass="bigLabel" text="Tickets Sold" />
+                        <MFXButton fx:id="btnMailTicket" layoutX="832.0" layoutY="653.0" onAction="#onMailTicket" prefHeight="30.0" prefWidth="110.0" styleClass="btnConfirm" text="Mail Ticket" />
+                        <HBox layoutX="51.0" layoutY="171.0">
+                            <children>
+                                <ToggleButton fx:id="tBtnEvent" prefHeight="30.0" prefWidth="110.0" styleClass="tglBtn" text="Event Ticket">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="grpSelectTicket" />
+                                    </toggleGroup>
+                                </ToggleButton>
+                                <ToggleButton fx:id="tBtnSpecial" prefHeight="30.0" prefWidth="110.0" styleClass="tglBtn" text="Special Ticket" toggleGroup="$grpSelectTicket" />
+                            </children>
+                        </HBox>
+                        <StackPane fx:id="spTicketPreview" layoutX="598.0" layoutY="359.0" prefHeight="175.0" prefWidth="400.0" />
                     </children>
                 </AnchorPane>
             </children>

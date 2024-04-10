@@ -19,7 +19,7 @@
 <left>
     <VBox id="Sidebar" prefHeight="720.0" prefWidth="131.0" BorderPane.alignment="CENTER">
         <children>
-            <Label id="lblUsername" fx:id="lblUsername" prefHeight="26.0" prefWidth="108.0" text="&lt;Username&gt;" VBox.vgrow="ALWAYS">
+            <Label id="lblUsername" fx:id="lblUsername" alignment="CENTER" prefHeight="26.0" prefWidth="108.0" text="&lt;Username&gt;" VBox.vgrow="ALWAYS">
                 <VBox.margin>
                     <Insets left="15.0" top="5.0" />
                 </VBox.margin>
