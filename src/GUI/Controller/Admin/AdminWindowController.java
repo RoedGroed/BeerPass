@@ -64,10 +64,8 @@ public class AdminWindowController extends BaseController implements Initializab
     @FXML
     private void onEditUser(ActionEvent actionEvent) throws IOException {
 
-
-        User selectedUser = selectedListView.getSelectionModel().getSelectedItem();
-
         if ((selectedListView != null && selectedListView.getSelectionModel().getSelectedItem() != null)) {
+            User selectedUser = selectedListView.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditUser.fxml"));
             Parent root = loader.load();
 

@@ -133,24 +133,11 @@ public class NewUserController extends BaseController implements Initializable {
         try {
             manager.createNewUser(username, password, role, email);
 
-
-
-            // Close current stage
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-
-            // And open AdminWindow
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminWindow.fxml"));
-            Parent root = loader.load();
-
-            Stage adminStage = new Stage();
-            adminStage.setScene(new Scene(root));
-            adminStage.setTitle("Admin Window");
-            adminStage.show();
+        loadFXML("/AdminWindow.FXML", model, (Stage) tfUserName.getScene().getWindow());
 
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            // Show error notification
+            Alert alert = new Alert(Alert.AlertType.WARNING, "An Error has occurred\rCreating a new user");
+            alert.showAndWait();
         }
     }
 }

@@ -21,9 +21,10 @@ public class User {
         this.email = email;
     }
 
-    public User(int userId, String username) {
-        this.userID = userId;
+    public User(int userID, String username, String email) {
+        this.userID = userID;
         this.username = username;
+        this.email = email;
     }
 
     public int getUserID() {

@@ -2,6 +2,7 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,15 +13,15 @@
    <center>
            <AnchorPane>
               <TextField fx:id="txtEmail" layoutX="88.0" layoutY="85.0" prefHeight="30.0" prefWidth="280.0" />
-              <TextField fx:id="txtPass" layoutX="88.0" layoutY="183.0" prefHeight="30.0" prefWidth="280.0" />
               <Label fx:id="lblEmail" layoutX="89.0" layoutY="37.0" prefHeight="39.0" prefWidth="155.0" styleClass="lbl" text="E-mail" />
               <Label fx:id="lblPass" layoutX="88.0" layoutY="132.0" prefHeight="39.0" prefWidth="148.0" styleClass="lbl" text="Password" />
-              <MFXButton id="btnForgot" fx:id="btnForgot" layoutX="89.0" layoutY="213.0" prefHeight="25.0" prefWidth="115.0" text="Forgot Password?" />
+              <MFXButton id="btnForgot" fx:id="btnForgot" layoutX="89.0" layoutY="213.0" onAction="#onForgotPassword" prefHeight="25.0" prefWidth="115.0" text="Forgot Password?" />
               <ImageView id="imgEA" fitHeight="170.0" fitWidth="233.0" layoutX="443.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@Images/CSS/EA-Logo.png" />
             </image></ImageView>
               <MFXButton id="btnLogin" fx:id="btnLogin" layoutX="253.0" layoutY="223.0" onAction="#onLogin" prefHeight="30.0" prefWidth="115.0" text="Login" />
+         <PasswordField fx:id="txtPass" layoutX="88.0" layoutY="183.0" prefHeight="30.0" prefWidth="280.0" />
            </AnchorPane>
    </center>
 </BorderPane>

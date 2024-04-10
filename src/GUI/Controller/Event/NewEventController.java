@@ -1,6 +1,7 @@
 package GUI.Controller.Event;
 
 import BE.Event;
+import BE.User;
 import GUI.Controller.BaseController;
 import GUI.Model.EventModel;
 import javafx.event.ActionEvent;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class NewEventController extends BaseController implements Initializable {
@@ -36,9 +37,9 @@ public class NewEventController extends BaseController implements Initializable 
     @FXML
     private ImageView imgEventImage;
     @FXML
-    private ListView<?> lvCoordinators;
+    private ListView<User> lvCoordinators;
     @FXML
-    private ListView<?> lvAllCoordinators;
+    private ListView<User> lvAllCoordinators;
     @FXML
     private DatePicker dpEventDate;
     private EventModel eventModel;
@@ -53,6 +54,7 @@ public class NewEventController extends BaseController implements Initializable 
         eventModel = new EventModel();
         loadImageViewer();
         loadImagesIntoComboBox();
+        populateList();
 
     }
     @FXML
@@ -112,6 +114,19 @@ public class NewEventController extends BaseController implements Initializable 
                     }
                 }
             }
+        }
+    }
+
+    public void populateList() {
+        try {
+            List<User> coordinators = eventModel.readAllEventCoordinators();
+            lvAllCoordinators.getItems().addAll(coordinators);
+        } catch (SQLException | IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error occurred while populating list");
+            alert.setContentText("An error occurred while fetching event coordinators. Please try again.");
+            alert.showAndWait();
         }
     }
 

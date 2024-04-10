@@ -215,9 +215,9 @@ public class EditEventController extends BaseController implements Initializable
         }
     }
 
-    /* TODO: Populate the Event Coordinator lists, so that i can assign them in the database, and remove them.
-        Remember to update the lists.
-        Look into how its done in admin, and just filter only event coordinator through, and link them via the DAO
+    /* TODO:
+        Make it such that there is verification on length of the all strings in the textfields.
+        So it doesnt ruin the ticket preview etc.
      */
 
 }

@@ -177,7 +177,7 @@ public class UserDAO {
     public List<User> getAssignedEventCoordinators(int eventId) throws SQLException, IOException {
         List<User> assignedCoordinators = new ArrayList<>();
         DBConnector dbConnector = new DBConnector();
-        String sql = "SELECT u.UserID, u.UserName FROM Users u " +
+        String sql = "SELECT u.UserID, u.UserName, u.Email FROM Users u " +
                      "INNER JOIN Event_Coordinator_assignment ec ON u.UserID = ec.UserID " +
                      "WHERE ec.EventID = ?";
         try (Connection conn = dbConnector.getConnection();
@@ -187,8 +187,9 @@ public class UserDAO {
                 while (rs.next()) {
                     int userID = rs.getInt("UserID");
                     String userName = rs.getString("UserName");
+                    String email = rs.getString("Email");
 
-                    User user = new User(userID, userName);
+                    User user = new User(userID, userName, email);
                     assignedCoordinators.add(user);
                 }
             }

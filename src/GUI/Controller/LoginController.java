@@ -1,7 +1,6 @@
 package GUI.Controller;
 
 import BE.User;
-import DAL.DBConnector;
 import GUI.Model.Model;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
@@ -9,7 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -26,7 +27,7 @@ public class LoginController {
 
 
     @FXML
-    private TextField txtPass;
+    private PasswordField txtPass;
 
     @FXML
     private TextField txtEmail;
@@ -58,7 +59,8 @@ public class LoginController {
                 secStage.setScene(new Scene(root));
                 secStage.show();
             }else {
-                System.out.println("Wrong email or password.");
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Wrong password or username\rPlease try again");
+                alert.showAndWait();
             }
         } catch (IOException e) {
             System.out.println(e);
@@ -66,6 +68,15 @@ public class LoginController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    private void onForgotPassword(){
+        Alert alert = new Alert(Alert.AlertType.WARNING,
+                "If you have forgotten your password\r" +
+                        "Please contact tech support at\r" +
+                        "GoodLuck@GettingYourPassword.Back");
+        alert.showAndWait();
     }
 
 }
