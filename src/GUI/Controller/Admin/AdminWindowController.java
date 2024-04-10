@@ -42,6 +42,7 @@ public class AdminWindowController extends BaseController implements Initializab
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         initListviews();
+
     }
 
     private void initListviews() {

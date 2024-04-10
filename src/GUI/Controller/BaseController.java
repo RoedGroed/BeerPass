@@ -3,6 +3,7 @@ package GUI.Controller;
 import BE.User;
 import GUI.Controller.Ticket.TicketWindowController;
 import GUI.Model.Model;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +33,10 @@ public class BaseController implements Initializable {
     private Button btnTickets;
     @FXML
     private Label lblAdmin;
+    @FXML
+    private Label lblUsername;
     private User loggedInUser;
+    private String user;
 
     /*public void setModel(Model model) {
         BaseController.model = model;
@@ -48,6 +52,7 @@ public class BaseController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
         AdminButtonVisibility();
+        lblUsername.setText(model.getCurrentUser().getUsername());
     }
 
     private void AdminButtonVisibility() {

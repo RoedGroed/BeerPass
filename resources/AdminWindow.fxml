@@ -16,7 +16,7 @@
             <Insets />
          </opaqueInsets>
          <children>
-            <Label id="lblUsername" fx:id="userLabel" prefHeight="26.0" prefWidth="108.0" text="&lt;Username&gt;">
+            <Label id="lblUsername" fx:id="lblUsername" prefHeight="26.0" prefWidth="108.0" text="&lt;Username&gt;">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>

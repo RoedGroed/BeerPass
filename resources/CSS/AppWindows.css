@@ -206,8 +206,11 @@ Listviews
 .list-cell
 {
     -fx-background-color: transparent;
+    -fx-text-fill: white;
 }
-
+.list-cell:selected {
+    -fx-background-color: rgba(133, 131, 131, 0.45);
+}
 /*
 Shapes
  */
