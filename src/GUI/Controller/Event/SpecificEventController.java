@@ -51,7 +51,7 @@ public class SpecificEventController extends BaseController implements Initializ
     private Event event;
     @FXML
     private ListView lvRadioBtns;
-    
+
     @FXML
     private ToggleGroup grpSelectTicket;
     @FXML
@@ -63,13 +63,13 @@ public class SpecificEventController extends BaseController implements Initializ
     @FXML
     private Label lblSeleUser;
 
-    public void initialize(URL location, ResourceBundle resources){
+    public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         eventModel = new EventModel();
         initToggleBtns();
     }
 
-    private void initToggleBtns()  {
+    private void initToggleBtns() {
         tBtnSpecial.selectedProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 updateVisibility(newValue, false);
@@ -111,9 +111,10 @@ public class SpecificEventController extends BaseController implements Initializ
         populateRadioButtons(specialTickets);
     }
 
+    ToggleGroup ticketToggleGroup = new ToggleGroup();
+
     private void populateRadioButtons(List<Ticket> tickets) {
         lvRadioBtns.getItems().clear();
-        ToggleGroup ticketToggleGroup = new ToggleGroup();
 
         for (Ticket ticket : tickets) {
             MFXRadioButton rb = new MFXRadioButton(ticket.getTicketType());
@@ -133,7 +134,7 @@ public class SpecificEventController extends BaseController implements Initializ
         confirmationAlert.setContentText("This action cannot be undone");
 
         confirmationAlert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK){
+            if (response == ButtonType.OK) {
                 try {
                     eventModel.deleteEvent(event);
                 } catch (SQLException e) {
@@ -143,7 +144,7 @@ public class SpecificEventController extends BaseController implements Initializ
                 }
                 // TODO: Get the event objected passed to this controller, so that i can delete the correct object.
                 // TODO: Update the events being shown, use the read method here/Remove from the list.
-                loadFXML("/EventWindow.FXML",model, (Stage) lblUsername.getScene().getWindow());
+                loadFXML("/EventWindow.FXML", model, (Stage) lblUsername.getScene().getWindow());
             }
         });
         //Show and wait, are you sure, everything connected, tickets sold to this event
@@ -174,17 +175,76 @@ public class SpecificEventController extends BaseController implements Initializ
     }
 
     @FXML
-    void onPrintTicket(ActionEvent event) {}
+    private void onPrintTicket(ActionEvent actionEvent) {
+        if (tBtnEvent.isSelected()) {
+            if (lvAllUsers.getSelectionModel().getSelectedItem() != null) {
+                if (ticketToggleGroup.getSelectedToggle().getUserData().toString() != null) {
+                    //Find the ticket in the tickettoggleGroup and then get the ID from it
+                    Ticket selected = (Ticket) ticketToggleGroup.getSelectedToggle().getUserData();
+                    int ticketID = selected.getTicketID();
+                    int eventID = event.getEventID();
+                    int userID = lvAllUsers.getSelectionModel().getSelectedItem().getUserID();
+                    try {
+                        model.linkTicketToUser(userID, ticketID, eventID);
+                    } catch (SQLException e) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
+                        alert.showAndWait();
+                    } catch (IOException e) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
+                        alert.showAndWait();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a ticket");
+                    alert.showAndWait();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a user");
+                alert.showAndWait();
+            }
+        } else if (tBtnSpecial.isSelected()) {
+            //Implement here
+        }
+    }
+
 
     @FXML
-    void onMailTicket(ActionEvent event) {}
+    void onMailTicket(ActionEvent actionEvent) {
+        if (tBtnEvent.isSelected()) {
+            if (lvAllUsers.getSelectionModel().getSelectedItem() != null) {
+                if (ticketToggleGroup.getSelectedToggle().getUserData().toString() != null) {
+                    //Find the ticket in the tickettoggleGroup and then get the ID from it
+                    Ticket selected = (Ticket) ticketToggleGroup.getSelectedToggle().getUserData();
+                    int ticketID = selected.getTicketID();
+                    int eventID = event.getEventID();
+                    int userID = lvAllUsers.getSelectionModel().getSelectedItem().getUserID();
+                    try {
+                        model.linkTicketToUser(userID, ticketID, eventID);
+                    } catch (SQLException e) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
+                        alert.showAndWait();
+                    } catch (IOException e) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
+                        alert.showAndWait();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a ticket");
+                    alert.showAndWait();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a user");
+                alert.showAndWait();
+            }
+        } else if (tBtnSpecial.isSelected()) {
+            //Implement here
+        }
+    }
 
 
     void initData(Event event) throws SQLException, IOException {
         lvAllUsers.setItems(model.getAllUsers());
     }
 
-    public void populateFields(Event event){
+    public void populateFields(Event event) {
         this.event = event;
 
 
@@ -206,7 +266,6 @@ public class SpecificEventController extends BaseController implements Initializ
             lvRadioBtns.getItems().add(radioButton);
         }
     }*/
-
 
 }
 

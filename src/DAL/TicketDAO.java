@@ -147,4 +147,16 @@ public class TicketDAO {
             prep.executeUpdate();
         }
     }
+    public void linkUserToTicket(int userID, int ticketID, int eventID) throws SQLException, IOException {
+        DBConnector dbConnector = new DBConnector();
+        try (Connection conn = dbConnector.getConnection()) {
+            String query = "INSERT INTO TicketUser (UserID, TicketID, EventID) VALUES (?,?,?)";
+            try (PreparedStatement prep = conn.prepareStatement(query)) {
+                prep.setInt(1, userID);
+                prep.setInt(2, ticketID);
+                prep.setInt(3, eventID);
+                prep.executeUpdate();
+            }
+        }
+    }
 }

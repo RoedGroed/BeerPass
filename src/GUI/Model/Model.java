@@ -115,6 +115,8 @@ public class Model {
     public void deleteTicket(int ticketID) throws SQLException, IOException {
         manager.deleteTicket(ticketID);
     }
-
+    public void linkTicketToUser(int userID, int ticketID, int eventID) throws SQLException, IOException {
+        manager.linkTicketToUser(userID, ticketID, eventID);
+    }
 }
 

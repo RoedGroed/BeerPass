@@ -9,57 +9,60 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="CSS/Admin.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Admin.AdminWindowController">
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/AppWindows.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Admin.AdminWindowController">
    <left>
-      <VBox id="Vbox" prefHeight="720.0" prefWidth="131.0" BorderPane.alignment="CENTER">
+      <VBox id="Sidebar" prefHeight="720.0" prefWidth="131.0" BorderPane.alignment="CENTER">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <children>
-            <Label fx:id="userLabel" prefHeight="26.0" prefWidth="108.0" styleClass="lblUsername" text="&lt;Username&gt;">
+            <Label id="lblUsername" fx:id="userLabel" prefHeight="26.0" prefWidth="108.0" text="&lt;Username&gt;">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </Label>
-            <MFXButton fx:id="btnLogout" onAction="#onLogout" prefHeight="80.0" prefWidth="100.0" styleClass="btnLogout" text="">
+            <MFXButton id="btnLogout" fx:id="btnLogout" onAction="#onLogout" prefHeight="78.0" prefWidth="88.0" styleClass="btnPanel" text="">
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </MFXButton>
-            <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Logout">
+            <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Logout" VBox.vgrow="ALWAYS">
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets left="15.0" />
                </VBox.margin>
             </Label>
-            <Separator prefHeight="2.0" prefWidth="131.0">
+            <Separator prefHeight="23.0" prefWidth="128.0">
                <padding>
                   <Insets bottom="20.0" />
                </padding>
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets top="10.0" />
                </VBox.margin>
             </Separator>
-            <MFXButton fx:id="btnEvent" onAction="#onEvent" prefHeight="90.0" prefWidth="100.0" styleClass="btnEvent" text=" ">
+            <MFXButton id="btnEvent" fx:id="btnEvent" onAction="#onEvent" prefHeight="90.0" prefWidth="100.0" styleClass="btnPanel" text=" ">
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets left="15.0" top="10.0" />
                </VBox.margin>
             </MFXButton>
-            <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Event">
+            <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Event" VBox.vgrow="ALWAYS">
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets left="10.0" />
                </VBox.margin>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
             </Label>
             <Separator prefWidth="131.0">
                <padding>
                   <Insets bottom="17.0" top="17.0" />
                </padding>
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets top="10.0" />
                </VBox.margin>
             </Separator>
-            <MFXButton fx:id="btnAdmin" onAction="#onAdmin" prefHeight="100.0" prefWidth="105.0" styleClass="btnAdmin" text="">
+            <MFXButton id="btnAdmin" fx:id="btnAdmin" onAction="#onAdmin" prefHeight="100.0" prefWidth="105.0" styleClass="btnPanel" text="">
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets left="15.0" top="10.0" />
                </VBox.margin>
             </MFXButton>
             <Label fx:id="lblAdmin" prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Admin">
@@ -72,12 +75,12 @@
                   <Insets bottom="12.0" top="10.0" />
                </padding>
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets top="10.0" />
                </VBox.margin>
             </Separator>
-            <MFXButton fx:id="btnTickets" onAction="#onTicket" prefHeight="100.0" prefWidth="105.0" styleClass="btnTickets" text=" ">
+            <MFXButton id="btnTicket" fx:id="btnTickets" onAction="#onTicket" prefHeight="77.0" prefWidth="102.0" styleClass="btnPanel" text=" ">
                <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
+                  <Insets left="15.0" top="20.0" />
                </VBox.margin>
             </MFXButton>
             <Label prefHeight="40.0" prefWidth="105.0" styleClass="lbl" text="Tickets">
@@ -91,14 +94,14 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="anchorPane" BorderPane.alignment="CENTER">
          <children>
-            <ListView fx:id="lvAdmin" layoutX="50.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listViews" />
-            <ListView fx:id="lvEventCo" layoutX="450.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listViews" />
-            <ListView fx:id="lvUsers" layoutX="850.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listViews" />
-            <Label layoutX="50.0" layoutY="92.0" prefHeight="17.0" prefWidth="248.0" styleClass="lblUserRoles" text="Admin" />
-            <Label layoutX="450.0" layoutY="92.0" prefHeight="17.0" prefWidth="249.0" styleClass="lblUserRoles" text="Event Coordinator" />
-            <Label layoutX="851.0" layoutY="92.0" prefHeight="17.0" prefWidth="248.0" styleClass="lblUserRoles" text="Users" />
-            <MFXButton fx:id="editUserBtn" layoutX="50.0" layoutY="659.0" onAction="#onEditUser" styleClass="btn" text="EDIT USER" />
-            <MFXButton fx:id="newUserBtn" layoutX="1018.0" layoutY="659.0" onAction="#onNewUser" prefHeight="25.0" prefWidth="82.0" styleClass="btn" text="NEW USER" />
+            <ListView fx:id="lvAdmin" layoutX="50.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listView" />
+            <ListView fx:id="lvEventCo" layoutX="450.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listView" />
+            <ListView fx:id="lvUsers" layoutX="850.0" layoutY="125.0" prefHeight="500.0" prefWidth="250.0" styleClass="listView" />
+            <Label id="lblTic" layoutX="50.0" layoutY="92.0" prefHeight="17.0" prefWidth="248.0" text="Admin" />
+            <Label id="lblTic" layoutX="450.0" layoutY="92.0" prefHeight="17.0" prefWidth="249.0" text="Event Coordinator" />
+            <Label id="lblTic" layoutX="851.0" layoutY="92.0" prefHeight="17.0" prefWidth="248.0" text="Users" />
+            <MFXButton fx:id="editUserBtn" layoutX="50.0" layoutY="659.0" onAction="#onEditUser" prefHeight="34.0" prefWidth="100.0" styleClass="btn" text="EDIT USER" />
+            <MFXButton fx:id="newUserBtn" layoutX="996.0" layoutY="659.0" onAction="#onNewUser" prefHeight="34.0" prefWidth="104.0" styleClass="btn" text="NEW USER" />
          </children>
       </AnchorPane>
    </center>

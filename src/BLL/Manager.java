@@ -91,5 +91,8 @@ public class Manager {
     public void deleteTicket(int ticketID) throws SQLException, IOException {
         ticketDAO.deleteTicket(ticketID);
     }
+    public void linkTicketToUser(int userID, int ticketID, int eventID) throws SQLException, IOException {
+        ticketDAO.linkUserToTicket(userID, ticketID, eventID);
+    }
 }
 
