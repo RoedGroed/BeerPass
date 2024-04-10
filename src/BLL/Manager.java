@@ -108,5 +108,9 @@ public class Manager {
     public void removeCoordinator(int eventID, int userID) throws SQLException, IOException {
         userDAO.removeCoordinator(eventID,userID);
     }
+
+    public void deleteUser(int userID) throws SQLException, IOException {
+        userDAO.deleteUser(userID);
+    }
 }
 

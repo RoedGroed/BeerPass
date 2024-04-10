@@ -112,6 +112,7 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
+
     public void createNewUser(User user) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {

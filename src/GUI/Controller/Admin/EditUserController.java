@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.shape.Rectangle;
@@ -97,6 +98,26 @@ public class EditUserController extends BaseController implements Initializable 
 
     @FXML
     private void onDelete(ActionEvent actionEvent) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirm Deletion");
+        confirmationAlert.setHeaderText("Are you sure you want to delete this user?");
+        confirmationAlert.setContentText("This action cannot be undone");
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                try {
+                    model.deleteUser(user.getUserID());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                // TODO: Get the event objected passed to this controller, so that i can delete the correct object.
+                // TODO: Update the events being shown, use the read method here/Remove from the list.
+                loadFXML("/EventWindow.FXML", model, (Stage) radiobtnRectangle.getScene().getWindow());
+            }
+        });
+
     }
 
     @FXML

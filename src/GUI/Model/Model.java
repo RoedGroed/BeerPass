@@ -4,7 +4,6 @@ import BE.Ticket;
 import BE.User;
 import BLL.Manager;
 
-import DAL.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -117,6 +116,10 @@ public class Model {
     }
     public void linkTicketToUser(int userID, int ticketID, int eventID) throws SQLException, IOException {
         manager.linkTicketToUser(userID, ticketID, eventID);
+    }
+
+    public void deleteUser(int userID) throws SQLException, IOException {
+        manager.deleteUser(userID);
     }
 }
 

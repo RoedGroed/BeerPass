@@ -56,11 +56,11 @@ public class EventWindowController extends BaseController implements Initializab
             if ("Event coordinator".equals(userRole)){
                 int userID = model.getCurrentUser().getUserID();
                 events = eventModel.getEventsForEventCo(userID);
-            } else {
+                displayEvents(events);
+            } else if ("Admin".equals(userRole)){
                 events = eventModel.getAllEvents();
+                displayEvents(events);
             }
-            displayEvents(events);
-
         } catch (SQLException | IOException e) {
             System.out.println(e);
         }
