@@ -13,11 +13,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.print.PageLayout;
+import javafx.print.Printer;
+import javafx.print.PrinterJob;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -240,6 +245,34 @@ public class SpecificEventController extends BaseController implements Initializ
         }
     }
 
+    private void printTicket() {
+        Printer printer = Printer.getDefaultPrinter();
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
+
+        if(printerJob != null) {
+            PageLayout pageLayout = printerJob.getPrinter().getDefaultPageLayout();
+            printerJob.getJobSettings().setPageLayout(pageLayout);
+
+            // Take a snapshot of the StackPane contents
+            WritableImage snapshot = spTicketPreview.snapshot(new SnapshotParameters(), null);
+            ImageView imageView = new ImageView(snapshot);
+
+            // Check to ensure that the ImageView node has been created and the printerJob has been created
+            if(imageView != null) {
+                if(printerJob.showPrintDialog(spTicketPreview.getScene().getWindow())) {
+                    boolean printed = printerJob.printPage(imageView);
+                    if(printed){
+                        printerJob.endJob();
+                    }
+                }
+            } else {
+                System.err.println("Error creating image view.");
+            }
+        } else {
+            System.err.println("Error creating print job.");
+        }
+    }
+
     @FXML
     private void onPrintTicket(ActionEvent actionEvent) {
         if (tBtnEvent.isSelected()) {
@@ -270,6 +303,7 @@ public class SpecificEventController extends BaseController implements Initializ
         } else if (tBtnSpecial.isSelected()) {
             //Implement here
         }
+        printTicket();
     }
 
 
