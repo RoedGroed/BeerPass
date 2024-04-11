@@ -103,7 +103,7 @@ public class UserDAO {
     public void deleteUser(int userId) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
-            String query = "DELETE FROM Users WHERE UserID = ?";
+            String query = "DELETE FROM DELETE FROM Users WHERE UserID = ?";
             try (PreparedStatement statement = conn.prepareStatement(query)) {
                 statement.setInt(1, userId);
                 statement.executeUpdate();

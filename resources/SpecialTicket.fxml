@@ -13,7 +13,7 @@
             <Image url="@Images/App/ticket_template.png" />
          </image>
       </ImageView>
-      <Label id="lblEventName" fx:id="lblEventName" alignment="CENTER" layoutX="28.0" layoutY="84.0" prefHeight="17.0" prefWidth="311.0" text="Event Name">
+      <Label fx:id="lblTicketType" alignment="CENTER" layoutX="28.0" layoutY="84.0" prefHeight="17.0" prefWidth="311.0" text="Ticket Type">
          <font>
             <Font size="24.0" />
          </font></Label>

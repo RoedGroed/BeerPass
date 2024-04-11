@@ -67,45 +67,72 @@ public class SpecificEventController extends BaseController implements Initializ
     private Label lblSeleUser;
     @FXML
     private StackPane spTicketPreview;
-    ToggleGroup ticketToggleGroup = new ToggleGroup();
+    private ToggleGroup ticketToggleGroup = new ToggleGroup();
+    private Ticket currentSelectedTicket;
+    private User currentSelectedUser;
 
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         eventModel = new EventModel();
         initToggleBtns();
+        initListenForPreview();
 
+
+    }
+    private void initListenForPreview() {
         ticketToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                Ticket selectedTicket = (Ticket) newValue.getUserData();
-                updateTicketPreview(selectedTicket);
+                currentSelectedTicket = (Ticket) newValue.getUserData();
+            } else {
+                currentSelectedTicket = null;
             }
+            updatePreviewIfPossible();
         });
+
+
+        lvAllUsers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            currentSelectedUser = newValue;
+            updatePreviewIfPossible();
+        });
+
+
+    }
+
+    private void updatePreviewIfPossible() {
+        if (currentSelectedTicket != null && currentSelectedTicket.getTicketType().equals("Special Ticket")){
+            updateTicketPreview(currentSelectedTicket);
+        }
+
+        else if (currentSelectedTicket != null && currentSelectedUser != null) {
+            updateTicketPreview(currentSelectedTicket);
+        }
     }
 
     private void updateTicketPreview(Ticket selectedTicket) {
-        try {
-            if ("Special Ticket".equals(selectedTicket.getTicketType())) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/SpecialTicket.fxml"));
-                Parent ticketPreview = loader.load();
-                SpecialTicketController specialTicketController = loader.getController();
-                specialTicketController.setSpecialTicketData(event);
+        User selectedUser = lvAllUsers.getSelectionModel().getSelectedItem();
+            try {
+                if ("Special Ticket".equals(selectedTicket.getTicketType())) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/SpecialTicket.fxml"));
+                    Parent ticketPreview = loader.load();
+                    SpecialTicketController specialTicketController = loader.getController();
+                    specialTicketController.setSpecialTicketData(selectedTicket);
 
-                spTicketPreview.getChildren().clear();
-                spTicketPreview.getChildren().add(ticketPreview);
-            } else if ("Event Ticket".equals(selectedTicket.getTicketType())){
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Ticket.fxml"));
-                Parent ticketPreview = loader.load();
-                TicketController ticketController = loader.getController();
-                ticketController.setEventTicketData(event);
+                    spTicketPreview.getChildren().clear();
+                    spTicketPreview.getChildren().add(ticketPreview);
+                } else if ("Event Ticket".equals(selectedTicket.getTicketType())) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Ticket.fxml"));
+                    Parent ticketPreview = loader.load();
+                    TicketController ticketController = loader.getController();
+                    ticketController.setEventTicketData(event, selectedUser);
 
-                spTicketPreview.getChildren().clear();
-                spTicketPreview.getChildren().add(ticketPreview);
+                    spTicketPreview.getChildren().clear();
+                    spTicketPreview.getChildren().add(ticketPreview);
+                }}
+            catch(IOException e){
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
+
 
     private void initToggleBtns() {
         tBtnSpecial.selectedProperty().addListener((observable, oldValue, newValue) -> {

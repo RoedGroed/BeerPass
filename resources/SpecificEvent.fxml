@@ -122,7 +122,7 @@
                         <MFXButton fx:id="btnMailTicket" layoutX="832.0" layoutY="653.0" onAction="#onMailTicket" prefHeight="30.0" prefWidth="110.0" styleClass="btnConfirm" text="Mail Ticket" />
                         <HBox layoutX="51.0" layoutY="171.0">
                             <children>
-                                <ToggleButton fx:id="tBtnEvent" prefHeight="30.0" prefWidth="110.0" selected="true" styleClass="tglBtn" text="Event Ticket">
+                                <ToggleButton fx:id="tBtnEvent" prefHeight="30.0" prefWidth="110.0" styleClass="tglBtn" text="Event Ticket">
                                     <toggleGroup>
                                         <ToggleGroup fx:id="grpSelectTicket" />
                                     </toggleGroup>

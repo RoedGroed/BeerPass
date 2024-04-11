@@ -14,7 +14,7 @@
             <Image url="@Images/App/ticket_template.png" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" layoutX="26.0" layoutY="65.0" prefHeight="61.0" prefWidth="310.0">
+      <VBox alignment="CENTER" layoutX="29.0" layoutY="47.0" prefHeight="61.0" prefWidth="310.0">
          <children>
             <Label id="lblEventName" fx:id="eventName" text="Event name">
                <font>
@@ -23,18 +23,20 @@
             </Label>
             <Label fx:id="eventLocation" text="Spangsbjerg Kirkevej 103, 6700 Esbjerg" />
             <Label fx:id="eventTime" text="11/03/24 - 11:30" />
+            <Label fx:id="eventNotes" text="notes">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="costumerName" text="Customer">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
          </children>
       </VBox>
       <ImageView fx:id="qrCode" fitHeight="70.0" fitWidth="70.0" layoutX="378.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="barCode" fitHeight="70.0" fitWidth="70.0" layoutX="378.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="costumerName" layoutX="155.0" layoutY="152.0" text="Customer">
-         <font>
-            <Font size="10.0" />
-         </font></Label>
-      <Label fx:id="eventNotes" layoutX="43.0" layoutY="30.0" text="notes">
-         <font>
-            <Font size="10.0" />
-         </font></Label>
 
    </children>
 </AnchorPane>

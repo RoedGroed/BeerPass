@@ -3,6 +3,7 @@ package GUI.Controller.Ticket;
 
 import BE.Event;
 import BE.Ticket;
+import BE.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -50,11 +51,11 @@ public class TicketController {
         this.eventNotes = eventNotes;
     }
 
-    public void setEventTicketData(Event event) {
+    public void setEventTicketData(Event event, User selectedUser) {
         eventName.setText(event.getName());
         eventLocation.setText(event.getLocation());
         eventTime.setText(event.getTime());
-        //costumerName.setText();
+        costumerName.setText(selectedUser.getUsername());
         eventNotes.setText(event.getNote());
     }
 }
