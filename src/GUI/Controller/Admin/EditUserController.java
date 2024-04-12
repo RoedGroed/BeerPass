@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class EditUserController extends BaseController implements Initializable {
@@ -112,9 +113,7 @@ public class EditUserController extends BaseController implements Initializable 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                // TODO: Get the event objected passed to this controller, so that i can delete the correct object.
-                // TODO: Update the events being shown, use the read method here/Remove from the list.
-                loadFXML("/EventWindow.FXML", model, (Stage) radiobtnRectangle.getScene().getWindow());
+                loadFXML("/AdminWindow.FXML", model, (Stage) radiobtnRectangle.getScene().getWindow());
             }
         });
 
@@ -134,6 +133,19 @@ public class EditUserController extends BaseController implements Initializable 
                 String password = tfUserPassword.getText();
                 String email = tfUserEmail.getText();
                 String role = getSelectedRole();
+
+                if (!model.validateStringLength(username,30))
+                {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "Name cannot be more than 30 characters");
+                    alert.showAndWait();
+                    return;
+                }
+                if (!model.validateEmail(email)){
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid Email, please retry:\rexample@email.com");
+                    alert.showAndWait();
+                    return;
+                }
+
 
                 user.setUsername(username);
                 user.setEmail(email);
@@ -168,5 +180,6 @@ public class EditUserController extends BaseController implements Initializable 
         //if none of the role is selected it will return null
         return null;
     }
+
 
 }

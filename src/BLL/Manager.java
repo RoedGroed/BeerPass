@@ -10,7 +10,10 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Manager {
     private UserDAO userDAO = new UserDAO();
@@ -112,5 +115,33 @@ public class Manager {
     public void deleteUser(int userID) throws SQLException, IOException {
         userDAO.deleteUser(userID);
     }
+
+    ///// INPUT VALIDATION /////
+
+
+    private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
+
+    public static boolean validateEmail(String email) {
+        Matcher matcher = EMAIL_PATTERN.matcher(email);
+        return matcher.matches();
+    }
+
+    public static boolean validateStringLength(String input, int maxLength) {
+        return input != null && input.length() <= maxLength;
+
+    }
+
+
+    static final String TIME_REGEX = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$";
+
+    public static boolean validateTime(String eventTime) {
+        // Replace any of the decimal dividers with ":"
+        String validatedTime = eventTime.replaceAll("[.,;-]", ":");
+        return validatedTime.matches(TIME_REGEX);
+    }
+
+
+
 }
 

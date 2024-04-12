@@ -5,6 +5,7 @@ import BE.User;
 import BLL.Manager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -99,6 +100,80 @@ public class EventModel {
         manager.removeCoordinator(eventID,userID);
     }
 
+    //// Input Validation
+    public boolean validateStringLength(String input, int maxLength) {
+        return manager.validateStringLength(input, maxLength);
+    }
 
+    public boolean validateTime(String eventTime) {
+        return manager.validateTime(eventTime);
+    }
+
+    /**
+     * Method that validates ALL the fields in an event.
+     * @param name
+     * @param location
+     * @param date
+     * @param time
+     * @param note
+     * @param ticketLimit
+     * @param selectedImage
+     * @return
+     */
+    public boolean validateInputs(String name, String location, LocalDate date, String time, String note, int ticketLimit, String selectedImage) {
+        if (name.isEmpty()) {
+            showAlert("Name cannot be empty.");
+            return false;
+        } else if (!validateStringLength(name, 255)) {
+            showAlert("Name cannot exceed 255 characters.");
+            return false;
+        }
+
+        if (location.isEmpty()) {
+            showAlert("Location cannot be empty.");
+            return false;
+        } else if (!validateStringLength(location, 255)) {
+            showAlert("Location cannot exceed 255 characters.");
+            return false;
+        }
+
+        if (date == null || time.isEmpty()) {
+            showAlert("Please select a date and time for the event.");
+            return false;
+        }
+
+        if (date.isBefore(LocalDate.now())) {
+            showAlert("Event date cannot be in the past.");
+            return false;
+        }
+
+        if (!validateTime(time)) {
+            showAlert("Invalid event time format. Please enter time in HH:MM format.");
+            return false;
+        }
+
+        if (!validateStringLength(note, 255)) {
+            showAlert("Note cannot exceed 255 characters.");
+            return false;
+        }
+
+        if (ticketLimit <= 0) {
+            showAlert("Ticket limit must be greater than zero.");
+            return false;
+        }
+
+        if (selectedImage == null || selectedImage.isEmpty()) {
+            showAlert("Please select an image for the event.");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void showAlert(String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, content);
+        alert.setTitle("Invalid Input");
+        alert.showAndWait();
+    }
 
 }

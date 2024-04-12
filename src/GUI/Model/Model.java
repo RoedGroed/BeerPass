@@ -121,5 +121,21 @@ public class Model {
     public void deleteUser(int userID) throws SQLException, IOException {
         manager.deleteUser(userID);
     }
+
+
+    //// Input Validation ////
+    public boolean validateEmail(String email) {
+        return manager.validateEmail(email);
+    }
+
+    public boolean validateStringLength(String input, int maxLength) {
+        return manager.validateStringLength(input, maxLength);
+    }
+
+    public boolean validateTime(String eventTime) {
+        return manager.validateTime(eventTime);
+    }
+
+
 }
 

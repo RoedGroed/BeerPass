@@ -79,24 +79,42 @@ public class EditEventController extends BaseController implements Initializable
     @FXML
     private void onConfirmEvent(ActionEvent actionEvent) throws SQLException, IOException {
         getUserInput(event);
-        eventModel.updateEvent(event);
-
-        loadFXML("/EventWindow.FXML", model, (Stage) tfEventName.getScene().getWindow());
+        String maxAttendeesText = tfMaxAttendees.getText();
+        if (!maxAttendeesText.isEmpty()) {
+            try {
+                int maxAttendees = Integer.parseInt(maxAttendeesText);
+                if (eventModel.validateInputs(tfEventName.getText(), tfEventLocation.getText(), dpEventDate.getValue(),
+                        tfEventTime.getText(), taEventNotes.getText(), maxAttendees, cbEventImages.getValue())) {
+                    eventModel.updateEvent(event);
+                    loadFXML("/EventWindow.FXML", model, (Stage) tfEventName.getScene().getWindow());
+                }
+                /// A Hack to circumvent if parsing MaxAttendees from string to an integer fails.
+            } catch (NumberFormatException e) {
+                eventModel.showAlert("Invalid input for maximum attendees. Please enter a valid integer.");
+            }
+        } else {
+            eventModel.showAlert("Maximum attendees field cannot be empty.");
+        }
     }
 
-    public void getUserInput(Event event){
+
+    public void getUserInput(Event event) {
         event.setName(tfEventName.getText());
         event.setLocation(tfEventLocation.getText());
 
-        String timeStart= tfEventTime.getText();
+        String timeStart = tfEventTime.getText();
         LocalDate timeDate = dpEventDate.getValue();
-        String time = eventModel.formatTimeToString(timeDate,timeStart);
+        String time = eventModel.formatTimeToString(timeDate, timeStart);
         event.setTime(time);
 
         event.setNote(taEventNotes.getText());
         event.setImagePath(cbEventImages.getValue());
-        event.setTicketLimit(Integer.parseInt(tfMaxAttendees.getText()));
 
+        // Validate and parse ticket limit only if it's not empty
+        String ticketLimitText = tfMaxAttendees.getText();
+        if (!ticketLimitText.isEmpty()) {
+            event.setTicketLimit(Integer.parseInt(ticketLimitText));
+        }
     }
 
     @FXML
@@ -235,6 +253,7 @@ public class EditEventController extends BaseController implements Initializable
     /* TODO:
         Make it such that there is verification on length of the all strings in the textfields.
         So it doesnt ruin the ticket preview etc.
+        This is "done", but numbers need to be adjusted if important.
      */
 
 }

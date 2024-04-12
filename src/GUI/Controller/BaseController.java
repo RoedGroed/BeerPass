@@ -73,6 +73,8 @@ public class BaseController implements Initializable {
         Stage stage = (Stage) btnLogout.getScene().getWindow();
         URL url = getClass().getResource("/Login.fxml");
 
+        stage.setTitle("BrewPass");
+
         FXMLLoader loader = new FXMLLoader(url);
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -159,10 +161,8 @@ public class BaseController implements Initializable {
 
             currentStage.close();
 
-            String appTitle = fxmlPath.substring(fxmlPath.lastIndexOf("/") + 1, fxmlPath.lastIndexOf("."));
-
             Stage stage = new Stage();
-            stage.setTitle("BrewPass - " + appTitle);
+            stage.setTitle("BrewPass");
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -171,6 +171,8 @@ public class BaseController implements Initializable {
             alert.showAndWait();
         }
     }
+
+
 
 
 }

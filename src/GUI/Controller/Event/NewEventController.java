@@ -4,7 +4,6 @@ import BE.Event;
 import BE.User;
 import GUI.Controller.BaseController;
 import GUI.Model.EventModel;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -70,8 +68,12 @@ public class NewEventController extends BaseController implements Initializable 
     private void onConfirmUser(ActionEvent actionEvent) throws SQLException, IOException {
         Event event = getUserInput();
 
-        // Save the event to generate an event ID
-        eventModel.createEvent(event);
+        if (event != null){
+
+            eventModel.createEvent(event);
+
+            loadFXML("/EventWindow.FXML",model, (Stage) tfEventName.getScene().getWindow());
+        }
 
         // Add coordinators to the event in the database
     /*
@@ -80,9 +82,12 @@ public class NewEventController extends BaseController implements Initializable 
         }
     */
 
-        // Show and Wait
-        // Update the database and lists(Observable Lists)
-        loadFXML("/EventWindow.FXML",model, (Stage) tfEventName.getScene().getWindow());
+    }
+
+    private void showAlert(String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, content);
+        alert.setTitle("Invalid Input");
+        alert.showAndWait();
     }
 
     private Event getUserInput(){
@@ -91,10 +96,21 @@ public class NewEventController extends BaseController implements Initializable 
         LocalDate timeDate = dpEventDate.getValue();
         String timeStart = tfEventTime.getText();
         String note = taEventNotes.getText(); // set a limit to 255 NVARS
-        int ticketLimit = Integer.parseInt(tfMaxAttendees.getText());
+        int ticketLimit;
+        try {
+            ticketLimit = Integer.parseInt(tfMaxAttendees.getText());
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            showAlert("Invalid input for max attendees. Please enter a valid integer.");
+            return null;
+        }
         String imagePath = cbEventImages.getValue();
 
-        String time = eventModel.formatTimeToString(timeDate,timeStart);
+        if (!eventModel.validateInputs(name, location, timeDate, timeStart, note, ticketLimit,imagePath)) {
+            return null;
+        }
+
+        String time = eventModel.formatTimeToString(timeDate, timeStart);
 
         return new Event(-1, name, location, time, note, ticketLimit, imagePath);
     }

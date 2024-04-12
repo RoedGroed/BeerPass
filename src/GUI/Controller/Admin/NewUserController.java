@@ -112,8 +112,21 @@ public class NewUserController extends BaseController implements Initializable {
 
     @FXML
     private void onConfirmUser(ActionEvent event) {
+
         String username = tfUserName.getText();
+        if (!model.validateStringLength(username,30))
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Name cannot be more than 30 characters");
+            alert.showAndWait();
+            return;
+        }
         String email = tfUserEmail.getText();
+        if (!model.validateEmail(email)){
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid Email, please check its correct");
+            alert.showAndWait();
+            return;
+        }
+
         String password = tfUserPassword.getText();
         String role = null;
         if (userEventCoordinator.isSelected()) {
@@ -121,7 +134,7 @@ public class NewUserController extends BaseController implements Initializable {
         } else if (userAdmin.isSelected()) {
             role = "Admin";
         } else if (userCustomer.isSelected()) {
-            role = "Customer";
+            role = "User";
         }
 
         if (role == null) {
