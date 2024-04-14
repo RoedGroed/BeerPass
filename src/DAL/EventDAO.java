@@ -134,4 +134,22 @@ public class EventDAO {
 
     public void readSomeOfTheEventMaybeIDontKnowForSureButItCouldBeOfUseWithTicketsAndUsersMaybe (){}
 
+    public int getSoldTicketsCount(int eventId) throws SQLException, IOException {
+        String sql = "SELECT COUNT(*) AS sold_tickets_count " +
+                "FROM TicketUser " +
+                "WHERE EventID = ?";
+            DBConnector dbConnector = new DBConnector();
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement prep = conn.prepareStatement(sql)) {
+            prep.setInt(1, eventId);
+            try (ResultSet rs = prep.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("sold_tickets_count");
+                } else {
+                    return 0; // No tickets sold for the event
+                }
+            }
+        }
+    }
+
 }

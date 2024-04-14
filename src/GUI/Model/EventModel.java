@@ -96,6 +96,11 @@ public class EventModel {
         manager.addCoordinator(eventID, userID);
     }
 
+    public int getSoldTicketsCount(int eventID) throws SQLException, IOException {
+        return manager.getSoldTicketsCount(eventID);
+
+    }
+
     public void removeCoordinator(int eventID, int userID) throws SQLException, IOException {
         manager.removeCoordinator(eventID,userID);
     }

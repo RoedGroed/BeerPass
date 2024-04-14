@@ -143,5 +143,10 @@ public class Manager {
 
 
 
+
+    public int getSoldTicketsCount(int eventID) throws SQLException, IOException {
+       return eventDAO.getSoldTicketsCount(eventID);
+    }
+
 }
 

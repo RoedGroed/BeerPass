@@ -284,7 +284,13 @@ public class SpecificEventController extends BaseController implements Initializ
                     int eventID = event.getEventID();
                     int userID = lvAllUsers.getSelectionModel().getSelectedItem().getUserID();
                     try {
-                        model.linkTicketToUser(userID, ticketID, eventID);
+                        if (eventModel.getSoldTicketsCount(eventID) <= event.getTicketLimit()) {
+                            model.linkTicketToUser(userID, ticketID, eventID);
+                        }
+                        else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR, "There are no more tickets available to this event");
+                            alert.showAndWait();
+                        }
                     } catch (SQLException e) {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
                         alert.showAndWait();
@@ -318,7 +324,13 @@ public class SpecificEventController extends BaseController implements Initializ
                     int eventID = event.getEventID();
                     int userID = lvAllUsers.getSelectionModel().getSelectedItem().getUserID();
                     try {
-                        model.linkTicketToUser(userID, ticketID, eventID);
+                        if (eventModel.getSoldTicketsCount(eventID) <= event.getTicketLimit()) {
+                            model.linkTicketToUser(userID, ticketID, eventID);
+                        }
+                        else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR, "There are no more tickets available to this event");
+                            alert.showAndWait();
+                        }
                     } catch (SQLException e) {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
                         alert.showAndWait();
@@ -350,9 +362,16 @@ public class SpecificEventController extends BaseController implements Initializ
 
         lblEventName.setText(event.getName());
         lblInfo.setText(event.getTime() + " || " + event.getLocation());
-        lblTicketCounter.setText(String.valueOf(event.getTicketLimit()));
         //FIXME: Der skal laves en måde at regne de solgte billeter ud på.
         taEventNotes.setText(event.getNote());
+
+        //populateTickets(event);
+        try {
+            int soldTickets = eventModel.getSoldTicketsCount(event.getEventID());
+            lblTicketCounter.setText(String.valueOf(soldTickets) + " / " + event.getTicketLimit());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
