@@ -16,5 +16,8 @@
     <orderEntry type="library" name="justifiedsolutions.openpdf" level="project" />
     <orderEntry type="library" name="iText7-Core-7.1" level="project" />
     <orderEntry type="library" name="github.librepdf.openpdf" level="project" />
+    <orderEntry type="library" name="krysalis.barcode" level="project" />
+    <orderEntry type="library" name="singingbush.barcode4j" level="project" />
+    <orderEntry type="library" name="google.zxing.javase" level="project" />
   </component>
 </module>

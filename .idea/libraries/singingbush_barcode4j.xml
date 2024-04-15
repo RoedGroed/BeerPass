@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="singingbush.barcode4j" type="repository">
+    <properties maven-id="com.singingbush:barcode4j:2.2.3" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/singingbush/barcode4j/2.2.3/barcode4j-2.2.3.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/avalon/framework/avalon-framework-impl/4.3.1/avalon-framework-impl-4.3.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/avalon/framework/avalon-framework-api/4.3.1/avalon-framework-api-4.3.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/zxing/core/3.5.3/core-3.5.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
