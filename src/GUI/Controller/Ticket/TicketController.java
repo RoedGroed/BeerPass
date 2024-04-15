@@ -6,6 +6,7 @@ import BE.Ticket;
 import BE.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.awt.*;
@@ -58,6 +59,15 @@ public class TicketController {
         costumerName.setText(selectedUser.getUsername());
         eventNotes.setText(event.getNote());
     }
+
+    public void setQRCodeImage(Image qrCodeImage) {
+        qrCode.setImage(qrCodeImage);
+    }
+
+    public void setBarCode(Image barCodeImage){
+        barCode.setImage(barCodeImage);
+    }
+
 }
 
 

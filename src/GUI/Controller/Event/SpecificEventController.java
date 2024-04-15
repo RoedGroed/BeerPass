@@ -7,6 +7,7 @@ import GUI.Controller.BaseController;
 import GUI.Controller.Ticket.SpecialTicketController;
 import GUI.Controller.Ticket.TicketController;
 import GUI.Model.EventModel;
+import Util.QRCodeGenerator;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import javafx.event.ActionEvent;
@@ -31,7 +32,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class SpecificEventController extends BaseController implements Initializable {
 
@@ -115,28 +118,45 @@ public class SpecificEventController extends BaseController implements Initializ
 
     private void updateTicketPreview(Ticket selectedTicket) {
         User selectedUser = lvAllUsers.getSelectionModel().getSelectedItem();
-            try {
-                if ("Special Ticket".equals(selectedTicket.getTicketType())) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/SpecialTicket.fxml"));
-                    Parent ticketPreview = loader.load();
-                    SpecialTicketController specialTicketController = loader.getController();
-                    specialTicketController.setSpecialTicketData(selectedTicket);
+        try {
+            if ("Special Ticket".equals(selectedTicket.getTicketType())) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/SpecialTicket.fxml"));
+                Parent ticketPreview = loader.load();
+                SpecialTicketController specialTicketController = loader.getController();
+                specialTicketController.setSpecialTicketData(selectedTicket);
 
-                    spTicketPreview.getChildren().clear();
-                    spTicketPreview.getChildren().add(ticketPreview);
-                } else if ("Event Ticket".equals(selectedTicket.getTicketType())) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Ticket.fxml"));
-                    Parent ticketPreview = loader.load();
-                    TicketController ticketController = loader.getController();
-                    ticketController.setEventTicketData(event, selectedUser);
+                // Generate QR code image for the special ticket
+                Image qrCodeImage = QRCodeGenerator.generateQRCodeImage(selectedTicket.getTicketData(), selectedTicket.getUuid(), 400, 400);
+                Image barCodeImage = QRCodeGenerator.generateBarcodeImage(selectedTicket.getTicketData(), selectedTicket.getUuid(), 400, 400);
+                System.out.println("UUID used for barcode image: " + selectedTicket.getUuid());
 
-                    spTicketPreview.getChildren().clear();
-                    spTicketPreview.getChildren().add(ticketPreview);
-                }}
-            catch(IOException e){
-                e.printStackTrace();
+
+                specialTicketController.setQRCodeImage(qrCodeImage);
+                specialTicketController.setBarCode(barCodeImage);
+
+                spTicketPreview.getChildren().clear();
+                spTicketPreview.getChildren().add(ticketPreview);
+            } else if ("Event Ticket".equals(selectedTicket.getTicketType())) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Ticket.fxml"));
+                Parent ticketPreview = loader.load();
+                TicketController ticketController = loader.getController();
+                ticketController.setEventTicketData(event, selectedUser);
+
+                // Generate QR code image for the event ticket
+                Image qrCodeImage = QRCodeGenerator.generateQRCodeImage(selectedTicket.getTicketData(), selectedTicket.getUuid(), 400, 400);
+                Image barCodeImage = QRCodeGenerator.generateBarcodeImage(selectedTicket.getTicketData(), selectedTicket.getUuid(), 400, 400);
+                System.out.println("UUID used for barcode image: " + selectedTicket.getUuid());
+                ticketController.setQRCodeImage(qrCodeImage);
+                ticketController.setBarCode(barCodeImage);
+
+                spTicketPreview.getChildren().clear();
+                spTicketPreview.getChildren().add(ticketPreview);
             }
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
+
 
 
     private void initToggleBtns() {
@@ -276,41 +296,98 @@ public class SpecificEventController extends BaseController implements Initializ
     @FXML
     private void onPrintTicket(ActionEvent actionEvent) {
         if (tBtnEvent.isSelected()) {
-            if (lvAllUsers.getSelectionModel().getSelectedItem() != null) {
-                if (ticketToggleGroup.getSelectedToggle().getUserData().toString() != null) {
-                    //Find the ticket in the tickettoggleGroup and then get the ID from it
-                    Ticket selected = (Ticket) ticketToggleGroup.getSelectedToggle().getUserData();
-                    int ticketID = selected.getTicketID();
-                    int eventID = event.getEventID();
-                    int userID = lvAllUsers.getSelectionModel().getSelectedItem().getUserID();
-                    try {
-                        if (eventModel.getSoldTicketsCount(eventID) <= event.getTicketLimit()) {
-                            model.linkTicketToUser(userID, ticketID, eventID);
-                        }
-                        else {
-                            Alert alert = new Alert(Alert.AlertType.ERROR, "There are no more tickets available to this event");
-                            alert.showAndWait();
-                        }
-                    } catch (SQLException e) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
-                        alert.showAndWait();
-                    } catch (IOException e) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
+            printEventTicket();
+        } else if (tBtnSpecial.isSelected()) {
+            generateAndPrintSpecialTickets();
+        }
+    }
+
+    private void printEventTicket() {
+        if (lvAllUsers.getSelectionModel().getSelectedItem() != null) {
+            if (ticketToggleGroup.getSelectedToggle().getUserData().toString() != null) {
+                // Find the ticket in the tickettoggleGroup and then get the ID from it
+                Ticket selected = (Ticket) ticketToggleGroup.getSelectedToggle().getUserData();
+                int ticketID = selected.getTicketID();
+                int eventID = event.getEventID();
+                int userID = lvAllUsers.getSelectionModel().getSelectedItem().getUserID();
+                try {
+                    if (eventModel.getSoldTicketsCount(eventID) <= event.getTicketLimit()) {
+                        model.linkTicketToUser(userID, ticketID, eventID);
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "There are no more tickets available to this event");
                         alert.showAndWait();
                     }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a ticket");
+                } catch (SQLException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
+                    alert.showAndWait();
+                } catch (IOException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
                     alert.showAndWait();
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a user");
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a ticket");
                 alert.showAndWait();
             }
-        } else if (tBtnSpecial.isSelected()) {
-            //Implement here
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a user");
+            alert.showAndWait();
         }
+
+        // Print the event ticket
         printTicket();
     }
+
+    private void generateAndPrintSpecialTickets() {
+        // Popup dialog to input the number of special tickets to generate
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Generate Special Tickets");
+        dialog.setHeaderText("Enter the number of special tickets to generate:");
+        dialog.setContentText("Number of tickets:");
+
+        // Show the dialog and wait for the user's input
+        Optional<String> result = dialog.showAndWait();
+
+        // Process the user's input
+        result.ifPresent(number -> {
+            try {
+                int numTickets = Integer.parseInt(number);
+                generateSpecialTickets(numTickets);
+                // Print the special tickets after generating
+                printTicket();
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid number.");
+                alert.showAndWait();
+            }
+        });
+    }
+
+    private void generateSpecialTickets(int numTickets) {
+        try {
+            RadioButton selectedRadioButton = (RadioButton) ticketToggleGroup.getSelectedToggle();
+            String selectedTicketName = selectedRadioButton.getText();
+
+            for (int i = 0; i < numTickets - 1; i++) {
+                Ticket specialTicket = new Ticket();
+                // Set the ticket type and other details as needed
+                // For example:
+                specialTicket.setTicketType("Special Ticket");
+                specialTicket.setTicketName(selectedTicketName);
+                // Generate a unique UUID for the ticket
+                String uuid = UUID.randomUUID().toString();
+                specialTicket.setUuid(UUID.fromString(uuid));
+
+                // Update the ticket preview with the special ticket
+                updateTicketPreview(specialTicket);
+
+                // Print each special ticket after generating
+                printTicket();
+            }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error generating special tickets.");
+            alert.showAndWait();
+        }
+    }
+
 
 
     @FXML
@@ -331,10 +408,7 @@ public class SpecificEventController extends BaseController implements Initializ
                             Alert alert = new Alert(Alert.AlertType.ERROR, "There are no more tickets available to this event");
                             alert.showAndWait();
                         }
-                    } catch (SQLException e) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
-                        alert.showAndWait();
-                    } catch (IOException e) {
+                    } catch (SQLException | IOException e) {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when trying to assign the user to a ticket");
                         alert.showAndWait();
                     }
@@ -362,7 +436,6 @@ public class SpecificEventController extends BaseController implements Initializ
 
         lblEventName.setText(event.getName());
         lblInfo.setText(event.getTime() + " || " + event.getLocation());
-        //FIXME: Der skal laves en måde at regne de solgte billeter ud på.
         taEventNotes.setText(event.getNote());
 
         //populateTickets(event);
