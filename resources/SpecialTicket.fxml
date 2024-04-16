@@ -17,8 +17,8 @@
          <font>
             <Font size="24.0" />
          </font></Label>
-      <ImageView fx:id="qrCode" fitHeight="70.0" fitWidth="70.0" layoutX="360.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="barCode" fitHeight="70.0" fitWidth="70.0" layoutX="360.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="qrCode" fitHeight="70.0" fitWidth="70.0" layoutX="346.0" layoutY="104.0" pickOnBounds="true" />
+      <ImageView fx:id="barCode" fitHeight="70.0" fitWidth="70.0" layoutX="346.0" layoutY="26.0" nodeOrientation="INHERIT" pickOnBounds="true" rotate="-90.0" />
 
    </children>
 </AnchorPane>

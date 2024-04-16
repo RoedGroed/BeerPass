@@ -128,7 +128,6 @@ public class EventWindowController extends BaseController implements Initializab
             Parent root = loader.load();
 
             SpecificEventController controller = loader.getController();
-            controller.initData(event);
             controller.populateFields(event);
 
             Stage stage = new Stage();

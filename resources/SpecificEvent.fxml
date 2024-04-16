@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
@@ -131,6 +132,7 @@
                             </children>
                         </HBox>
                         <StackPane fx:id="spTicketPreview" layoutX="598.0" layoutY="359.0" prefHeight="175.0" prefWidth="400.0" />
+                  <Spinner fx:id="spinnerSpecTickets" layoutX="963.0" layoutY="611.0" prefHeight="25.0" prefWidth="110.0" visible="false" />
                     </children>
                 </AnchorPane>
             </children>

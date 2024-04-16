@@ -7,9 +7,13 @@ import GUI.Controller.BaseController;
 import GUI.Controller.Ticket.SpecialTicketController;
 import GUI.Controller.Ticket.TicketController;
 import GUI.Model.EventModel;
+import Util.BarQRCodeUtil;
+import Util.PrintAndMailUtility;
 import Util.QRCodeGenerator;
+import com.google.zxing.WriterException;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
+import jakarta.mail.MessagingException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.print.PageLayout;
 import javafx.print.Printer;
 import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -78,6 +83,8 @@ public class SpecificEventController extends BaseController implements Initializ
     private ToggleGroup ticketToggleGroup = new ToggleGroup();
     private Ticket currentSelectedTicket;
     private User currentSelectedUser;
+    @FXML
+    private Spinner spinnerSpecTickets;
 
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -181,6 +188,7 @@ public class SpecificEventController extends BaseController implements Initializ
         lblSeleUser.setVisible(eventSelected);
         tfSearch.setVisible(eventSelected);
         lvAllUsers.setVisible(eventSelected);
+        spinnerSpecTickets.setVisible(specialSelected);
         lblSeleTicket.setVisible(specialSelected || eventSelected);
         lvRadioBtns.setVisible(specialSelected || eventSelected);
 
@@ -425,15 +433,59 @@ public class SpecificEventController extends BaseController implements Initializ
         }
     }
 
+    /*@FXML
+    private void onPrintTicket(ActionEvent actionEvent) {
+        if (tBtnSpecial.isSelected()) {
+            int numberOfTickets = (int) spinnerSpecTickets.getValue();
+            for (int i = 0; i < numberOfTickets; i++) {
+                String uniqueCode = BarQRCodeUtil.generateUUID();
+                try {
+                    Image barcodeImage = BarQRCodeUtil.generateBarcode(uniqueCode, 300, 100);
+                    Image qrCodeImage = BarQRCodeUtil.generateQRCode(uniqueCode, 300, 300);
+                    Node ticketNode = createTicketNode(barcodeImage, qrCodeImage);
+                    PrintAndMailUtility.printTicket(ticketNode);
+                    //model.saveSpecialTicket(uniqueCode); // Gemmer hver billet med sin unikke kode
+                } catch (WriterException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (tBtnEvent.isSelected() && currentSelectedUser != null) {
+            Node ticketNode = spTicketPreview; // Antag at denne node repræsenterer den aktuelle billet
+            PrintAndMailUtility.printTicket(ticketNode);
+        }
+    }*/
 
-    void initData(Event event) throws SQLException, IOException {
-        lvAllUsers.setItems(model.getAllUsers());
-    }
+    /*@FXML
+    private void onMail(ActionEvent event) {
+        if (tBtnEvent.isSelected() && currentSelectedUser != null) {
+            try {
+                String uniqueCode = BarQRCodeUtil.generateUUID();
+                Image qrCodeImage = BarQRCodeUtil.generateQRCode(uniqueCode, 300, 300);
+                PrintAndMailUtility.sendTicketByEmail(currentSelectedUser.getEmail(), "Din Event Billet", "Her er din QR-kode billet.", qrCodeImage);
+            } catch (WriterException | MessagingException e) {
+                e.printStackTrace();
+            }
+        }
+    }*/
 
-    public void populateFields(Event event) {
+    /*private Node createTicketNode(Image barcodeImage, Image qrCodeImage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TicketLayout.fxml")); // Antag at du har en FXML fil for billet layout
+        Parent layout = loader.load();
+
+        // Sæt billeder
+        ((ImageView) layout.lookup("#barCode")).setImage(barcodeImage);
+        ((ImageView) layout.lookup("#qrCode")).setImage(qrCodeImage);
+
+        // Du kan også tilpasse andre elementer baseret på billetdata, hvis nødvendigt
+        return layout;
+    }*/
+
+
+
+    public void populateFields(Event event) throws SQLException, IOException {
         this.event = event;
 
-
+        lvAllUsers.setItems(model.getAllUsers());
         lblEventName.setText(event.getName());
         lblInfo.setText(event.getTime() + " || " + event.getLocation());
         taEventNotes.setText(event.getNote());

@@ -64,7 +64,6 @@ public class EditEventController extends BaseController implements Initializable
         Parent root = loader.load();
 
         SpecificEventController controller = loader.getController();
-        controller.initData(event);
         controller.populateFields(event);
 
         Stage stage = new Stage();

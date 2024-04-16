@@ -35,8 +35,8 @@
             </Label>
          </children>
       </VBox>
-      <ImageView fx:id="qrCode" fitHeight="70.0" fitWidth="70.0" layoutX="378.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="barCode" fitHeight="70.0" fitWidth="70.0" layoutX="378.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="qrCode" fitHeight="70.0" fitWidth="70.0" layoutX="345.0" layoutY="103.0" pickOnBounds="true" />
+      <ImageView fx:id="barCode" fitHeight="70.0" fitWidth="70.0" layoutX="345.0" layoutY="27.0" nodeOrientation="INHERIT" pickOnBounds="true" rotate="-90.0" />
 
    </children>
 </AnchorPane>
