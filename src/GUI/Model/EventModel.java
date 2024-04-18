@@ -15,7 +15,6 @@ import java.util.List;
 public class EventModel {
 
     private Manager manager;
-    //private Model model;
 
 
     public EventModel (){
@@ -45,7 +44,7 @@ public class EventModel {
         return manager.getEventsForEventCo(userID);
     }
 
-    public ObservableList<User> getUsersByRole(String role){
+    public ObservableList<User> getUsersByRole(String role) throws SQLException, IOException {
         ObservableList<User> filteredUsers = FXCollections.observableArrayList();
         try {
             List<User> allUsers = manager.getAllUsers();
@@ -55,8 +54,8 @@ public class EventModel {
                     filteredUsers.add(user);
                 }
             }
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
+        } finally {
+
         }
         return filteredUsers;
     }

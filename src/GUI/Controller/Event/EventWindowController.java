@@ -138,9 +138,7 @@ public class EventWindowController extends BaseController implements Initializab
             Stage currentStage = (Stage) btnNewEvent.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            System.out.println("noget gik galt");
+            showAlert("Error", "Could not load window");
         }
     }
 

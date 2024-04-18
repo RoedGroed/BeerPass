@@ -88,9 +88,7 @@ public class NewUserController extends BaseController implements Initializable {
             adminStage.setTitle("Admin Window");
             adminStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load AdminWindow.fxml");
-            alert.showAndWait();
+            showAlert("Error", "could not open the window");
         }
     }
 
@@ -116,14 +114,12 @@ public class NewUserController extends BaseController implements Initializable {
         String username = tfUserName.getText();
         if (!model.validateStringLength(username,30))
         {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Name cannot be more than 30 characters");
-            alert.showAndWait();
+            showInformationAlert("Warning", "Name cannot be more than 30 characters");
             return;
         }
         String email = tfUserEmail.getText();
         if (!model.validateEmail(email)){
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid Email, please check its correct");
-            alert.showAndWait();
+            showInformationAlert("Warning", "Invalid Email, please check its correct");
             return;
         }
 
@@ -139,7 +135,7 @@ public class NewUserController extends BaseController implements Initializable {
 
         if (role == null) {
             // No radio button was selected, handle this case appropriately
-            System.err.println("Please select a role.");
+            showInformationAlert("Warning", "No user role selected");
             return;
         }
 
@@ -149,8 +145,7 @@ public class NewUserController extends BaseController implements Initializable {
         loadFXML("/AdminWindow.FXML", model, (Stage) tfUserName.getScene().getWindow());
 
         } catch (SQLException | IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "An Error has occurred\rCreating a new user");
-            alert.showAndWait();
+            showAlert("Error", "An error occurred while creating a new user");
         }
     }
 }

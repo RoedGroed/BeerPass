@@ -60,7 +60,7 @@ public class User {
 
     @Override
     public String toString() {
-        return  username + ", " + email ;
+        return  username;
     }
 
     public void setEmail(String email) {

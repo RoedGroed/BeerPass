@@ -72,7 +72,7 @@ public class Manager {
     public List<Event> getEventsForEventCo(int userId) throws SQLException, IOException {
         return eventDAO.readEventsForCoordinator(userId);
     }
-    public void addTicket(String ticketName, String ticketType) throws IOException {
+    public void addTicket(String ticketName, String ticketType) throws IOException, SQLException {
         ticketDAO.addTicket(ticketName, ticketType);
     }
     public List<Ticket> getAllTickets() throws SQLException, IOException {

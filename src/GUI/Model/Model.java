@@ -36,7 +36,7 @@ public class Model {
         return instance;
     }
 
-    public ObservableList<User>getUsersByRole(String role){
+    public ObservableList<User>getUsersByRole(String role) throws SQLException, IOException {
         ObservableList<User> filteredUsers = FXCollections.observableArrayList();
         try {
             List<User> allUsers = manager.getAllUsers();
@@ -46,8 +46,7 @@ public class Model {
                     filteredUsers.add(user);
                 }
             }
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
+        } finally {
         }
         return filteredUsers;
     }
@@ -59,8 +58,7 @@ public class Model {
             for (User user : allUsers) {
                 Users.add(user);
             }
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
+        } finally {
         }
         return Users;
     }
@@ -82,7 +80,7 @@ public class Model {
         return currentUser != null && "Admin".equals(currentUser.getRole());
     }
 
-    public void addTicket(String ticketName, String ticketType) throws IOException {
+    public void addTicket(String ticketName, String ticketType) throws IOException, SQLException {
         manager.addTicket(ticketName, ticketType);
     }
     public List<Ticket> getAllTickets() throws SQLException, IOException {

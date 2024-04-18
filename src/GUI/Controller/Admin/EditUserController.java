@@ -103,15 +103,12 @@ public class EditUserController extends BaseController implements Initializable 
         confirmationAlert.setTitle("Confirm Deletion");
         confirmationAlert.setHeaderText("Are you sure you want to delete this user?");
         confirmationAlert.setContentText("This action cannot be undone");
-
         confirmationAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 try {
                     model.deleteUser(user.getUserID());
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (SQLException | IOException e) {
+                    showAlert("Error", "An error occurred while deleting the user");
                 }
                 loadFXML("/AdminWindow.FXML", model, (Stage) radiobtnRectangle.getScene().getWindow());
             }
@@ -136,17 +133,13 @@ public class EditUserController extends BaseController implements Initializable 
 
                 if (!model.validateStringLength(username,30))
                 {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "Name cannot be more than 30 characters");
-                    alert.showAndWait();
+                    showInformationAlert("Warning","Name cannot be more than 30 characters");
                     return;
                 }
                 if (!model.validateEmail(email)){
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "Invalid Email, please retry:\rexample@email.com");
-                    alert.showAndWait();
+                    showInformationAlert("Warning","Invalid Email, please retry:\rexample@email.com");
                     return;
                 }
-
-
                 user.setUsername(username);
                 user.setEmail(email);
                 user.setRole(role);
@@ -163,9 +156,7 @@ public class EditUserController extends BaseController implements Initializable 
                 loadFXML("/AdminWindow.FXML",model,(Stage) tfUserEmail.getScene().getWindow());
             }
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not update user.");
-            alert.showAndWait();
+            showAlert("Error", "Could not update user");
         }
     }
 

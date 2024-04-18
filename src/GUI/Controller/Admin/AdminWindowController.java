@@ -11,13 +11,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -37,6 +37,7 @@ public class AdminWindowController extends BaseController implements Initializab
     private ListView<User> selectedListView;
     private List<User> selectedCoordinators = new ArrayList<>();
 
+
     public AdminWindowController() {
 
     }
@@ -45,14 +46,21 @@ public class AdminWindowController extends BaseController implements Initializab
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         initListviews();
-
+        setupHoverFunctionality();
     }
 
     private void initListviews() {
-        lvAdmin.setItems(model.getUsersByRole("Admin"));
-        lvEventCo.setItems(model.getUsersByRole("Event Coordinator"));
-        lvUsers.setItems(model.getUsersByRole("User"));
-        addListListener();
+        try {
+            lvAdmin.setItems(model.getUsersByRole("Admin"));
+            lvEventCo.setItems(model.getUsersByRole("Event Coordinator"));
+            lvUsers.setItems(model.getUsersByRole("User"));
+            addListListener();
+
+        } catch (SQLException | IOException e) {
+            showAlert("Error", "An error occurred while performing this action \r" +
+                    "please contact support for help");
+        }
+
 
     }
 
@@ -65,30 +73,33 @@ public class AdminWindowController extends BaseController implements Initializab
      * Passes the information from the user-object into the corresponding fields.
      */
     @FXML
-    private void onEditUser(ActionEvent actionEvent) throws IOException {
+    private void onEditUser(ActionEvent actionEvent) {
 
         if ((selectedListView != null && selectedListView.getSelectionModel().getSelectedItem() != null)) {
             User selectedUser = selectedListView.getSelectionModel().getSelectedItem();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditUser.fxml"));
-            Parent root = loader.load();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditUser.fxml"));
+                Parent root = loader.load();
 
-            EditUserController editUserController = loader.getController();
-            editUserController.populateFields(selectedUser);
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Edit User");
-            stage.show();
+                EditUserController editUserController = loader.getController();
+                editUserController.populateFields(selectedUser);
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Edit User");
+                stage.show();
 
-            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            currentStage.close();
+                Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                currentStage.close();
+            } catch (IOException e) {
+                showAlert("Error", "Could not load the window");
+            }
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a user to edit.");
-            alert.showAndWait();
+            showInformationAlert("Warning", "Please select a user to edit");
         }
     }
 
     @FXML
-    private void onNewUser(ActionEvent actionEvent) throws IOException {
+    private void onNewUser(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewUser.fxml"));
             Parent root = loader.load();
@@ -101,9 +112,7 @@ public class AdminWindowController extends BaseController implements Initializab
             currentStage.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load App.fxml");
-            alert.showAndWait();
+            showAlert("Error", "Could not load the window");
         }
     }
 
@@ -112,6 +121,42 @@ public class AdminWindowController extends BaseController implements Initializab
         lvAdmin.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedListView = lvAdmin);
         lvEventCo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedListView = lvEventCo);
         lvUsers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedListView = lvUsers);
+    }
+    private void setupHoverFunctionality() {
+        lvAdmin.setCellFactory(param -> createListCell());
+        lvEventCo.setCellFactory(param -> createListCell());
+        lvUsers.setCellFactory(param -> createListCell());
+    }
+
+    private ListCell<User> createListCell() {
+        return new ListCell<User>() {
+            private VBox hoverBox = new VBox();
+            private Label emailLabel = new Label();
+
+            @Override
+            protected void updateItem(User user, boolean empty) {
+                super.updateItem(user, empty);
+                if (empty || user == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(user.getUsername());
+
+                    // Handle mouse hover events
+                    setOnMouseEntered(event -> {
+                        setText(null);
+                        emailLabel.setText("Email: " + user.getEmail());
+                        hoverBox.getChildren().setAll(emailLabel);
+                        setGraphic(hoverBox);
+                    });
+
+                    setOnMouseExited(event -> {
+                        setText(user.getUsername());
+                        setGraphic(null);
+                    });
+                }
+            }
+        };
     }
 
 

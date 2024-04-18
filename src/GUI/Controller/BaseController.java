@@ -13,11 +13,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class BaseController implements Initializable {
@@ -60,17 +62,21 @@ public class BaseController implements Initializable {
     /////////////////////
 
     @FXML
-    private void onLogout(ActionEvent actionEvent) throws IOException {
-        Stage stage = (Stage) btnLogout.getScene().getWindow();
-        URL url = getClass().getResource("/Login.fxml");
+    private void onLogout(ActionEvent actionEvent) {
+        try {
+            Stage stage = (Stage) btnLogout.getScene().getWindow();
+            URL url = getClass().getResource("/Login.fxml");
 
-        stage.setTitle("BrewPass");
+            stage.setTitle("BrewPass");
 
-        FXMLLoader loader = new FXMLLoader(url);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+            FXMLLoader loader = new FXMLLoader(url);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Error", "Could not load the window");
+        }
     }
 
     @FXML
@@ -89,9 +95,7 @@ public class BaseController implements Initializable {
             currentStage.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load EventWindow.fxml");
-            alert.showAndWait();
+            showAlert("Error", "Could not load the window");
         }
     }
 
@@ -111,9 +115,7 @@ public class BaseController implements Initializable {
             currentStage.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load AdminWindow.fxml");
-            alert.showAndWait();
+            showAlert("Error", "Could not load the window");
         }
     }
 
@@ -133,9 +135,7 @@ public class BaseController implements Initializable {
             currentStage.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load TicketWindow.fxml");
-            alert.showAndWait();
+            showAlert("Error", "Could not load the window");
         }
     }
 
@@ -158,12 +158,26 @@ public class BaseController implements Initializable {
             stage.show();
 
         } catch (IOException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Could not load " + fxmlPath);
-            alert.showAndWait();
+            showAlert("Error", "Could not load the window");
         }
     }
 
 
+/**
+ * Handling of expression helper methods.
+ */
 
+    public void showAlert(String title, String context) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(context);
+        alert.showAndWait();
+    }
+    public void showInformationAlert(String title, String context) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Information");
+        alert.setContentText(context);
+        alert.showAndWait();
+    }
 
 }

@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class TicketDAO {
 
-    public void addTicket(String ticketName, String ticketType) throws IOException {
+    public void addTicket(String ticketName, String ticketType) throws IOException, SQLException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
             String query = "INSERT INTO Tickets (Name, Type) VALUES (?,?)";
@@ -23,11 +23,8 @@ public class TicketDAO {
                 prep.setString(2, ticketType);
                 prep.executeUpdate();
             }
-        } catch (SQLServerException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
+
     }
 
     public List<Ticket> readAllTickets() throws SQLException, IOException {

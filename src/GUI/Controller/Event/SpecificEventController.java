@@ -173,29 +173,21 @@ public class SpecificEventController extends BaseController implements Initializ
                 spTicketPreview.getChildren().add(ticketPreview);
             }
         } catch(IOException | WriterException e){
-            e.printStackTrace();
+            showAlert("Error", "There was an error updating the ticket preview");
         }
     }
 
     private void initToggleBtns() {
         tBtnSpecial.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                updateVisibility(newValue, false);
-            } catch (SQLException | IOException e) {
-                throw new RuntimeException(e);
-            }
+            updateVisibility(newValue, false);
         });
 
         tBtnEvent.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                updateVisibility(false, newValue);
-            } catch (SQLException | IOException e) {
-                throw new RuntimeException(e);
-            }
+            updateVisibility(false, newValue);
         });
     }
 
-    private void updateVisibility(boolean specialSelected, boolean eventSelected) throws SQLException, IOException {
+    private void updateVisibility(boolean specialSelected, boolean eventSelected) {
         lblSeleUser.setVisible(eventSelected);
         tfSearch.setVisible(eventSelected);
         lvAllUsers.setVisible(eventSelected);
@@ -205,20 +197,28 @@ public class SpecificEventController extends BaseController implements Initializ
         lvRadioBtns.setVisible(specialSelected || eventSelected);
 
         if (eventSelected) {
-            populateRadioButtonsForEventTickets(event);
+                populateRadioButtonsForEventTickets(event);
         } else if (specialSelected) {
-            populateRadioButtonsForSpecialTickets();
+                populateRadioButtonsForSpecialTickets();
         }
     }
 
-    private void populateRadioButtonsForEventTickets(Event event) throws SQLException, IOException {
-        List<Ticket> ticketsForEvent = model.getLinkedTickets(event.getEventID());
-        populateRadioButtons(ticketsForEvent);
+    private void populateRadioButtonsForEventTickets(Event event) {
+        try {
+            List<Ticket> ticketsForEvent = model.getLinkedTickets(event.getEventID());
+            populateRadioButtons(ticketsForEvent);
+        } catch (SQLException | IOException e) {
+            showAlert("Error", "An error occurred while retrieving data");
+        }
     }
 
-    private void populateRadioButtonsForSpecialTickets() throws SQLException, IOException {
-        List<Ticket> specialTickets = model.getSpecialTickets();
-        populateRadioButtons(specialTickets);
+    private void populateRadioButtonsForSpecialTickets() {
+        try {
+            List<Ticket> specialTickets = model.getSpecialTickets();
+            populateRadioButtons(specialTickets);
+        } catch (SQLException | IOException e) {
+            showAlert("Error", "Error occurred while retrieving data");
+        }
     }
 
     private void populateRadioButtons(List<Ticket> tickets) {
@@ -243,7 +243,7 @@ public class SpecificEventController extends BaseController implements Initializ
         try {
             allUsers = FXCollections.observableArrayList(model.getAllUsers());
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
+            showAlert("Error", "An error occurred while retrieving data");
         }
         lvAllUsers.setItems(allUsers);
     }
@@ -260,10 +260,8 @@ public class SpecificEventController extends BaseController implements Initializ
             if (response == ButtonType.OK) {
                 try {
                     eventModel.deleteEvent(event);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (SQLException | IOException e) {
+                    showAlert("Error", "An error occurred while deleting event");
                 }
                 // TODO: Get the event objected passed to this controller, so that i can delete the correct object.
                 // TODO: Update the events being shown, use the read method here/Remove from the list.
@@ -294,7 +292,7 @@ public class SpecificEventController extends BaseController implements Initializ
             Stage currentStage = (Stage) lblInfo.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            showAlert("Error", "An error occurred while loading the window");
         }
     }
 
@@ -319,31 +317,32 @@ public class SpecificEventController extends BaseController implements Initializ
                     throw new IllegalStateException("Ingen billettype valgt");
                 }
             } catch (SQLException | IOException e) {
-                e.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Der skete en fejl under gemning eller udskrivning af billetten.");
-                alert.show();
+                showAlert("Error", "An error occurred while saving or printing the ticket");
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Vælg venligst en gyldig billet først.");
-            alert.show();
+            showInformationAlert("Warning", "Please select a ticket type");
         }
     }
 
-    private void printNode(Node node) throws SQLException, IOException {
-        WritableImage snapshot = node.snapshot(new SnapshotParameters(), null);
-        ImageView imageView = new ImageView(snapshot);
+    private void printNode(Node node) {
+        try {
+            WritableImage snapshot = node.snapshot(new SnapshotParameters(), null);
+            ImageView imageView = new ImageView(snapshot);
 
-        PrinterJob job = PrinterJob.createPrinterJob();
-        if (job != null && job.showPrintDialog(node.getScene().getWindow())) {
-            boolean success = job.printPage(imageView);
-            if (success) {
-                job.endJob();
-                System.out.println("Billetten er blevet printet succesfuldt fra snapshot.");
+            PrinterJob job = PrinterJob.createPrinterJob();
+            if (job != null && job.showPrintDialog(node.getScene().getWindow())) {
+                boolean success = job.printPage(imageView);
+                if (success) {
+                    job.endJob();
+                    showInformationAlert("Success", "The ticket has been printed successfully");
+                } else {
+                    showInformationAlert("Warning", "An error occurred while printing the ticket");
+                }
             } else {
-                System.out.println("Der skete en fejl under udskrivningen af snapshot.");
+                showInformationAlert("Warning", "No printer selected");
             }
-        } else {
-            System.out.println("Ingen printer valgt eller fejl i printerdialogen.");
+        } catch (Exception e) {
+            showAlert("Error", "An error occurred while printing");
         }
     }
 
@@ -373,22 +372,17 @@ public class SpecificEventController extends BaseController implements Initializ
                         MailUtility.sendEmailWithAttachment(host, port, mailFrom, password, toEmail, subject, message, imagePath);
                         model.linkTicketToUser(currentSelectedTicket.getTicketID(), currentSelectedUser.getUserID(), event.getEventID(), currentSelectedTicket.getUuid());
                         Platform.runLater(() -> {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "E-mailen er blevet sendt.");
-                            alert.showAndWait();
+                            showInformationAlert("Success", "the email has been sent");
                         });
                     } catch (MessagingException | IOException | SQLException e) {
                         Platform.runLater(() -> {
-                            Alert alert = new Alert(Alert.AlertType.ERROR, "Fejl ved sending af e-mail: " + e.getMessage());
-                            alert.showAndWait();
+                            showAlert("Error", "Error when sending the email");
                         });
-                        e.printStackTrace();
                     }
                 }).start();
 
             } catch (IOException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Kunne ikke gemme billede: " + e.getMessage());
-                alert.show();
-                e.printStackTrace();
+                showAlert("Error", "Could not save image");
             }
         });
     }
@@ -397,20 +391,24 @@ public class SpecificEventController extends BaseController implements Initializ
 
 
 
-    public void populateFields(Event event) throws SQLException, IOException {
-        this.event = event;
+    public void populateFields(Event event) {
+        try {
+            this.event = event;
 
-        lvAllUsers.setItems(model.getAllUsers());
-        lblEventName.setText(event.getName());
-        lblInfo.setText(event.getTime() + " || " + event.getLocation());
-        taEventNotes.setText(event.getNote());
+            lvAllUsers.setItems(model.getAllUsers());
+            lblEventName.setText(event.getName());
+            lblInfo.setText(event.getTime() + " || " + event.getLocation());
+            taEventNotes.setText(event.getNote());
+        } catch (SQLException | IOException e) {
+            showAlert("Error", "An error occurred while retrieving data");
+        }
 
         //populateTickets(event);
         try {
             int soldTickets = eventModel.getSoldTicketsCount(event.getEventID());
             lblTicketCounter.setText(String.valueOf(soldTickets) + " / " + event.getTicketLimit());
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            showAlert("Error", "An error occurred while retrieving data");
         }
 
     }

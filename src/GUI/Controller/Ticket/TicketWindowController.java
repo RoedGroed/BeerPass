@@ -95,7 +95,7 @@ public class TicketWindowController extends BaseController implements Initializa
                     }
                 }
             });
-            //listview for the eventtickets linked to an event
+            //listview for the event tickets linked to an event
             listviewEvents.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     Event selectedEvent = (Event) newValue;
@@ -104,7 +104,7 @@ public class TicketWindowController extends BaseController implements Initializa
                     try {
                         linkedTickets = model.getLinkedTickets(selectedEvent.getEventID());
                     } catch (SQLException | IOException e) {
-                        throw new RuntimeException(e);
+                        showAlert("Error", "Contact support / database error");
                     }
                     // Clear the list before adding new items
                     listviewAvaTickets.getItems().clear();
@@ -119,7 +119,7 @@ public class TicketWindowController extends BaseController implements Initializa
             });
 
         } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
+            showAlert("Error", "Contact support / database error");
         }
     }
 
@@ -132,8 +132,7 @@ public class TicketWindowController extends BaseController implements Initializa
                 model.deleteTicket(selectedTicketName.getTicketID());
                 updateUI();
             } catch (SQLException | IOException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "This ticket is in use, please remove it form an event first.");
-                alert.showAndWait();
+                showAlert("Error", "This ticket is in use");
             }
         } else if (listviewSpecialTickets.getSelectionModel().getSelectedItem() != null) {
             Ticket selectedTicketName = (Ticket) listviewSpecialTickets.getSelectionModel().getSelectedItem();
@@ -142,10 +141,8 @@ public class TicketWindowController extends BaseController implements Initializa
                 model.deleteTicket(selectedTicketName.getTicketID());
                 updateUI();
             } catch (SQLException | IOException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "This ticket is in use, please remove it form an event first.");
-                alert.showAndWait();
+                showAlert("Error", "This ticket is in use");
             }
-
         }
     }
     @FXML
@@ -162,16 +159,16 @@ public class TicketWindowController extends BaseController implements Initializa
                     model.addTicket(ticketName, ticketType);
                     updateUI();
                 } catch (IOException e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred while adding the ticket");
-                    alert.showAndWait();
+                    showAlert("Error", "An error occurred while adding this ticket. \r" +
+                            "Please try again");
+                } catch (SQLException e) {
+                    showAlert("Error", "Contact support / database error");
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a ticket type to continue.");
-                alert.showAndWait();
+                showInformationAlert("Warning", "Please select a ticket type");
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "You need to enter a ticket name.");
-            alert.showAndWait();
+            showInformationAlert("Warning", "You need to enter a ticket name");
         }
     }
 
@@ -182,7 +179,7 @@ public class TicketWindowController extends BaseController implements Initializa
     }
 
     @FXML
-    private void onTriangleLeft(ActionEvent actionEvent) throws SQLException, IOException, InterruptedException {
+    private void onTriangleLeft(ActionEvent actionEvent) {
         if(listviewEvents.getSelectionModel().getSelectedItem() != null &&
                 listviewEventTickets.getSelectionModel().getSelectedItem() != null) {
             //Getting the event and ticket ids from the two listviews
@@ -191,12 +188,15 @@ public class TicketWindowController extends BaseController implements Initializa
             Ticket selectedTicket = (Ticket) listviewEventTickets.getSelectionModel().getSelectedItem();
             int ticketID = selectedTicket.getTicketID();
             //calling the method from the database to link the ticket to the event
-            model.linkTicketToEvent(eventID, ticketID);
+            try {
+                model.linkTicketToEvent(eventID, ticketID);
+            } catch (SQLException | IOException e) {
+                showAlert("Error", "Contact support / database error");
+            }
             updateUI();
         }
         else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select both an Event and a Ticket type to perform this action.");
-            alert.showAndWait();
+            showInformationAlert("Warning", "Please select both an event and a ticket type to perform this action");
         }
     }
     @FXML
@@ -216,10 +216,8 @@ public class TicketWindowController extends BaseController implements Initializa
                 int ticketID = model.getTicketIDByName(selectedTicketName);
                 model.removeTicketFromEvent(eventID, ticketID);
                 updateUI();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (SQLException | IOException e) {
+               showAlert("Error", "Contact support / database error");
             }
         }
     }
@@ -241,7 +239,7 @@ public class TicketWindowController extends BaseController implements Initializa
             listviewEventTickets.refresh();
             listviewSpecialTickets.refresh();
         } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
+            showAlert("Error", "Could not update the UI");
         }
     }
 }

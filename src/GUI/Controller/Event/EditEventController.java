@@ -59,24 +59,28 @@ public class EditEventController extends BaseController implements Initializable
         loadImagesIntoComboBox();
     }
     @FXML
-    private void onCancel(ActionEvent actionEvent) throws IOException, SQLException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/SpecificEvent.fxml"));
-        Parent root = loader.load();
+    private void onCancel(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/SpecificEvent.fxml"));
+            Parent root = loader.load();
 
-        SpecificEventController controller = loader.getController();
-        controller.populateFields(event);
+            SpecificEventController controller = loader.getController();
+            controller.populateFields(event);
 
-        Stage stage = new Stage();
-        stage.setTitle(event.getName());
-        stage.setScene(new Scene(root));
-        stage.show();
+            Stage stage = new Stage();
+            stage.setTitle(event.getName());
+            stage.setScene(new Scene(root));
+            stage.show();
 
-        Stage currentStage = (Stage) tfEventTime.getScene().getWindow();
-        currentStage.close();
+            Stage currentStage = (Stage) tfEventTime.getScene().getWindow();
+            currentStage.close();
+        } catch (IOException e) {
+            showAlert("Error", "Could not load window");
+        }
     }
 
-    @FXML
-    private void onConfirmEvent(ActionEvent actionEvent) throws SQLException, IOException {
+        @FXML
+    private void onConfirmEvent(ActionEvent actionEvent) {
         getUserInput(event);
         String maxAttendeesText = tfMaxAttendees.getText();
         if (!maxAttendeesText.isEmpty()) {
@@ -89,10 +93,12 @@ public class EditEventController extends BaseController implements Initializable
                 }
                 /// A Hack to circumvent if parsing MaxAttendees from string to an integer fails.
             } catch (NumberFormatException e) {
-                eventModel.showAlert("Invalid input for maximum attendees. Please enter a valid integer.");
+                showInformationAlert("Warning", "Invalid input for maximum attenders, Please enter a valid integer");
+            } catch (SQLException | IOException e) {
+              showAlert("Error", "Error while loading the window, try again");
             }
         } else {
-            eventModel.showAlert("Maximum attendees field cannot be empty.");
+            showInformationAlert("Warning", "Invalid input for maximum attenders, Field can't be empty");
         }
     }
 
@@ -126,15 +132,10 @@ public class EditEventController extends BaseController implements Initializable
             try {
                 eventModel.addCoordinator(event.getEventID(), selectedUser.getUserID());
             } catch (IOException | SQLException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR,
-                        "Failed to add coordinator to the event. Please try again later.");
-                alert.showAndWait();
+                showAlert("Error", "Failed to add coordinator to event");
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR,
-                    "Please Select an Event Coordinator\r" +
-                    "that should be added to this event");
-            alert.showAndWait();
+            showInformationAlert("Warning", "Please select an Event Coordinator\r" + "that should be added to this event");
         }
     }
 
@@ -148,15 +149,11 @@ public class EditEventController extends BaseController implements Initializable
             try{
                 eventModel.removeCoordinator(event.getEventID(), selectedUser.getUserID());
             } catch (IOException | SQLException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR,
-                        "Failed to remove coordinator to the event. Please try again later.");
-                alert.showAndWait();
+                showAlert("Error", "Failed to remove coordinator from the event. PLease try again");
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR,
-                    "Please Select an Event Coordinator\r" +
-                            "that should be removed from this event");
-            alert.showAndWait();
+            showInformationAlert("Warning", "Please Select an Event Coordinator\r" +
+                    "that should be removed from this event");
         }
     }
     //FIXME: Current adding all to the left Listview, and not removing those already assigned.
@@ -245,7 +242,7 @@ public class EditEventController extends BaseController implements Initializable
 
             lvCoordinators.getItems().addAll(assignedCoordinators);
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
+            showAlert("Error", "An database error occurred, contact support");
         }
     }
 

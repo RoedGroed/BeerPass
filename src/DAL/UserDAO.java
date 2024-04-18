@@ -93,8 +93,6 @@ public class UserDAO {
                 User user = new User(userID, userName, password, email, role);
                 allUsers.add(user);
             }
-        } catch (SQLException e) {
-            throw new SQLException("Could not retrieve users from database", e);
         }
         return allUsers;
     }
@@ -108,8 +106,6 @@ public class UserDAO {
                 statement.setInt(1, userId);
                 statement.executeUpdate();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -126,8 +122,6 @@ public class UserDAO {
                 statement.setString(4, user.getEmail());
                 statement.executeUpdate();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -146,8 +140,6 @@ public class UserDAO {
             preparedStatement.setString(4, selectedUser.getEmail());
             preparedStatement.setInt(5, selectedUser.getUserID());
             preparedStatement.executeUpdate();
-        } catch (SQLException ex) {
-            throw new SQLException("Could not update user", ex);
         }
     }
 
@@ -207,8 +199,6 @@ public class UserDAO {
             ps.setInt(1, EventID);
             ps.setInt(2, userID);
             ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new SQLException("Could not add coordinator to this event",e);
         }
     }
 
@@ -220,8 +210,6 @@ public class UserDAO {
             ps.setInt(1, EventID);
             ps.setInt(2, userID);
             ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new SQLException("Could not remove coordinator to this event",e);
         }
     }
 

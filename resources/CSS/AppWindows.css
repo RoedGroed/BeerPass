@@ -204,6 +204,19 @@ Text field
 /*
 Listviews
  */
+.list-cell-admin:selected{
+    -fx-background-color: #201f45;
+    -fx-background-radius: 15;
+}
+.listView-admin{
+    -fx-background-color: rgba(0, 0, 0, 0.45);
+    -fx-text-fill: White;
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-width: 2px;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+}
+
 .listView{
     -fx-background-color: rgba(0, 0, 0, 0.45);
     -fx-text-fill: White;
@@ -217,6 +230,7 @@ Listviews
 {
     -fx-background-color: transparent;
     -fx-text-fill: white;
+    -fx-font-size: 15px;
 }
 
 .list-cell:selected{
@@ -307,9 +321,9 @@ Shapes
 .tglBtn:selected {
     -fx-text-fill: white;
     -fx-background-color: rgba(0, 0, 0, 0.45);
-    -fx-border-color: rgba(95, 18, 18, 0.5);
+    -fx-border-color: rgb(255, 255, 255);
     -fx-border-style: solid;
-    -fx-border-width: 2px;
+    -fx-border-width: 3px;
     -fx-border-radius: 7px;
     -fx-background-radius: 10px;
 }

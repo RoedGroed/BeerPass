@@ -65,14 +65,17 @@ public class NewEventController extends BaseController implements Initializable 
     }
 
     @FXML
-    private void onConfirmUser(ActionEvent actionEvent) throws SQLException, IOException {
+    private void onConfirmUser(ActionEvent actionEvent) {
         Event event = getUserInput();
 
         if (event != null){
 
-            eventModel.createEvent(event);
-
-            loadFXML("/EventWindow.FXML",model, (Stage) tfEventName.getScene().getWindow());
+            try {
+                eventModel.createEvent(event);
+                loadFXML("/EventWindow.FXML",model, (Stage) tfEventName.getScene().getWindow());
+            } catch (SQLException | IOException e) {
+                showAlert("Error", "Error occurred while creating a user, try again");
+            }
         }
 
         // Add coordinators to the event in the database
@@ -84,11 +87,6 @@ public class NewEventController extends BaseController implements Initializable 
 
     }
 
-    private void showAlert(String content) {
-        Alert alert = new Alert(Alert.AlertType.WARNING, content);
-        alert.setTitle("Invalid Input");
-        alert.showAndWait();
-    }
 
     private Event getUserInput(){
         String name = tfEventName.getText();
@@ -100,8 +98,7 @@ public class NewEventController extends BaseController implements Initializable 
         try {
             ticketLimit = Integer.parseInt(tfMaxAttendees.getText());
         } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            showAlert("Invalid input for max attendees. Please enter a valid integer.");
+            showInformationAlert("Warning", "Invalid input for max attenders, please inter a valid integer");
             return null;
         }
         String imagePath = cbEventImages.getValue();
@@ -156,11 +153,7 @@ public class NewEventController extends BaseController implements Initializable 
                 }
             });
         } catch (SQLException | IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error occurred while populating list");
-            alert.setContentText("An error occurred while fetching event coordinators. Please try again.");
-            alert.showAndWait();
+            showAlert("Error", "An error occurred while fetching event coordinators.");
         }
     }
 
@@ -176,10 +169,8 @@ public class NewEventController extends BaseController implements Initializable 
             lvAllCoordinators.getItems().remove(selectedUser);
             lvCoordinators.getItems().add(selectedUser);
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR,
-                    "Please Select an Event Coordinator\r" +
-                            "that should be added to this event");
-            alert.showAndWait();
+            showInformationAlert("Warning", "Please select an Event Coordinator\r" +
+                    "to add to this event");
         }
     }
 
@@ -190,8 +181,7 @@ public class NewEventController extends BaseController implements Initializable 
             lvCoordinators.getItems().remove(selectedUser);
             lvAllCoordinators.getItems().add(selectedUser);
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a coordinator to remove.");
-            alert.showAndWait();
+            showInformationAlert("Warning", "Please select and Event Coordinator to remove");
         }
     }
 
