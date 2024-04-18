@@ -97,6 +97,10 @@ public class Manager {
         ticketDAO.linkUserToTicket(userID, ticketID, eventID, uuid);
     }
 
+    public void linkSpecialTicket(int ticketID, UUID uuid) throws SQLException, IOException {
+        ticketDAO.linkSpecialTicket(ticketID, uuid);
+    }
+
     public List<User> readAllEventCoordinators() throws SQLException, IOException {
         return userDAO.readAllEventCoordinators();
     }
@@ -147,6 +151,7 @@ public class Manager {
     public int getSoldTicketsCount(int eventID) throws SQLException, IOException {
        return eventDAO.getSoldTicketsCount(eventID);
     }
+
 
 }
 

@@ -11,6 +11,7 @@ import Util.BarQRCodeUtil;
 import Util.MailUtility;
 import Util.SearchUtility;
 import com.google.zxing.WriterException;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import jakarta.mail.MessagingException;
 import javafx.application.Platform;
@@ -40,7 +41,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import java.util.UUID;
 
 
 public class SpecificEventController extends BaseController implements Initializable {
@@ -88,6 +89,9 @@ public class SpecificEventController extends BaseController implements Initializ
     private ObservableList<User> allUsers;
     @FXML
     private Spinner spinnerSpecTickets;
+    @FXML
+    private MFXButton btnMailTicket;
+
 
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -103,10 +107,10 @@ public class SpecificEventController extends BaseController implements Initializ
         ticketToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 currentSelectedTicket = (Ticket) newValue.getUserData();
+                updatePreviewIfPossible();
             } else {
                 currentSelectedTicket = null;
             }
-            updatePreviewIfPossible();
         });
 
 
@@ -121,16 +125,18 @@ public class SpecificEventController extends BaseController implements Initializ
     private void updatePreviewIfPossible() {
         if (currentSelectedTicket != null && currentSelectedTicket.getTicketType().equals("Special Ticket")){
             updateTicketPreview(currentSelectedTicket);
+            currentSelectedTicket.setUuid(UUID.randomUUID());
         }
 
         else if (currentSelectedTicket != null && currentSelectedUser != null) {
             updateTicketPreview(currentSelectedTicket);
+            currentSelectedTicket.setUuid(UUID.randomUUID());
         }
     }
 
     private void updateTicketPreview(Ticket selectedTicket) {
         User selectedUser = lvAllUsers.getSelectionModel().getSelectedItem();
-        String uniqueID = BarQRCodeUtil.generateUniqueID();
+        String uniqueID = currentSelectedTicket.getUuid().toString();
 
         try {
             if ("Special Ticket".equals(selectedTicket.getTicketType())) {
@@ -193,6 +199,7 @@ public class SpecificEventController extends BaseController implements Initializ
         lblSeleUser.setVisible(eventSelected);
         tfSearch.setVisible(eventSelected);
         lvAllUsers.setVisible(eventSelected);
+        btnMailTicket.setVisible(eventSelected);
         spinnerSpecTickets.setVisible(specialSelected);
         lblSeleTicket.setVisible(specialSelected || eventSelected);
         lvRadioBtns.setVisible(specialSelected || eventSelected);
@@ -295,16 +302,19 @@ public class SpecificEventController extends BaseController implements Initializ
     @FXML
     private void onPrintTicket(ActionEvent actionEvent) {
         if (currentSelectedTicket != null) {
+            UUID uniqueID = currentSelectedTicket.getUuid();
             try {
                 if (tBtnEvent.isSelected()) {
-                    model.linkTicketToUser(currentSelectedTicket.getTicketID(), currentSelectedUser.getUserID(), event.getEventID(), currentSelectedTicket.getUuid());
-                    printNode(spTicketPreview);  // Her udskrives hele panelet
+                    printNode(spTicketPreview);
+                    model.linkTicketToUser(currentSelectedTicket.getTicketID(), currentSelectedUser.getUserID(), event.getEventID(), uniqueID);
                 } else if (tBtnSpecial.isSelected()) {
                     int numberOfTickets = (int) spinnerSpecTickets.getValue();
                     for (int i = 0; i < numberOfTickets; i++) {
                         updateTicketPreview(currentSelectedTicket);
-                        printNode(spTicketPreview);  // Her udskrives hele panelet
+                        printNode(spTicketPreview);
+                        model.linkSpecialTicket(currentSelectedTicket.getTicketID(), uniqueID);
                     }
+
                 } else {
                     throw new IllegalStateException("Ingen billettype valgt");
                 }
@@ -319,7 +329,7 @@ public class SpecificEventController extends BaseController implements Initializ
         }
     }
 
-    private void printNode(Node node) {
+    private void printNode(Node node) throws SQLException, IOException {
         WritableImage snapshot = node.snapshot(new SnapshotParameters(), null);
         ImageView imageView = new ImageView(snapshot);
 
@@ -357,15 +367,16 @@ public class SpecificEventController extends BaseController implements Initializ
                 File file = new File(imagePath);
                 ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
 
-                // Her kan du flytte e-mail-sending til en anden tråd hvis nødvendigt
+                // Her flyttes e-mail-sending til en anden tråd
                 new Thread(() -> {
                     try {
                         MailUtility.sendEmailWithAttachment(host, port, mailFrom, password, toEmail, subject, message, imagePath);
+                        model.linkTicketToUser(currentSelectedTicket.getTicketID(), currentSelectedUser.getUserID(), event.getEventID(), currentSelectedTicket.getUuid());
                         Platform.runLater(() -> {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "E-mailen er blevet sendt.");
                             alert.showAndWait();
                         });
-                    } catch (MessagingException e) {
+                    } catch (MessagingException | IOException | SQLException e) {
                         Platform.runLater(() -> {
                             Alert alert = new Alert(Alert.AlertType.ERROR, "Fejl ved sending af e-mail: " + e.getMessage());
                             alert.showAndWait();

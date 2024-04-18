@@ -119,6 +119,10 @@ public class Model {
         manager.linkTicketToUser(userID, ticketID, eventID, uuid);
     }
 
+    public void linkSpecialTicket(int ticketID, UUID uuid) throws SQLException, IOException {
+        manager.linkSpecialTicket(ticketID, uuid);
+    }
+
     public void deleteUser(int userID) throws SQLException, IOException {
         manager.deleteUser(userID);
     }

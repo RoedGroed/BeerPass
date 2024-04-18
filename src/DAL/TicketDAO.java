@@ -160,4 +160,16 @@ public class TicketDAO {
             }
         }
     }
+
+    public void linkSpecialTicket(int ticketID, UUID uuid) throws IOException, SQLException {
+        DBConnector dbConnector = new DBConnector();
+        try (Connection conn = dbConnector.getConnection()) {
+            String query = "INSERT INTO TicketUser (TicketID, UniqueID) VALUES (?,?)";
+            try (PreparedStatement prep = conn.prepareStatement(query)) {
+                prep.setInt(1, ticketID);
+                prep.setString(2, String.valueOf(uuid));
+                prep.executeUpdate();
+            }
+        }
+    }
 }

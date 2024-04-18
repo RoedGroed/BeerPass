@@ -39,7 +39,4 @@ public class BarQRCodeUtil {
         }
     }
 
-    public static String generateUniqueID() {
-        return UUID.randomUUID().toString();
-    }
 }
