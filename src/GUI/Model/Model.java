@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Model {
@@ -114,8 +115,8 @@ public class Model {
     public void deleteTicket(int ticketID) throws SQLException, IOException {
         manager.deleteTicket(ticketID);
     }
-    public void linkTicketToUser(int userID, int ticketID, int eventID) throws SQLException, IOException {
-        manager.linkTicketToUser(userID, ticketID, eventID);
+    public void linkTicketToUser(int userID, int ticketID, int eventID, UUID uuid) throws SQLException, IOException {
+        manager.linkTicketToUser(userID, ticketID, eventID, uuid);
     }
 
     public void deleteUser(int userID) throws SQLException, IOException {

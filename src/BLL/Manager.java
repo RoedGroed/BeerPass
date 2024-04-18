@@ -10,8 +10,8 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,8 +93,8 @@ public class Manager {
     public void deleteTicket(int ticketID) throws SQLException, IOException {
         ticketDAO.deleteTicket(ticketID);
     }
-    public void linkTicketToUser(int userID, int ticketID, int eventID) throws SQLException, IOException {
-        ticketDAO.linkUserToTicket(userID, ticketID, eventID);
+    public void linkTicketToUser(int userID, int ticketID, int eventID, UUID uuid) throws SQLException, IOException {
+        ticketDAO.linkUserToTicket(userID, ticketID, eventID, uuid);
     }
 
     public List<User> readAllEventCoordinators() throws SQLException, IOException {

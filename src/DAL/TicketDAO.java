@@ -1,6 +1,5 @@
 package DAL;
 
-import BE.Event;
 import BE.Ticket;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
@@ -11,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TicketDAO {
 
@@ -147,14 +147,15 @@ public class TicketDAO {
             prep.executeUpdate();
         }
     }
-    public void linkUserToTicket(int userID, int ticketID, int eventID) throws SQLException, IOException {
+    public void linkUserToTicket(int ticketID, int userID, int eventID, UUID uuid) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
-            String query = "INSERT INTO TicketUser (UserID, TicketID, EventID) VALUES (?,?,?)";
+            String query = "INSERT INTO TicketUser (TicketID, UserID, EventID, UniqueID) VALUES (?,?,?,?)";
             try (PreparedStatement prep = conn.prepareStatement(query)) {
-                prep.setInt(1, userID);
-                prep.setInt(2, ticketID);
+                prep.setInt(1, ticketID);
+                prep.setInt(2, userID);
                 prep.setInt(3, eventID);
+                prep.setString(4, String.valueOf(uuid));
                 prep.executeUpdate();
             }
         }

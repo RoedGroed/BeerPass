@@ -1,46 +1,45 @@
 package Util;
 
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.oned.Code128Writer;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
 import javafx.scene.image.Image;
 import javafx.embed.swing.SwingFXUtils;
 
 import javax.imageio.ImageIO;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class BarQRCodeUtil {
-    public static Image generateQRCode(String data, int width, int height) throws WriterException {
-        Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-        BitMatrix matrix = new MultiFormatWriter().encode(data, BarcodeFormat.QR_CODE, width, height, hints);
-        return convertMatrixToImage(matrix);
+
+    public static Image generateQRCodeImage(String data) throws WriterException {
+        QRCodeWriter writer = new QRCodeWriter();
+        BitMatrix bitMatrix = writer.encode(data, BarcodeFormat.QR_CODE, 200, 200);
+        return createImageFromBitMatrix(bitMatrix);
     }
 
-    public static Image generateBarcode(String data, int width, int height) throws WriterException {
-        BitMatrix matrix = new MultiFormatWriter().encode(data, BarcodeFormat.CODE_128, width, height);
-        return convertMatrixToImage(matrix);
+    public static Image generateBarcodeImage(String data) throws WriterException {
+        Code128Writer writer = new Code128Writer();
+        BitMatrix bitMatrix = writer.encode(data, BarcodeFormat.CODE_128, 200, 200);
+        return createImageFromBitMatrix(bitMatrix);
     }
 
-    private static Image convertMatrixToImage(BitMatrix matrix) {
+    private static Image createImageFromBitMatrix(BitMatrix bitMatrix) {
         try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            MatrixToImageWriter.writeToStream(matrix, "PNG", outputStream);
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            return new Image(inputStream);
+            ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
+            byte[] pngData = pngOutputStream.toByteArray();
+            return SwingFXUtils.toFXImage(ImageIO.read(new ByteArrayInputStream(pngData)), null);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to convert matrix to image", e);
+            throw new RuntimeException(e);
         }
     }
 
-    public static String generateUUID() {
+    public static String generateUniqueID() {
         return UUID.randomUUID().toString();
     }
 }

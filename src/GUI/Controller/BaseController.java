@@ -38,15 +38,6 @@ public class BaseController implements Initializable {
     private User loggedInUser;
     private String user;
 
-    /*public void setModel(Model model) {
-        BaseController.model = model;
-        System.out.println("Model set in BaseController: " + model);
-    }
-
-    public static Model getModel() {
-        System.out.println("Model retrieved from BaseController: " + model);
-        return model;
-    }*/
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
