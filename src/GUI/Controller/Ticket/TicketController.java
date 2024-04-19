@@ -52,6 +52,11 @@ public class TicketController {
         this.eventNotes = eventNotes;
     }
 
+    /**
+     * Sets the data for event ticket
+     * @param event the event
+     * @param selectedUser the user
+     */
     public void setEventTicketData(Event event, User selectedUser) {
         eventName.setText(event.getName());
         eventLocation.setText(event.getLocation());

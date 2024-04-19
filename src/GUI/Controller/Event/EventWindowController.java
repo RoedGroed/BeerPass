@@ -43,7 +43,9 @@ public class EventWindowController extends BaseController implements Initializab
     @FXML
     private ScrollPane scrollPane;
 
-
+    /**
+     * Retrieves the current user's role and displays events accordingly
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources){
         //model = Model.getInstance();
@@ -66,6 +68,10 @@ public class EventWindowController extends BaseController implements Initializab
         }
     }
 
+    /**
+     * Displays the list of events in the UI
+     * @param events list of events
+     */
     private void displayEvents(List<Event> events) {
         int imagesPerRow = 3;
         HBox hbox = null;
@@ -90,6 +96,10 @@ public class EventWindowController extends BaseController implements Initializab
         }
     }
 
+    /**
+     * Creates an ImageView fot he specified event
+     * @param event the event object
+     */
     private ImageView createImageViewForEvent(Event event) {
         try {
             String imagePath = "/Images/App/" + event.getImagePath();
@@ -107,6 +117,10 @@ public class EventWindowController extends BaseController implements Initializab
         }
     }
 
+    /**
+     * Creates a label for the specified event
+     * @param event the event
+     */
     private Label createLabelForEvent(Event event) {
         String labelText = event.getName() + " - " + event.getTime();
         Label label = new Label(labelText);
@@ -122,6 +136,10 @@ public class EventWindowController extends BaseController implements Initializab
         return label;
     }
 
+    /**
+     * handle the click event ImageView by loading the specific event window with the details of the clicked event
+     * @param event event object
+     */
     private void onImageViewClick(Event event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/SpecificEvent.fxml"));

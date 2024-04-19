@@ -44,6 +44,9 @@ public class NewUserController extends BaseController implements Initializable {
     private MFXRadioButton userCustomer;
     private ToggleGroup roleGroup;
 
+    /**
+     *  Adds listeners to the radio buttons for user roles
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -74,6 +77,9 @@ public class NewUserController extends BaseController implements Initializable {
         userCustomer.setToggleGroup(roleGroup);
     }
 
+    /**
+     * Goes back to AdminWindow
+     */
     @FXML
     private void onCancel(ActionEvent actionEvent) {
         Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -92,6 +98,9 @@ public class NewUserController extends BaseController implements Initializable {
         }
     }
 
+    /**
+     * Clears the previously selected radio button
+     */
     private void clearSelectionAndSelect(MFXRadioButton selectedRadioButton) {
         if (selectedRoleButton != null) {
             selectedRoleButton.getStyleClass().remove("selected");
@@ -108,6 +117,9 @@ public class NewUserController extends BaseController implements Initializable {
         this.manager = new Manager();
     }
 
+    /**
+     * Handle the conformation of creating a new user
+     */
     @FXML
     private void onConfirmUser(ActionEvent event) {
 

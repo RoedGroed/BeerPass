@@ -50,6 +50,9 @@ public class NewEventController extends BaseController implements Initializable 
     @FXML
     private ComboBox<String> cbEventImages;
 
+    /**
+     * Loads the image viewer, load the images into combo boxes
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -64,6 +67,10 @@ public class NewEventController extends BaseController implements Initializable 
         loadFXML("/EventWindow.FXML",model, (Stage) tfEventName.getScene().getWindow());
     }
 
+    /**
+     * Handle the confirmation of user input for creating event.
+     * Creates the event and then opening the event window
+     */
     @FXML
     private void onConfirmUser(ActionEvent actionEvent) {
         Event event = getUserInput();
@@ -77,10 +84,13 @@ public class NewEventController extends BaseController implements Initializable 
                 showAlert("Error", "Error occurred while creating a user, try again");
             }
         }
-
     }
 
-
+    /**
+     * Retrieves user input from the UI Fields and creates event object
+     * Validates the input before creating event
+     * @return the event object
+     */
     private Event getUserInput(){
         String name = tfEventName.getText();
         String location = tfEventLocation.getText();
@@ -105,6 +115,9 @@ public class NewEventController extends BaseController implements Initializable 
         return new Event(-1, name, location, time, note, ticketLimit, imagePath);
     }
 
+    /**
+     * Loads the selected image into the ImageViewer when an item is selected
+     */
     private void loadImageViewer(){
         cbEventImages.setOnAction(event -> {
             String selectedImage = cbEventImages.getValue();
@@ -117,6 +130,9 @@ public class NewEventController extends BaseController implements Initializable 
         });
     }
 
+    /**
+     * Loads the images from the specified directory into the comboBox
+     */
     private void loadImagesIntoComboBox(){
         File folder = new File("resources/Images/App/");
 
@@ -132,6 +148,9 @@ public class NewEventController extends BaseController implements Initializable 
         }
     }
 
+    /**
+     * Populates the list view with all event coordinators retrieved from the database
+     */
     public void populateList() {
         try {
             List<User> coordinators = eventModel.readAllEventCoordinators();
@@ -148,7 +167,9 @@ public class NewEventController extends BaseController implements Initializable 
         }
     }
 
-
+    /**
+     * Handles the event when a user is selected from the listview and added as a coordinator
+     */
     @FXML
     private void onAddCoordinator(ActionEvent actionEvent) {
         User selectedUser = lvAllCoordinators.getSelectionModel().getSelectedItem();
@@ -161,6 +182,9 @@ public class NewEventController extends BaseController implements Initializable 
         }
     }
 
+    /**
+     * Handle the event when a user is selected from the list view and removed as an Event Coordinator
+     */
     @FXML
     private void onRemoveCoordinator(ActionEvent actionEvent) {
         User selectedUser = lvCoordinators.getSelectionModel().getSelectedItem();

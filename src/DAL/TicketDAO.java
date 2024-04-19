@@ -14,6 +14,11 @@ import java.util.UUID;
 
 public class TicketDAO {
 
+    /**
+     * Adds a new ticket to the database
+     * @param ticketName name of the ticket
+     * @param ticketType ticket type (Event or Special)
+     */
     public void addTicket(String ticketName, String ticketType) throws IOException, SQLException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
@@ -27,6 +32,9 @@ public class TicketDAO {
 
     }
 
+    /**
+     * Retrieving all the tickets from the database
+     */
     public List<Ticket> readAllTickets() throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         List<Ticket> tickets = new ArrayList<>();
@@ -48,6 +56,11 @@ public class TicketDAO {
         return tickets;
     }
 
+    /**
+     * A method which links a ticket to an event
+     * @param eventID the event
+     * @param ticketID the ticket
+     */
     public void linkTicketToEvent(int eventID, int ticketID) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
@@ -59,6 +72,11 @@ public class TicketDAO {
             }
         }
     }
+
+    /**
+     * Retrieving the tickets linked to an event
+     * @param eventID the event
+     */
     public List<Ticket> getLinkedTickets(int eventID) throws SQLException, IOException {
         List<Ticket> linkedTickets = new ArrayList<>();
         String query = "SELECT * FROM EventTickets WHERE EventID =?";
@@ -79,6 +97,11 @@ public class TicketDAO {
         }
         return linkedTickets;
     }
+
+    /**
+     * Retrieving a ticket based on its ID
+     * @param ticketID the ticket
+     */
     private Ticket getTicketByID(int ticketID) throws SQLException, IOException {
         String query = "SELECT * FROM Tickets WHERE TicketID = ?";
         DBConnector dbConnector = new DBConnector();
@@ -101,6 +124,11 @@ public class TicketDAO {
         // Return null if ticket with the given ID is not found
         return null;
     }
+
+    /**
+     * Finding the ticket ID by using the name of the ticket
+     * @param ticketName name of ticket
+     */
     public int getTicketIDByName(String ticketName) throws SQLException, IOException {
         String query = "SELECT TicketID FROM Tickets WHERE Name = ?";
         DBConnector dbConnector = new DBConnector();
@@ -120,6 +148,11 @@ public class TicketDAO {
         return -1;
     }
 
+    /**
+     * Removing a ticket from an event
+     * @param eventID the event
+     * @param ticketID the ticket
+     */
     public void removeTicketFromEvent (int eventID, int ticketID) throws IOException, SQLException {
         DBConnector dbConnector = new DBConnector();
         String query = "DELETE FROM EventTickets WHERE EventID = ? AND TicketID = ?";
@@ -133,6 +166,10 @@ public class TicketDAO {
         }
     }
 
+    /**
+     * Delete a ticket from the database
+     * @param ticketID the ticket
+     */
     public void deleteTicket(int ticketID) throws IOException, SQLException {
         DBConnector dbConnector = new DBConnector();
         String query = "DELETE FROM Tickets WHERE TicketID = ?";
@@ -144,6 +181,14 @@ public class TicketDAO {
             prep.executeUpdate();
         }
     }
+
+    /**
+     * Linking a ticket to the user
+     * @param ticketID the ticket
+     * @param userID the user
+     * @param eventID the event
+     * @param uuid the UUID
+     */
     public void linkUserToTicket(int ticketID, int userID, int eventID, UUID uuid) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
@@ -158,6 +203,11 @@ public class TicketDAO {
         }
     }
 
+    /**
+     * Link the special ticket
+     * @param ticketID the ticket
+     * @param uuid the uuid
+     */
     public void linkSpecialTicket(int ticketID, UUID uuid) throws IOException, SQLException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {

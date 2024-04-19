@@ -41,6 +41,9 @@ public class EditUserController extends BaseController implements Initializable 
     @FXML
     private MFXRadioButton userCustomer;
 
+    /**
+     * Adds listeners to the radio buttons for user roles
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
@@ -71,7 +74,10 @@ public class EditUserController extends BaseController implements Initializable 
         userCustomer.setToggleGroup(roleGroup);
     }
 
-
+    /**
+     * Populates the fields with the information of the user
+     * @param user the user
+     */
     public void populateFields(User user) {
         this.user = user;
         tfUserName.setText(user.getUsername());
@@ -86,6 +92,10 @@ public class EditUserController extends BaseController implements Initializable 
         }
     }
 
+    /**
+     * Clears the selection of the previously selected radio button.
+     * @param selectedRadioButton
+     */
     private void clearSelectionAndSelect(MFXRadioButton selectedRadioButton) {
         if (selectedRoleButton != null) {
             selectedRoleButton.getStyleClass().remove("selected");
@@ -96,7 +106,9 @@ public class EditUserController extends BaseController implements Initializable 
 
     private MFXRadioButton selectedRoleButton; // Keep track of the currently selected button
 
-
+    /**
+     * Deleting a user upon conformation
+     */
     @FXML
     private void onDelete(ActionEvent actionEvent) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -121,6 +133,9 @@ public class EditUserController extends BaseController implements Initializable 
         loadFXML("/AdminWindow.FXML",model, (Stage) tfUserName.getScene().getWindow());
     }
 
+    /**
+     * Handles the conformation of changes to the user.
+     */
     @FXML
     private void onConfirm(ActionEvent actionEvent) {
         try {
@@ -160,6 +175,9 @@ public class EditUserController extends BaseController implements Initializable 
         }
     }
 
+    /**
+     * Retrieves the selected role from the radio buttons
+     */
     private String getSelectedRole() {
         if (userAdmin.isSelected()) {
             return "Admin";

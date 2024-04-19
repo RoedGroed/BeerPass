@@ -11,48 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
-
-    /*public boolean isValidUser(String username, String password) throws SQLException, IOException {
-        DBConnector dbConnector = new DBConnector();
-        try (Connection conn = dbConnector.getConnection()) {
-            String query = "SELECT * FROM Users WHERE UserName = ? AND Password = ?";
-            try (PreparedStatement statement = conn.prepareStatement(query)) {
-                statement.setString(1, username);
-                statement.setString(2, password);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    return resultSet.next();
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false; // Return false if an exception occurred
-        }
-    }*/
-
-    /*public User getUserByNameAndPassword(String username, String password) throws SQLException, IOException {
-        DBConnector dbConnector = new DBConnector();
-        try (Connection conn = dbConnector.getConnection()) {
-            String query = "SELECT UserID, UserName, Password, Email, Role FROM Users WHERE UserName = ? AND Password = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, username);
-                stmt.setString(2, password);
-
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        return new User(
-                                rs.getInt("UserID"),
-                                rs.getString("UserName"),
-                                rs.getString("Password"),
-                                rs.getString("Email"),
-                                rs.getString("Role")
-                        );
-                    }
-                }
-            }
-        }
-        return null;
-    }*/
-
+    /**
+     * Retrieving the user from the database by using the email of the user
+     * @param email the user email
+     */
     public User getUserByEmail(String email) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
@@ -76,6 +38,9 @@ public class UserDAO {
         return null;
     }
 
+    /**
+     * Retrieving all the users from the database
+     */
     public List<User> readAllUsers() throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         List<User> allUsers = new ArrayList<>();
@@ -97,7 +62,10 @@ public class UserDAO {
         return allUsers;
     }
 
-
+    /**
+     * Deleting the user
+     * @param userId the user
+     */
     public void deleteUser(int userId) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
@@ -109,6 +77,10 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Create a user in the database using the user object
+     * @param user the user
+     */
     public void createNewUser(User user) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
@@ -125,7 +97,10 @@ public class UserDAO {
         }
     }
 
-
+    /**
+     * Update the user in the database by using the user object
+     * @param selectedUser user
+     */
     public void updateUser(User selectedUser) throws SQLException, IOException {
         String updateQuery = "UPDATE Users SET UserName = ?, Password = ?, Role = ?, Email = ? WHERE UserID = ?";
         DBConnector dbConnector = new DBConnector();
@@ -145,9 +120,6 @@ public class UserDAO {
 
     /**
      * Method to read all Event coordinators.
-     * @return
-     * @throws SQLException
-     * @throws IOException
      */
     public List<User> readAllEventCoordinators() throws SQLException, IOException {
         List<User> allUsers = readAllUsers();
@@ -162,10 +134,7 @@ public class UserDAO {
 
     /**
      * Get all the assigned EC to the specific Event.
-     * @param eventId
-     * @return
-     * @throws SQLException
-     * @throws IOException
+     * @param eventId the event
      */
     public List<User> getAssignedEventCoordinators(int eventId) throws SQLException, IOException {
         List<User> assignedCoordinators = new ArrayList<>();
@@ -190,6 +159,11 @@ public class UserDAO {
         return assignedCoordinators;
     }
 
+    /**
+     * Links a coordinator to an event
+     * @param EventID the event
+     * @param userID the user
+     */
     public void addCoordinator(int EventID, int userID) throws IOException, SQLException {
         DBConnector dbConnector = new DBConnector();
         String sql = "INSERT INTO Event_Coordinator_assignment (EventID, UserID) VALUES (?, ?)";
@@ -202,6 +176,11 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Removing a coordinator from an event
+     * @param EventID the event
+     * @param userID  the user
+     */
     public void removeCoordinator(int EventID, int userID) throws IOException, SQLException {
         DBConnector dbConnector = new DBConnector();
         String sql = "DELETE FROM Event_Coordinator_assignment WHERE EventID = ? AND UserID = ?";

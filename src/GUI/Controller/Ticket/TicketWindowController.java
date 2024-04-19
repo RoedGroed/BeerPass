@@ -42,7 +42,9 @@ public class TicketWindowController extends BaseController implements Initializa
         eventModel = new EventModel();
     }
 
-
+    /**
+     * Sets up toggle groups and initializes list views
+     */
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         tglBtnEventTicket.setToggleGroup(tg);
@@ -50,7 +52,10 @@ public class TicketWindowController extends BaseController implements Initializa
         initListViews();
     }
 
-
+    /**
+     * Initializes list views for events and tickets
+     * Sets up cell factories for list views displaying events, event tickets, and special tickets
+     */
     private void initListViews() {
         try {
             //Setting up the listview in the program (Events)
@@ -123,6 +128,9 @@ public class TicketWindowController extends BaseController implements Initializa
         }
     }
 
+    /**
+     * Removes the selected ticket from the list view and deletes it from the database
+     */
     @FXML
     private void onRemoveTicket(ActionEvent actionEvent) {
         if (listviewEventTickets.getSelectionModel().getSelectedItem() != null) {
@@ -145,6 +153,10 @@ public class TicketWindowController extends BaseController implements Initializa
             }
         }
     }
+
+    /**
+     * Adds a new ticket to the database based on the input provided by the user.
+     */
     @FXML
     private void onAddTicket(ActionEvent actionEvent) {
         //checking that the "Ticket name field" is not empty and that "togglebutton" has been selected
@@ -178,6 +190,9 @@ public class TicketWindowController extends BaseController implements Initializa
     public void onSpecialTicket(ActionEvent actionEvent) {
     }
 
+    /**
+     * Links the selected ticket to the selected event in the database
+     */
     @FXML
     private void onTriangleLeft(ActionEvent actionEvent) {
         if(listviewEvents.getSelectionModel().getSelectedItem() != null &&
@@ -199,6 +214,10 @@ public class TicketWindowController extends BaseController implements Initializa
             showInformationAlert("Warning", "Please select both an event and a ticket type to perform this action");
         }
     }
+
+    /**
+     * Removes the selected ticket from the selected event in the database
+     */
     @FXML
     private void onTriangleRight(ActionEvent actionEvent) {
         //Checking that both an event and an available ticket have been selected
@@ -221,7 +240,11 @@ public class TicketWindowController extends BaseController implements Initializa
             }
         }
     }
-    //Method which updates the ui
+
+    /**
+     * Updates the UI by refreshing the events and tickets lists amd
+     * refreshing the ListViews displaying them
+     */
     private void updateUI() {
         try {
             // Update the events list

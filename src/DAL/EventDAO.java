@@ -13,6 +13,10 @@ import java.util.List;
 
 public class EventDAO {
 
+    /**
+     * Creating an event in the database
+     * @param event the event being created
+     */
     public Event createEvent(Event event) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try(Connection conn = dbConnector.getConnection()) {
@@ -31,7 +35,10 @@ public class EventDAO {
         return event;
     }
 
-
+    /**
+     * A method for updating the event in the database
+     * @param selectedEvent the event being updated
+     */
 
     public void updateEvents(Event selectedEvent) throws SQLException, IOException{
         String updateQuery = "UPDATE Events SET Name = ?, Location = ?, Time = ?, Note = ?, TicketLimit = ?, ImagePath = ? WHERE EventID = ?";
@@ -50,6 +57,10 @@ public class EventDAO {
             preparedStatement.executeUpdate();
         }
     }
+
+    /**
+     * A method which retrieves the information about all events in the database
+     */
 
     public List<Event> readAllEvents() throws SQLException, IOException{
         DBConnector dbConnector = new DBConnector();
@@ -76,6 +87,10 @@ public class EventDAO {
         return events;
     }
 
+    /**
+     * Retrieving the events information that is linked to an Event Coordinator
+     * @param userId the id of the event coordinator
+     */
     public List<Event> readEventsForCoordinator(int userId) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         List<Event> events = new ArrayList<>();
@@ -107,6 +122,10 @@ public class EventDAO {
 
     ///// UTILITY /////
 
+    /**
+     * Deletes an event and its associated tickets from the database
+     * @param eventId the event being deleted
+     */
     public void deleteEvent(int eventId) throws SQLException, IOException {
         DBConnector dbConnector = new DBConnector();
         try (Connection conn = dbConnector.getConnection()) {
@@ -115,6 +134,10 @@ public class EventDAO {
         }
     }
 
+    /**
+     * A method which deletes the tickets associated to a specific event
+     * @param eventId
+     */
     private void deleteEventTickets(Connection conn, int eventId) throws SQLException {
         String deleteTicketsSql = "DELETE FROM EventTickets WHERE EventID = ?";
         try (PreparedStatement stmt = conn.prepareStatement(deleteTicketsSql)) {
@@ -123,6 +146,9 @@ public class EventDAO {
         }
     }
 
+    /**
+     * A method which deletes a specific event
+     */
     private void deleteTheEvent(Connection conn, int eventId) throws SQLException {
         String deleteEventSql = "DELETE FROM Events WHERE EventID = ?";
         try (PreparedStatement stmt = conn.prepareStatement(deleteEventSql)) {
@@ -131,9 +157,10 @@ public class EventDAO {
         }
     }
 
-
-    public void readSomeOfTheEventMaybeIDontKnowForSureButItCouldBeOfUseWithTicketsAndUsersMaybe (){}
-
+    /**
+     * Method which get the number of total tickets sold for specific event
+     * @param eventId the event
+     */
     public int getSoldTicketsCount(int eventId) throws SQLException, IOException {
         String sql = "SELECT COUNT(*) AS sold_tickets_count " +
                 "FROM TicketUser " +

@@ -39,6 +39,9 @@ public class LoginController {
         this.model = Model.getInstance();
     }
 
+    /**
+     * Loads the Event Window if the login credentials are correct
+     */
     @FXML
     private void onLogin(ActionEvent actionEvent) {
         String email = txtEmail.getText();
@@ -63,13 +66,17 @@ public class LoginController {
                 alert.showAndWait();
             }
         } catch (IOException e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred when loading the window");
+            alert.showAndWait();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "An error occurred while retrieving the data");
+            alert.showAndWait();
         }
     }
 
+    /**
+     * Make an alert box if forgot password is clicked
+     */
     @FXML
     private void onForgotPassword(){
         Alert alert = new Alert(Alert.AlertType.WARNING,

@@ -49,6 +49,9 @@ public class AdminWindowController extends BaseController implements Initializab
         setupHoverFunctionality();
     }
 
+    /**
+     * Setting up the listviews
+     */
     private void initListviews() {
         try {
             lvAdmin.setItems(model.getUsersByRole("Admin"));
@@ -66,9 +69,6 @@ public class AdminWindowController extends BaseController implements Initializab
 
 
     /**
-     *
-     * @param actionEvent
-     * @throws IOException
      * Checks if a user or a listview != null.
      * Passes the information from the user-object into the corresponding fields.
      */
@@ -98,6 +98,9 @@ public class AdminWindowController extends BaseController implements Initializab
         }
     }
 
+    /**
+     * opening a newUser window
+     */
     @FXML
     private void onNewUser(ActionEvent actionEvent) {
         try {
@@ -116,18 +119,28 @@ public class AdminWindowController extends BaseController implements Initializab
         }
     }
 
-
+    /**
+     * Adds listeners to the listviews
+     */
     private void addListListener(){
         lvAdmin.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedListView = lvAdmin);
         lvEventCo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedListView = lvEventCo);
         lvUsers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedListView = lvUsers);
     }
+
+    /**
+     * Setting up list-cells for the listviews
+     */
     private void setupHoverFunctionality() {
         lvAdmin.setCellFactory(param -> createListCell());
         lvEventCo.setCellFactory(param -> createListCell());
         lvUsers.setCellFactory(param -> createListCell());
     }
 
+    /**
+     * Creates a customized ListCell for displaying the user email when hovering over them in the listviews
+     * @return
+     */
     private ListCell<User> createListCell() {
         return new ListCell<User>() {
             private VBox hoverBox = new VBox();

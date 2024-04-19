@@ -36,7 +36,10 @@ public class BaseController implements Initializable {
     private User loggedInUser;
     private String user;
 
-
+    /**
+     * Initializes the controller when the corresponding FXML file is loaded
+     * Sets the visibility of the admin buttons and updating the username label
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         model = Model.getInstance();
@@ -57,6 +60,9 @@ public class BaseController implements Initializable {
     /// Panel buttons ///
     /////////////////////
 
+    /**
+     * Loads the login window
+     */
     @FXML
     private void onLogout(ActionEvent actionEvent) {
         try {
@@ -74,7 +80,9 @@ public class BaseController implements Initializable {
             showAlert("Error", "Could not load the window");
         }
     }
-
+    /**
+     * Loads the Event window
+     */
     @FXML
     private void onEvent(ActionEvent actionEvent) {
         try {
@@ -94,7 +102,9 @@ public class BaseController implements Initializable {
             showAlert("Error", "Could not load the window");
         }
     }
-
+    /**
+     * Loads the Admin window
+     */
     @FXML
     private void onAdmin(ActionEvent actionEvent) {
         try {
@@ -114,7 +124,9 @@ public class BaseController implements Initializable {
             showAlert("Error", "Could not load the window");
         }
     }
-
+    /**
+     * Loads the Ticket window
+     */
     @FXML
     private void onTicket(ActionEvent actionEvent) {
         try {

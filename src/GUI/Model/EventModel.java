@@ -44,6 +44,10 @@ public class EventModel {
         return manager.getEventsForEventCo(userID);
     }
 
+    /**
+     * Retrieves a list of user filtered by their role
+     * @param role the role of the user
+     */
     public ObservableList<User> getUsersByRole(String role) throws SQLException, IOException {
         ObservableList<User> filteredUsers = FXCollections.observableArrayList();
         try {
@@ -73,6 +77,10 @@ public class EventModel {
         return formatDate + " " + timeStart;
     }
 
+    /**
+     * Divorces the formatted date time into date and time components
+     * @param formattedDateTime the date as a string
+     */
     public String[] divorceTimeString(String formattedDateTime) {
         String[] parts = formattedDateTime.split(" ", 2); // Splits String into an array
         String stringDate = parts[0];

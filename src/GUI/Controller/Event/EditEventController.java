@@ -58,6 +58,10 @@ public class EditEventController extends BaseController implements Initializable
         loadImageViewer();
         loadImagesIntoComboBox();
     }
+
+    /**
+     * Goes back to specificEvent window
+     */
     @FXML
     private void onCancel(ActionEvent actionEvent) {
         try {
@@ -79,6 +83,9 @@ public class EditEventController extends BaseController implements Initializable
         }
     }
 
+    /**
+     * handle the conformation of event details
+     */
         @FXML
     private void onConfirmEvent(ActionEvent actionEvent) {
         getUserInput(event);
@@ -102,7 +109,10 @@ public class EditEventController extends BaseController implements Initializable
         }
     }
 
-
+    /**
+     * Retrieves user input and sets it to the specified event object
+     * @param event the event
+     */
     public void getUserInput(Event event) {
         event.setName(tfEventName.getText());
         event.setLocation(tfEventLocation.getText());
@@ -122,6 +132,9 @@ public class EditEventController extends BaseController implements Initializable
         }
     }
 
+    /**
+     * Handle the addition of an Event Coordinator to the event
+     */
     @FXML
     private void onAddCoordinator(ActionEvent actionEvent) {
         User selectedUser = lvAllCoordinators.getSelectionModel().getSelectedItem();
@@ -139,6 +152,9 @@ public class EditEventController extends BaseController implements Initializable
         }
     }
 
+    /**
+     * Handle the removal of an Event Coordinator from the event
+     */
     @FXML
     private void onRemoveCoordinator(ActionEvent actionEvent){
         User selectedUser = lvCoordinators.getSelectionModel().getSelectedItem();
@@ -156,8 +172,11 @@ public class EditEventController extends BaseController implements Initializable
                     "that should be removed from this event");
         }
     }
-    //FIXME: Current adding all to the left Listview, and not removing those already assigned.
-    // Maybe try and filter them or something, so that if there is duplicates remove them from all.
+
+    /**
+     * Populates the fields with information from the provided event object
+     * @param event the event object
+     */
     public void populateFields(Event event){
         this.event = event;
 
@@ -179,7 +198,10 @@ public class EditEventController extends BaseController implements Initializable
 
     }
 
-    //FIXME Find a more elegant solution to load the correct image. I cant just call ComboBoxSetup.
+    /**
+     * Sets the value of the combobox to the current image filename if it matches
+     * and loads the corresponding image
+     */
     private void comboBoxValue(){
         String currentImage = event.getImagePath();
         boolean currentImageFound = false;
@@ -204,7 +226,9 @@ public class EditEventController extends BaseController implements Initializable
         }
     }
 
-
+    /**
+     * Loads the selected image into the ImageViewer
+     */
     public void loadImageViewer(){
         cbEventImages.setOnAction(event -> {
             String selectedImage = cbEventImages.getValue();
@@ -216,6 +240,9 @@ public class EditEventController extends BaseController implements Initializable
         });
     }
 
+    /**
+     * Loads the images from the specified directory into the combo boxes
+     */
     public void loadImagesIntoComboBox(){
         File folder = new File("resources/Images/App/");
 
@@ -231,6 +258,10 @@ public class EditEventController extends BaseController implements Initializable
         }
     }
 
+    /**
+     * Populates the lists of all coordinators and assigned coordinators for the event
+     * @param eventId the event id
+     */
     public void populateCoordinatorLists(int eventId) {
         try {
 

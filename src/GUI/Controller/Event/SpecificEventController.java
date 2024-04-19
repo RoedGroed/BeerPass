@@ -92,7 +92,9 @@ public class SpecificEventController extends BaseController implements Initializ
     @FXML
     private MFXButton btnMailTicket;
 
-
+    /**
+     * Initializes the event model, toggle buttons, event preview listener, search listener, and loads all users
+     */
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
         eventModel = new EventModel();
@@ -103,6 +105,10 @@ public class SpecificEventController extends BaseController implements Initializ
 
 
     }
+
+    /**
+     * Initializes the listener to update the preview when a ticket is selected from the toggle group
+     */
     private void initListenForPreview() {
         ticketToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -122,6 +128,10 @@ public class SpecificEventController extends BaseController implements Initializ
 
     }
 
+    /**
+     * Updates the ticket preview if a ticket is selected and either it's a special ticket or an event ticket
+     * Generates a new UUID for the current selected Ticket
+     */
     private void updatePreviewIfPossible() {
         if (currentSelectedTicket != null && currentSelectedTicket.getTicketType().equals("Special Ticket")){
             generateNewUUIDForTicket();
@@ -141,6 +151,13 @@ public class SpecificEventController extends BaseController implements Initializ
         }
     }
 
+    /**
+     * Updates the ticket preview based on the selected ticket and user
+     * If the selected ticket is a "Special Ticket", loads the SpecialTicket.fxml and sets its data.
+     * If the selected ticket is an "Event Ticket", loads the Ticket.fxml and sets its data
+     * Generates and sets Bar & QR code images for the ticket
+     * @param selectedTicket the ticket object
+     */
     private void updateTicketPreview(Ticket selectedTicket) {
         User selectedUser = lvAllUsers.getSelectionModel().getSelectedItem();
         String uniqueID = currentSelectedTicket.getUuid().toString();
@@ -180,6 +197,10 @@ public class SpecificEventController extends BaseController implements Initializ
         }
     }
 
+    /**
+     * Initializes toggle buttons to update the visibility og ticket types
+     * The visibility of Special Ticket and Event Ticket is updated based on selected toggle button
+     */
     private void initToggleBtns() {
         tBtnSpecial.selectedProperty().addListener((observable, oldValue, newValue) -> {
             updateVisibility(newValue, false);
@@ -189,6 +210,14 @@ public class SpecificEventController extends BaseController implements Initializ
             updateVisibility(false, newValue);
         });
     }
+
+    /**
+     * Updates the visibility of UI components based on the slected toggle buttons
+     * If Special Ticket is selected, set visibility for special ticket related components
+     * if Event Tickets is selected, set visibility for event ticket related components
+     * @param specialSelected if special ticket is selected
+     * @param eventSelected if event ticket is selected
+     */
 
     private void updateVisibility(boolean specialSelected, boolean eventSelected) {
         lblSeleUser.setVisible(eventSelected);
@@ -206,6 +235,11 @@ public class SpecificEventController extends BaseController implements Initializ
         }
     }
 
+    /**
+     * Populates radio buttons for event tickets associated with the given event
+     * Retrieves the list of tickets linked to the specified event and populates radio buttons
+     * @param event the event object
+     */
     private void populateRadioButtonsForEventTickets(Event event) {
         try {
             List<Ticket> ticketsForEvent = model.getLinkedTickets(event.getEventID());
@@ -215,6 +249,9 @@ public class SpecificEventController extends BaseController implements Initializ
         }
     }
 
+    /**
+     * Retrieves the list of special tickets and populates radio buttons
+     */
     private void populateRadioButtonsForSpecialTickets() {
         try {
             List<Ticket> specialTickets = model.getSpecialTickets();
@@ -224,6 +261,11 @@ public class SpecificEventController extends BaseController implements Initializ
         }
     }
 
+    /**
+     * Populates radio buttons with the provided list of tickets
+     * Clears existing radio buttons and creates a new radio button for each ticket in the list
+     * @param tickets list of tickets
+     */
     private void populateRadioButtons(List<Ticket> tickets) {
         lvRadioBtns.getItems().clear();
         for (Ticket ticket : tickets) {
@@ -235,6 +277,9 @@ public class SpecificEventController extends BaseController implements Initializ
         }
     }
 
+    /**
+     * Initialize a listener for the search field
+     */
     private void initSearchListener() {
         tfSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             List<User> filteredUsers = SearchUtility.filterUsers(allUsers, newValue);
@@ -242,6 +287,9 @@ public class SpecificEventController extends BaseController implements Initializ
         });
     }
 
+    /**
+     * Loads all the users from the model and populates the listview
+     */
     private void loadAllUsers() {
         try {
             allUsers = FXCollections.observableArrayList(model.getAllUsers());
@@ -251,6 +299,11 @@ public class SpecificEventController extends BaseController implements Initializ
         lvAllUsers.setItems(allUsers);
     }
 
+    /**
+     * Handle the deletion of the current event
+     * Displays confirmation box
+     * Deletes event if confirmed
+     */
     @FXML
     void onDeleteEvent(ActionEvent actionEvent) {
 
@@ -266,17 +319,15 @@ public class SpecificEventController extends BaseController implements Initializ
                 } catch (SQLException | IOException e) {
                     showAlert("Error", "An error occurred while deleting event");
                 }
-                // TODO: Get the event objected passed to this controller, so that i can delete the correct object.
-                // TODO: Update the events being shown, use the read method here/Remove from the list.
                 loadFXML("/EventWindow.FXML", model, (Stage) lblUsername.getScene().getWindow());
             }
         });
-        //Show and wait, are you sure, everything connected, tickets sold to this event
-        // users assigned and event coordinators will also be removed from this event.
-        // Delete Logic
 
     }
 
+    /**
+     * handle the editing of the current event, loads the edit event window
+     */
     @FXML
     void onEditEvent(ActionEvent actionEvent) {
         try {
@@ -299,7 +350,12 @@ public class SpecificEventController extends BaseController implements Initializ
         }
     }
 
-
+    /**
+     * handle the printing of tickets
+     * Generate a UUID for the ticket
+     * If Event Ticket is selected, then links the ticket to selected user nad prints the ticket preview
+     * If special Ticket is selected, links multiple tickets to the event and prints.
+     */
     @FXML
     private void onPrintTicket(ActionEvent actionEvent) {
         if (currentSelectedTicket != null) {
@@ -325,6 +381,12 @@ public class SpecificEventController extends BaseController implements Initializ
         }
     }
 
+    /**
+     * Prints the specified JavaFX Node
+     * Creates a WritableImage snapshot of the node
+     *  Prints the node using a PrinterJob and shows a success or warning alert based on the printing result
+     * @param node The JavaFX Node to be printed
+     */
     private void printNode(Node node) {
             WritableImage snapshot = node.snapshot(new SnapshotParameters(), null);
             ImageView imageView = new ImageView(snapshot);
@@ -343,28 +405,29 @@ public class SpecificEventController extends BaseController implements Initializ
             }
     }
 
-
+    /**
+     * Sends the ticket to the selected user's email
+     *  The email sending process is performed in a separate thread to avoid blocking the JavaFX application thread
+     * @param actionEvent
+     */
     @FXML
     private void onMailTicket(ActionEvent actionEvent) {
         if (currentSelectedTicket != null && currentSelectedUser != null){
-            // Kør på JavaFX-tråden
-            Platform.runLater(() -> {
                 try {
                     String host = "smtp.simply.com";
                     String port = "587";
                     String mailFrom = "brewpass@xn--jonasdomne-k6a.dk";
                     String password = "K0de.123";
                     String toEmail = currentSelectedUser.getEmail();
-                    String subject = "Din Billet";
-                    String message = "Her er din billet!";
+                    String subject = "Your Ticket";
+                    String message = "here is your Ticket!";
 
-                    // Tag et snapshot af billetten
+                    // Takes a snapshot of the ticket
                     WritableImage image = spTicketPreview.snapshot(new SnapshotParameters(), null);
-                    String imagePath = "resources/Images/App/Tickets/CustomerTicket.png"; // Opdater denne sti korrekt
+                    String imagePath = "resources/Images/App/CustomerTicket"; // Opdater denne sti korrekt
                     File file = new File(imagePath);
                     ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-
-                    // Her flyttes e-mail-sending til en anden tråd
+                    // Moving the email-send thread to a different Thread
                     new Thread(() -> {
                         try {
                             MailUtility.sendEmailWithAttachment(host, port, mailFrom, password, toEmail, subject, message, imagePath);
@@ -378,13 +441,17 @@ public class SpecificEventController extends BaseController implements Initializ
                             });
                         }
                     }).start();
+
                 } catch (IOException e) {
                     showAlert("Error", "Could not save image");
                 }
-            });
         } else showAlert("Error", "Please select a user and ticket to send");
     }
 
+    /**
+     * Populates the fields with information about the given event
+     * @param event the event object
+     */
     public void populateFields(Event event) {
         try {
             this.event = event;
@@ -397,7 +464,6 @@ public class SpecificEventController extends BaseController implements Initializ
             showAlert("Error", "An error occurred while retrieving data");
         }
 
-        //populateTickets(event);
         try {
             int soldTickets = eventModel.getSoldTicketsCount(event.getEventID());
             lblTicketCounter.setText(String.valueOf(soldTickets) + " / " + event.getTicketLimit());

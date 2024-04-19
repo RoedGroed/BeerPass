@@ -36,6 +36,11 @@ public class Model {
         return instance;
     }
 
+    /**
+     * Retrieves a list of users filtered by their role
+     * @param role user role
+     * @return filtered users
+     */
     public ObservableList<User>getUsersByRole(String role) throws SQLException, IOException {
         ObservableList<User> filteredUsers = FXCollections.observableArrayList();
         try {
@@ -51,6 +56,10 @@ public class Model {
         return filteredUsers;
     }
 
+    /**
+     * Retrieves all the users from the database
+     * @return list of all users
+     */
     public ObservableList<User> getAllUsers() throws SQLException, IOException {
         ObservableList<User> Users = FXCollections.observableArrayList();
         try {
@@ -86,12 +95,19 @@ public class Model {
     public List<Ticket> getAllTickets() throws SQLException, IOException {
         return manager.getAllTickets();
     }
+
+    /**
+     * @return List of all event tickets
+     */
     public List<Ticket> getEventTickets() throws SQLException, IOException {
         return manager.getAllTickets().stream()
                 .filter(ticket -> "Event Ticket".equalsIgnoreCase(ticket.getTicketType()))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * @return List of all special tickets
+     */
     public List<Ticket> getSpecialTickets() throws SQLException, IOException {
         return manager.getAllTickets().stream()
                 .filter(ticket -> "Special Ticket".equalsIgnoreCase(ticket.getTicketType()))
