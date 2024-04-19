@@ -1,7 +1,6 @@
-package Util;
-
 import BE.User;
-import org.junit.Test;
+import Util.SearchUtility;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;

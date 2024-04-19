@@ -1,9 +1,7 @@
 package GUI.Controller;
 
 import BE.User;
-import GUI.Controller.Ticket.TicketWindowController;
 import GUI.Model.Model;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,13 +11,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class BaseController implements Initializable {
@@ -174,7 +170,7 @@ public class BaseController implements Initializable {
         alert.showAndWait();
     }
     public void showInformationAlert(String title, String context) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setContentText(context);
         alert.showAndWait();

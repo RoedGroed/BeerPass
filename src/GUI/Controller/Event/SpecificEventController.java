@@ -124,13 +124,20 @@ public class SpecificEventController extends BaseController implements Initializ
 
     private void updatePreviewIfPossible() {
         if (currentSelectedTicket != null && currentSelectedTicket.getTicketType().equals("Special Ticket")){
+            generateNewUUIDForTicket();
             updateTicketPreview(currentSelectedTicket);
-            currentSelectedTicket.setUuid(UUID.randomUUID());
         }
 
         else if (currentSelectedTicket != null && currentSelectedUser != null) {
+            generateNewUUIDForTicket();
             updateTicketPreview(currentSelectedTicket);
-            currentSelectedTicket.setUuid(UUID.randomUUID());
+        }
+    }
+
+    private void generateNewUUIDForTicket() {
+        if (currentSelectedTicket != null) {
+            currentSelectedTicket.setUuid(UUID.randomUUID()); // Always set a new UUID here
+            System.out.println("New UUID generated for the ticket: " + currentSelectedTicket.getUuid());
         }
     }
 
@@ -148,9 +155,6 @@ public class SpecificEventController extends BaseController implements Initializ
                 // Generate Bar & QR code images for the special ticket
                 Image qrCodeImage = BarQRCodeUtil.generateQRCodeImage(uniqueID);
                 Image barCodeImage = BarQRCodeUtil.generateBarcodeImage(uniqueID);
-                System.out.println("UUID used for barcode image: " + selectedTicket.getUuid());
-
-
                 specialTicketController.setQRCodeImage(qrCodeImage);
                 specialTicketController.setBarCode(barCodeImage);
 
@@ -165,7 +169,6 @@ public class SpecificEventController extends BaseController implements Initializ
                 // Generate Bar & QR code images for the event ticket
                 Image qrCodeImage = BarQRCodeUtil.generateQRCodeImage(uniqueID);
                 Image barCodeImage = BarQRCodeUtil.generateBarcodeImage(uniqueID);
-                System.out.println("UUID used for barcode image: " + selectedTicket.getUuid());
                 ticketController.setQRCodeImage(qrCodeImage);
                 ticketController.setBarCode(barCodeImage);
 
@@ -300,21 +303,19 @@ public class SpecificEventController extends BaseController implements Initializ
     @FXML
     private void onPrintTicket(ActionEvent actionEvent) {
         if (currentSelectedTicket != null) {
-            UUID uniqueID = currentSelectedTicket.getUuid();
             try {
                 if (tBtnEvent.isSelected()) {
                     printNode(spTicketPreview);
-                    model.linkTicketToUser(currentSelectedTicket.getTicketID(), currentSelectedUser.getUserID(), event.getEventID(), uniqueID);
+                    model.linkTicketToUser(currentSelectedTicket.getTicketID(), currentSelectedUser.getUserID(), event.getEventID(), currentSelectedTicket.getUuid());
                 } else if (tBtnSpecial.isSelected()) {
                     int numberOfTickets = (int) spinnerSpecTickets.getValue();
                     for (int i = 0; i < numberOfTickets; i++) {
+                        generateNewUUIDForTicket();
                         updateTicketPreview(currentSelectedTicket);
                         printNode(spTicketPreview);
-                        model.linkSpecialTicket(currentSelectedTicket.getTicketID(), uniqueID);
+                        model.linkSpecialTicket(currentSelectedTicket.getTicketID(), currentSelectedTicket.getUuid());
                     }
 
-                } else {
-                    throw new IllegalStateException("Ingen billettype valgt");
                 }
             } catch (SQLException | IOException e) {
                 showAlert("Error", "An error occurred while saving or printing the ticket");
@@ -325,7 +326,6 @@ public class SpecificEventController extends BaseController implements Initializ
     }
 
     private void printNode(Node node) {
-        try {
             WritableImage snapshot = node.snapshot(new SnapshotParameters(), null);
             ImageView imageView = new ImageView(snapshot);
 
@@ -341,55 +341,49 @@ public class SpecificEventController extends BaseController implements Initializ
             } else {
                 showInformationAlert("Warning", "No printer selected");
             }
-        } catch (Exception e) {
-            showAlert("Error", "An error occurred while printing");
-        }
     }
 
 
     @FXML
     private void onMailTicket(ActionEvent actionEvent) {
-        // Kør på JavaFX-tråden
-        Platform.runLater(() -> {
-            try {
-                String host = "smtp.simply.com";
-                String port = "587";
-                String mailFrom = "brewpass@xn--jonasdomne-k6a.dk";
-                String password = "K0de.123";
-                String toEmail = currentSelectedUser.getEmail();
-                String subject = "Din Billet";
-                String message = "Her er din billet!";
+        if (currentSelectedTicket != null && currentSelectedUser != null){
+            // Kør på JavaFX-tråden
+            Platform.runLater(() -> {
+                try {
+                    String host = "smtp.simply.com";
+                    String port = "587";
+                    String mailFrom = "brewpass@xn--jonasdomne-k6a.dk";
+                    String password = "K0de.123";
+                    String toEmail = currentSelectedUser.getEmail();
+                    String subject = "Din Billet";
+                    String message = "Her er din billet!";
 
-                // Tag et snapshot af billetten
-                WritableImage image = spTicketPreview.snapshot(new SnapshotParameters(), null);
-                String imagePath = "resources/Images/App/CustomerTicket"; // Opdater denne sti korrekt
-                File file = new File(imagePath);
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+                    // Tag et snapshot af billetten
+                    WritableImage image = spTicketPreview.snapshot(new SnapshotParameters(), null);
+                    String imagePath = "resources/Images/App/Tickets/CustomerTicket.png"; // Opdater denne sti korrekt
+                    File file = new File(imagePath);
+                    ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
 
-                // Her flyttes e-mail-sending til en anden tråd
-                new Thread(() -> {
-                    try {
-                        MailUtility.sendEmailWithAttachment(host, port, mailFrom, password, toEmail, subject, message, imagePath);
-                        model.linkTicketToUser(currentSelectedTicket.getTicketID(), currentSelectedUser.getUserID(), event.getEventID(), currentSelectedTicket.getUuid());
-                        Platform.runLater(() -> {
-                            showInformationAlert("Success", "the email has been sent");
-                        });
-                    } catch (MessagingException | IOException | SQLException e) {
-                        Platform.runLater(() -> {
-                            showAlert("Error", "Error when sending the email");
-                        });
-                    }
-                }).start();
-
-            } catch (IOException e) {
-                showAlert("Error", "Could not save image");
-            }
-        });
+                    // Her flyttes e-mail-sending til en anden tråd
+                    new Thread(() -> {
+                        try {
+                            MailUtility.sendEmailWithAttachment(host, port, mailFrom, password, toEmail, subject, message, imagePath);
+                            model.linkTicketToUser(currentSelectedTicket.getTicketID(), currentSelectedUser.getUserID(), event.getEventID(), currentSelectedTicket.getUuid());
+                            Platform.runLater(() -> {
+                                showInformationAlert("Success", "the email has been sent");
+                            });
+                        } catch (MessagingException | IOException | SQLException e) {
+                            Platform.runLater(() -> {
+                                showAlert("Error", "Error when sending the email");
+                            });
+                        }
+                    }).start();
+                } catch (IOException e) {
+                    showAlert("Error", "Could not save image");
+                }
+            });
+        } else showAlert("Error", "Please select a user and ticket to send");
     }
-
-
-
-
 
     public void populateFields(Event event) {
         try {

@@ -78,13 +78,6 @@ public class NewEventController extends BaseController implements Initializable 
             }
         }
 
-        // Add coordinators to the event in the database
-    /*
-        for (User coordinator : selectedCoordinators) {
-            eventModel.addCoordinator(event.getEventID(), coordinator.getUserID());
-        }
-    */
-
     }
 
 
@@ -117,7 +110,6 @@ public class NewEventController extends BaseController implements Initializable 
             String selectedImage = cbEventImages.getValue();
             if (selectedImage != null) {
 
-                // TODO: Ændre når vi har nogle event images til den nye file path
                 String imagePath = "resources/Images/App/" + selectedImage;
                 Image image = new Image(new File(imagePath).toURI().toString());
                 imgEventImage.setImage(image);
@@ -126,7 +118,6 @@ public class NewEventController extends BaseController implements Initializable 
     }
 
     private void loadImagesIntoComboBox(){
-        // TODO: Ændre når vi har nogle event images til den nye file path
         File folder = new File("resources/Images/App/");
 
         if(folder.exists() && folder.isDirectory()) {
@@ -156,10 +147,6 @@ public class NewEventController extends BaseController implements Initializable 
             showAlert("Error", "An error occurred while fetching event coordinators.");
         }
     }
-
-    /**TODO: create event, send it back up. so that i can add the event coordinators.
-     *
-     */
 
 
     @FXML
